@@ -13,9 +13,9 @@ const Hero = () => {
           </div>
           <div className="heroText flex flex-col text-7xl font-bold">
             <span>Be The Fastest</span>
-            <span>In Delivering</span>
+            <span>In Finding</span>
             <span>
-              Your <span style={{ color: "var(--themeRed)" }}>Pizza</span>
+              Your <span style={{ color: "var(--themeRed)" }}>Food or Service</span>
             </span>
           </div>
           <span className="miniText w-[70%] text-[var(--gray)] font-semibold">Our Mission is to filling your tummy with delicious food and with and free delivery</span>
