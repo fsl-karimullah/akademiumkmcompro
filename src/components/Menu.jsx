@@ -118,23 +118,23 @@ const Menu = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-red-100 h-[600px] p-2 md:p-10">
       {/* Header */}
-      <header className="top-0 left-0 right-0 z-10 m-0 p-0">
-        <span className="uppercase text-sm font-semibold text-[var(--themeRed)]">Our Menu</span>
+      <header className="top-0 left-0 right-0 z-10 m-0 p-0 text-center md:text-left flex flex-col gap-4">
+        <span className="uppercase text-lg md:text-sm font-semibold text-[var(--themeRed)]">Our Menu</span>
         <div className="flex flex-col font-bold">
-          <h1 className="font-bold text-2xl">Menu That Always</h1>
-          <h1 className="font-bold text-2xl">Makes You Fall In Love</h1>
+          <h1 className="font-semibold md:font-bold text-[14px] md:text-2xl">Menu That Always</h1>
+          <h1 className="font-semibold md:font-bold text-[14px] md:text-2xl">Makes You Fall In Love</h1>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="flex flex-row mt-20 overflow-y-auto items-center">
-        <div className="w-[10%]">
+      <div className="flex flex-col md:flex-row mt-6 overflow-y-auto items-center gap-4">
+        <div className="w-2/12 rounded-xl p-2">
           <Sidebar handleMenuClick={handleMenuClick} />
         </div>
 
-        <div className="flex flex-col w-[90%] overflow-y-auto items-center">
+        <div className="flex flex-col w-10/12 overflow-y-auto items-center rounded-xl p-4">
           <CardMenu news={selectedMenu === "burger" ? burger : []} />
           <CardMenu news={selectedMenu === "pizza" ? pizza : []} />
           <CardMenu news={selectedMenu === "cupcake" ? cupCake : []} />

@@ -62,6 +62,15 @@ a {
   cursor: pointer;
   background-color: var(--themeRed);
 }
+
+@media only screen and (max-width: 768px) {
+  .btn {
+    width: 150px; /* Tombol akan mengambil lebar penuh pada perangkat mobile */
+    padding: 0.8rem; /* Sesuaikan padding sesuai kebutuhan Anda */
+    font-size: 14px; /* Sesuaikan ukuran font sesuai kebutuhan Anda */
+  }
+}
+
 .btnSec {
   width: max-content;
   padding: 0.9rem;

@@ -16,7 +16,7 @@ const Sidebar = ({ handleMenuClick }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center text-slate-700">
       <TypeOfMenu MenuType={MenuType} handleClick={handleClick} flexDirection="column" />
     </div>
   );

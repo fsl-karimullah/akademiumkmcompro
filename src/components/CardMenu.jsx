@@ -28,6 +28,15 @@ const CardMenu = React.memo(({ news }) => {
     cssEase: "linear",
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -36,11 +45,11 @@ const CardMenu = React.memo(({ news }) => {
         {...settings}
         style={{
           width: "80%",
-          margin: "10px 0px",
+          margin: "center",
         }}
       >
         {news.map((item, index) => (
-          <div key={index} className="border-4 border-[var(--pink)] relative h-[250px] rounded-[40px] overflow-hidden">
+          <div key={index} className="border-4 border-[var(--pink)] relative h-[300px] md:h-[260px] rounded-[40px] overflow-hidden">
             <img src={`${item.img}`} alt="" className="w-full h-full object-cover " />
             <div className="absolute bottom-0 left-0 right-0 p-4 text-justify bg-gradient-to-t from-black to-transparent flex flex-col justify-center gap-2">
               <h1 className="text-xl text-left text-slate-200">{item.title}</h1>
