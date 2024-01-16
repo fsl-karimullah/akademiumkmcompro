@@ -1,11 +1,11 @@
 import React from "react";
+import Hero from "../sections/Hero";
+import Serve from "../sections/Serve";
+import Menu from "../sections/Menu";
+import Customers from "../sections/Customers";
+import DownloadApp from "../sections/DownloadApp";
+import Footer from "../sections/Footer";
 import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import Serve from "../components/Serve";
-import Menu from "../components/Menu";
-import Customers from "../components/Customers";
-import DownloadApp from "../components/DownloadApp";
-import Footer from "../components/Footer";
 
 const Home = () => {
   return (

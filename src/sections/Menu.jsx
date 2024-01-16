@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
-import CardMenu from "./CardMenu";
+import Sidebar from "../components/Sidebar";
+import CardMenu from "../components/CardMenu";
+import CustomComponent from "../components/title/Title";
 
 const burger = [
   {
@@ -121,11 +122,14 @@ const Menu = () => {
     <div className="flex flex-col bg-red-100 h-[600px] p-2 md:p-10">
       {/* Header */}
       <header className="top-0 left-0 right-0 z-10 m-0 p-0 text-center md:text-left flex flex-col gap-4">
-        <span className="uppercase text-lg md:text-sm font-semibold text-[var(--themeRed)]">Our Menu</span>
-        <div className="flex flex-col font-bold">
-          <h1 className="font-semibold md:font-bold text-[14px] md:text-2xl">Menu That Always</h1>
-          <h1 className="font-semibold md:font-bold text-[14px] md:text-2xl">Makes You Fall In Love</h1>
-        </div>
+        <CustomComponent
+          title1="Our Menu"
+          title2="Menu That Always"
+          title3="Makes You Fall In Love"
+          textColor1="#FF0000" // Warna untuk title1
+          textColor2="#000000" // Warna untuk title2 dan title3
+          alignItems="start"
+        />
       </header>
 
       {/* Main Content */}
