@@ -21,7 +21,7 @@ const DownloadApp = () => {
             <span className="uppercase text-[20px] md:text-sm font-semibold text-[var(--themeRed)]">Download Our App</span>
             <div>
               <h1 className="text-sm md:text-3xl font-bold">Get Started With</h1>
-              <h1 className="text-sm md:text-3xl font-bold">Fudo Today!</h1>
+              <h1 className="text-sm md:text-3xl font-bold">Jejasa Today!</h1>
             </div>
             <p className="text-[var(--gray)] text-sm md:text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptates temporibus cumque iure, laudantium ab. Eligendi rerum eos necessitatibus ex.</p>
             <div>
