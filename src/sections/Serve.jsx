@@ -1,4 +1,5 @@
 import React from "react";
+import CustomComponent from "../components/title/Title";
 
 const services = [
   { title: "Easy To Order", Desc: "You only need a few steps in ordering food", img: "s1.png" },
@@ -10,10 +11,15 @@ const Serve = () => {
   return (
     <div className="flex flex-row items-center justify-between">
       <div className="flex flex-col gap-24 mt-10 w-full">
-        <div className="flex flex-col items-center justify-center gap-3">
-          <span className="uppercase text-sm text-[var(--themeRed)] font-semibold">What we serve</span>
-          <h1 className="font-bold text-2xl">Your Favourite Food</h1>
-          <h1 className="font-bold text-2xl">Delivery Partner</h1>
+        <div>
+          <CustomComponent
+            title1="What we serve"
+            title2="Your Favourite Food"
+            title3="Delivery Partner"
+            textColor1="#FF0000" // Warna untuk title1
+            textColor2="#000000" // Warna untuk title2 dan title3
+            alignItems="center"
+          />
         </div>
         <div className="flex flex-col md:flex-row items-center justify-around">
           {services.map((service, index) => (

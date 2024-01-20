@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
-import ImgReview from "./ImgReview";
+import ImgReview from "../components/ImgReview";
+import CustomComponent from "../components/title/Title";
 
 const labels = {
   0.5: "Useless",
@@ -37,11 +38,14 @@ const Customers = () => {
       </div>
       {/* right */}
       <div className="w-full md:w-1/2 flex flex-col gap-4 justify-center text-center md:text-left  ">
-        <span className="uppercase text-[20px] md:text-sm text-[var(--themeRed)] font-semibold">What they say</span>
-        <div>
-          <h1 className="font-bold text-sm md:text-2xl">What Our Customers</h1>
-          <h1 className="font-bold text-sm md:text-2xl">Say About Us</h1>
-        </div>
+        <CustomComponent
+          title1="What they say"
+          title2="What our customers"
+          title3="Say about us"
+          textColor1="#FF0000" // Warna untuk title1
+          textColor2="#000000" // Warna untuk title2 dan title3
+          alignItems="start"
+        />
         <span className="font-thin text-[10px] md:text-sm">"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore earum natus corrupti beatae vel aperiam iste ad eligendi illum autem".</span>
         <div className="flex flex-col items-center md:items-start gap-2">
           <img src="c1.webp" alt="" className="w-10 h-10 rounded-[50%] object-cover" />
