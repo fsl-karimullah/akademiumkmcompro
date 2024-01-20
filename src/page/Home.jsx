@@ -6,6 +6,7 @@ import Customers from "../sections/Customers";
 import DownloadApp from "../sections/DownloadApp";
 import Footer from "../sections/Footer";
 import Navbar from "../components/Navbar";
+import OurClient from "../sections/OurClient";
 
 const Home = () => {
   return (
@@ -22,6 +23,9 @@ const Home = () => {
       </section>
       <section className="p-4">
         <Customers />
+      </section>
+      <section className="p-4">
+        <OurClient />
       </section>
       <section className="p-4">
         <DownloadApp />
