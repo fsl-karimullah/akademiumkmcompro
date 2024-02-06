@@ -17,7 +17,7 @@ const Navbar = ({ currentPath }) => {
       <div className="h-14 m-5">
         <div className="flex flex-row items-center justify-between ">
           <Logo />
-          <div className="hidden md:flex flex-row items-center gap-2 cursor-pointer">
+          {/* <div className="hidden md:flex flex-row items-center gap-2 cursor-pointer">
             {menu.map((item, i) =>
               item === "Services" || item === "Menu" ? (
                 <div key={i} className="gap-0 flex flex-row items-center">
@@ -32,7 +32,7 @@ const Navbar = ({ currentPath }) => {
                 </div>
               )
             )}
-          </div>
+          </div> */}
           <div>
             {currentPath === "/" ? (
               <div className="hidden md:flex flex-row items-center gap-2">
