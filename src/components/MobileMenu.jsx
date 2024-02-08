@@ -24,12 +24,12 @@ const MobileMenu = ({ currentPath }) => {
           open ? "scale-100 transition-transform duration-500" : "scale-0 transition-transform duration-500 pointer-events-none"
         }`}
       >
-        {open &&
+        {/* {open &&
           links.map((item) => (
             <a href={item.url} key={item.id} onClick={() => setOpen(false)} className="hover:scale-110">
               {item.title} {item.title === "Services" || item.title === "Menu" ? <KeyboardArrowDownOutlinedIcon style={{ color: "white" }} /> : null}
             </a>
-          ))}
+          ))} */}
         {currentPath === "/" ? (
           <div className="flex flex-col items-center gap-8">
             <div className="cursor-pointer hover:scale-110">
