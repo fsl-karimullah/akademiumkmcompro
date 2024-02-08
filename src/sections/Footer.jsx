@@ -5,7 +5,7 @@ import { ArrowRightAltOutlined, Facebook, Instagram, Twitter } from "@mui/icons-
 const Footer = () => {
   return (
     <div>
-      <div className="flex flex-col md:flex-row gap-8 justify-between p-2 md:py-4 md:px-2">
+      <div className="flex flex-col md:flex-row gap-8 justify-around p-2 md:py-4 md:px-2">
         <div className="w-full md:w-1/5 gap-6 flex flex-col justify-center ">
           <Logo />
           <span className="text-[12px] md:text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti quidem inventore vitae.</span>

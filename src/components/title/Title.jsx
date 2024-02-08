@@ -25,7 +25,7 @@ class CustomComponent extends React.Component {
   }
 
   render() {
-    const { title1, title2, title3, textColor1, textColor2, alignItems } = this.props;
+    const { title1, title2, title3, textColor1, textColor2, alignItems, display1, display2 } = this.props;
     const { windowWidth } = this.state;
 
     const containerStyle = {
@@ -41,6 +41,7 @@ class CustomComponent extends React.Component {
       fontSize: "14px",
       fontWeight: "600",
       color: textColor1,
+      display: display1,
     };
 
     const titleStyle2 = {
@@ -54,6 +55,7 @@ class CustomComponent extends React.Component {
       fontWeight: "bold",
       fontSize: "18px",
       color: textColor2,
+      display: display2,
     };
 
     return (
@@ -73,6 +75,8 @@ CustomComponent.propTypes = {
   textColor1: PropTypes.string.isRequired,
   textColor2: PropTypes.string.isRequired,
   alignItems: PropTypes.string,
+  display1: PropTypes.string,
+  display2: PropTypes.string,
 };
 
 export default CustomComponent;

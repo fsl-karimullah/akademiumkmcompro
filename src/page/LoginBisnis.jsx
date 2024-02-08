@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Navbar from "../components/Navbar";
 import Hero from "../sections/Hero";
 import Serve from "../sections/Serve";
 import Menu from "../sections/Menu";
 import Customers from "../sections/Customers";
-import DownloadApp from "../sections/DownloadApp";
-import Footer from "../sections/Footer";
-import Navbar from "../components/Navbar";
 import OurClient from "../sections/OurClient";
-import { useLocation } from "react-router-dom";
+import DownloadApp from "../sections/DownloadApp";
+import DropDown from "../sections/DropDown";
+import Footer from "../sections/Footer";
 
-const Home = ({ currentPath }) => {
+const LoginBisnis = ({ currentPath }) => {
   console.log(currentPath);
   return (
     <main className="flex flex-col justify-around max-w-screen-xl mx-auto">
@@ -33,10 +33,13 @@ const Home = ({ currentPath }) => {
         <DownloadApp currentPath={currentPath} />
       </section>
       <section className="p-4">
+        <DropDown />
+      </section>
+      <section className="p-4">
         <Footer />
       </section>
     </main>
   );
 };
 
-export default Home;
+export default LoginBisnis;
