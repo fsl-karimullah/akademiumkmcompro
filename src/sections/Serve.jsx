@@ -2,7 +2,7 @@ import React from "react";
 import CustomComponent from "../components/title/Title";
 
 const services = [
-  { title: "Order dengan Mudah", Desc: "Anda hanya perlu menginstall aplikasi JASA", img: "s1.png" },
+  { title: "Order dengan Mudah", Desc: "Anda hanya perlu menginstall aplikasi Brand-In", img: "s1.png" },
   { title: "Cari produk dan jasa dengan mudah", Desc: "Kami bekerjasama dengan berbagai partner bisnis produk dan jasa", img: "s2.png" },
   { title: "Promosikan bisnis anda", Desc: "Anda bisa mempromosikan bisnis secara gratis melalui platform kami", img: "s3.png" },
 ];
@@ -16,8 +16,8 @@ const Serve = ({ currentPath }) => {
           <div>
             <CustomComponent
               title1="Apa yang kami sediakan"
-              title2="untuk kamu"
-              title3="Jelajah Rasa"
+              title2="Untuk Kamu"
+              title3="di Brand-In Indonesia"
               textColor1="#FF0000" 
               textColor2="#000000" 
               alignItems="center"

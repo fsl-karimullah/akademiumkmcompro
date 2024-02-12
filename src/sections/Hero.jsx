@@ -53,15 +53,15 @@ const Hero = ({ currentPath }) => {
           <div className="w-1/2 flex items-center justify-center text-center">
             <div className=" relative ">
               <div className="md:w-[600px] w-[400px]">
-                <img src="image 46.png" alt="" className="w-full md:w-full" />
+                <img src="p1.png" alt="" className="w-full md:w-full" />
               </div>
-              <div className="flex items-center justify-center absolute w-34 md:w-max p-2 md:p-4 rounded-[5rem] top-14 left-0 md:top-16 md:left-4 gap-4 bg-white shadow-2xl text-[var(--themeRed)] hover:cursor-pointer hover:scale-110">
+              {/* <div className="flex items-center justify-center absolute w-34 md:w-max p-2 md:p-4 rounded-[5rem] top-14 left-0 md:top-16 md:left-4 gap-4 bg-white shadow-2xl text-[var(--themeRed)] hover:cursor-pointer hover:scale-110">
                 <span className="text-sm md:text-2xl">Contact us</span>
                 <div className="bg-[rgb(59,208,59)] rounded-full md:w-10 md:h-10  flex items-center justify-center">
                   <LocalPhoneIcon style={{ color: "white" }} />
                 </div>
-              </div>
-              <div className="flex gap-4 bg-white shadow-2xl p-2 rounded-lg absolute top-72 left-56 md:top-[400px] md:left-[340px] w-max items-center justify-center hover:cursor-pointer hover:scale-110">
+              </div> */}
+              {/* <div className="flex gap-4 bg-white shadow-2xl p-2 rounded-lg absolute top-72 left-56 md:top-[400px] md:left-[340px] w-max items-center justify-center hover:cursor-pointer hover:scale-110">
                 <div>
                   <img src="p1.jpg" alt="" className="w-14 h-10 md:w-24 md:h-16 overflow-hidden object-cover rounded-lg" />
                 </div>
@@ -71,7 +71,7 @@ const Hero = ({ currentPath }) => {
                     <span className="text-[var(--themeRed)]">Rp. </span>0
                   </span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
