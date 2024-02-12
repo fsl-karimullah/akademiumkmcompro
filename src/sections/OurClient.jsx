@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
+import ClientListComponent from "../components/client/ClientList";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -11,10 +12,7 @@ function SamplePrevArrow(props) {
   return <div className={className} style={{ ...style, display: "block", background: "black", borderRadius: "50%" }} onClick={onClick} />;
 }
 
-const OurClient = ({ currentPath }) => {
-  const Clients = ["MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png"];
-  const reversedClients = [...Clients].reverse();
-
+const OurClient = ({ currentPath, reversedClients, Clients }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -54,21 +52,7 @@ const OurClient = ({ currentPath }) => {
   return (
     <div className="flex flex-col gap-4">
       {currentPath === "/" ? (
-        <>
-          <div className="text-[18px] font-semibold text-black text-center gap-4">
-            <h1>Telah dipercaya membantu</h1>
-            <h1>
-              <span className="text-[var(--themeRed)]">100 ribu+ </span>perusahaan ternama
-            </h1>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {reversedClients.map((client, index) => (
-              <div key={index} className="w-64">
-                <img src={client} alt="" className="w-full" />
-              </div>
-            ))}
-          </div>
-        </>
+        <ClientListComponent pageType="/" clients={Clients} />
       ) : (
         <div className="flex flex-col gap-16 items-center justify-center p-10 md:p-0 ">
           <h1 className="text-2xl md:text-4xl font-bold text-center">

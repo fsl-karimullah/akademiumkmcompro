@@ -5,15 +5,15 @@ import { ArrowRightAltOutlined, Facebook, Instagram, Twitter } from "@mui/icons-
 const Footer = () => {
   return (
     <div>
-      <div className="flex flex-col md:flex-row gap-8 justify-around p-2 md:py-4 md:px-2">
-        <div className="w-full md:w-1/5 gap-6 flex flex-col justify-center ">
+      <div className="flex flex-col md:flex-row gap-8 justify-center p-2 md:py-4 md:px-2">
+        <div className="w-full md:w-1/3 gap-2 flex flex-col justify-start  ">
           <Logo />
           <span className="text-[12px] md:text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti quidem inventore vitae.</span>
           <div className="flex flex-row items-center gap-2  md:gap-4 md:justify-around"></div>
         </div>
-        <div className="flex flex-row text-[12px] gap-5 justify-center px-4">
-          <div className="md:w-1/5 flex flex-col gap-2">
-            <h1 className="font-bold">About</h1>
+        <div className="md:w-2/3 flex flex-row text-[12px] gap-5 justify-around px-4">
+          <div className="md:w-1/2 flex flex-col justify-center items-center gap-2">
+            <h1 className="font-bold text-[14px]">About</h1>
             <ul className="text-[10px] md:text-sm flex flex-col gap-2">
               <li>About Us</li>
               <li>Features</li>
@@ -21,8 +21,8 @@ const Footer = () => {
               <li>Menu</li>
             </ul>
           </div>
-          <div className="md:w-1/5 flex flex-col gap-2">
-            <h1 className="font-bold">Company</h1>
+          <div className="md:w-1/2 flex flex-col justify-center items-center gap-2">
+            <h1 className="font-bold text-[14px]">Company</h1>
             <ul className="text-[10px] md:text-sm flex flex-col gap-2">
               <li>Why Foodeli?</li>
               <li>Partner with Us</li>
@@ -30,7 +30,7 @@ const Footer = () => {
               <li>Blog</li>
             </ul>
           </div>
-          <div className="md:w-1/5 flex flex-col gap-2">
+          {/* <div className="md:w-1/5 flex flex-col gap-2">
             <h1 className="font-bold">Support</h1>
             <ul className="text-[10px] md:text-sm flex flex-col gap-2">
               <li>Account</li>
@@ -50,7 +50,7 @@ const Footer = () => {
               <span className="text-[12px] md:text-sm">Email Address</span>
               <ArrowRightAltOutlined style={{ color: "white" }} />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="md:flex flex-row items-center justify-start gap-2 p-2 hidden">

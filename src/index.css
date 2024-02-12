@@ -168,7 +168,7 @@ a {
 .text-wrapper {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   overflow: hidden;
 }
 
