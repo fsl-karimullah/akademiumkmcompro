@@ -7,7 +7,7 @@ const ClientList = ({ clients, reversed = false }) => {
   const reversedClients = [...Clients].reverse();
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex flex-nowrap justify-center gap-4">
       {Clients.map((client, index) => (
         <div key={index} className="w-64">
           <img src={client} alt="" className="w-full" />
