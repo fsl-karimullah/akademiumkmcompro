@@ -12,7 +12,7 @@ function SamplePrevArrow(props) {
 }
 
 const OurClient = ({ currentPath }) => {
-  const Clients = ["MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png", "MNC.png"];
+  const Clients = ["glazestore.webp", "colosseum.webp", "donatnumnum.webp"];
   const reversedClients = [...Clients].reverse();
 
   const settings = {
@@ -58,7 +58,7 @@ const OurClient = ({ currentPath }) => {
           <div className="text-[18px] font-semibold text-black text-center gap-4">
             <h1>Telah dipercaya membantu</h1>
             <h1>
-              <span className="text-[var(--themeRed)]">100 ribu+ </span>perusahaan ternama
+              <span className="text-[var(--themeRed)]">100+ </span>perusahaan ternama
             </h1>
           </div>
           <div className="flex flex-wrap justify-center gap-4">

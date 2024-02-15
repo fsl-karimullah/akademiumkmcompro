@@ -39,9 +39,9 @@ const Serve = ({ currentPath }) => {
             Kami telah membantu dan dipercayai oleh <span className="text-[var(--themeRed)]">100+ </span> umkm ternama
           </h1>
           <div className="text-wrapper flex flex-row items-center justify-center">
-            <img src="MNC.png" alt="" />
-            <img src="MNC.png" alt="" />
-            <img src="MNC.png" alt="" />
+            <img src="glazestore.webp" alt="" />
+            <img src="donatnumnum.webp" alt="" />
+            <img src="colosseum.webp" alt="" />
             <img src="MNC.png" alt="" />
             <img src="MNC.png" alt="" />
             <img src="MNC.png" alt="" />
