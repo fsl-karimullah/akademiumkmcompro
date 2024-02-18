@@ -36,8 +36,8 @@ const Navbar = ({ currentPath }) => {
           <div>
             {currentPath === "/" ? (
               <div className="hidden md:flex flex-row items-center gap-2">
-                <SearchIcon style={{ cursor: "pointer" }} />
-                <ShoppingBag />
+                {/* <SearchIcon style={{ cursor: "pointer" }} />
+                <ShoppingBag /> */}
                 <a href="/loginbisnis" className="btnSec bisnis flex items-center gap-[5px] transition-colors duration-300 ease-in-out hover:text-[var(--themeRed)] hover:bg-[var(--themeBlack)]">
                   <LoginIcon /> <span>Pasang Bisnis</span>
                 </a>

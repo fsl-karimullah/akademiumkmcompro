@@ -32,12 +32,12 @@ const MobileMenu = ({ currentPath }) => {
           ))} */}
         {currentPath === "/" ? (
           <div className="flex flex-col items-center gap-8">
-            <div className="cursor-pointer hover:scale-110">
+            {/* <div className="cursor-pointer hover:scale-110">
               <SearchIcon style={{ cursor: "pointer" }} /> <span>Search</span>
             </div>
             <div className="flex flex-row gap-2 items-center cursor-pointer hover:scale-110">
               <ShoppingBagOutlinedIcon style={{ cursor: "pointer" }} /> <span>Shoping Cart (4)</span>
-            </div>
+            </div> */}
             <a href="/loginbisnis" className="btnSec bisnis flex items-center gap-[5px] transition-colors duration-300 ease-in-out hover:text-[var(--themeRed)] hover:bg-[var(--themeBlack)]">
               <LoginIcon /> <span>Pasang Bisnis</span>
             </a>
