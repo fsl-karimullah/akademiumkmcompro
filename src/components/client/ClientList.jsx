@@ -1,10 +1,8 @@
 import React from "react";
 
 // const clients = ["Logo1.jpg", "Logo2.jpg"];
-const ClientList = ({ clients, reversed = false }) => {
-  //   const clientList = reversed ? [...clients].reverse() : clients;
-  const Clients = ["colosseum.webp", "donatnumnum.webp", 'glazestore.webp'];
-  const reversedClients = [...Clients].reverse();
+const ClientList = () => {
+  const Clients = ["colosseum.webp", "donatnumnum.webp", "glazestore.webp", "L1.webp", "L2.webp"];
 
   return (
     <div className="flex flex-nowrap justify-center gap-4">
@@ -12,10 +10,6 @@ const ClientList = ({ clients, reversed = false }) => {
         <div key={index} className="w-64">
           <img src={client} alt="" className="w-full" />
         </div>
-        //   {clientList.map((client, index) => (
-        //     <div key={index} className="w-64">
-        //       <img src={client} alt="" className="w-full" />
-        //     </div>
       ))}
     </div>
   );
