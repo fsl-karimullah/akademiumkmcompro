@@ -8,24 +8,24 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 const burger = [
   {
-    title: "Italian Burger",
-    img: "b1.avif",
-    price: "7.49",
+    title: "Donat Kentang",
+    img: "donat-1.jpeg",
+    price: "3.5K",
   },
   {
-    title: "Sausage Burger",
-    img: "b2.avif",
-    price: "6.04",
+    title: "Paket 1",
+    img: "donat-2.jpeg",
+    price: "6k",
   },
   {
-    title: "Twin Burger",
-    img: "b3.avif",
-    price: "8.00",
+    title: "Paket 2",
+    img: "donat-3.jpeg",
+    price: "12K",
   },
   {
-    title: "Large Burger",
-    img: "b4.avif",
-    price: "10.00",
+    title: "Paket Hampers",
+    img: "donat-4.jpeg",
+    price: "35K",
   },
 ];
 
@@ -152,23 +152,23 @@ const Menu = ({ currentPath }) => {
   const features = [
     {
       icon: <PublicIcon />,
-      title: "Menjangkau 3 Juta+ Talent",
-      description: "Tiga juta kandidat siap bekerja untuk perusahaan Anda",
+      title: "Menjangkau ratusan customer",
+      description: "Ratusan customer yang tertarik dengan bisnis anda",
     },
     {
       icon: <PercentIcon />,
       title: "GRATIS!",
-      description: "Pemasangan lowongan di KitaLulus Gratis! Lowongan Anda juga akan dipromosikan melalui partner media KitaLulus.",
+      description: "Pemasangan iklan bisnis di platform kami gratis.",
     },
     {
       icon: <SupportAgentIcon />,
-      title: "Customer Support Tim KitaLulus",
-      description: "Tim KitaLulus siap memandu Anda dalam pemasangan loker.",
+      title: "Customer Support Tim Brand-In",
+      description: "Tim Brand-In siap memandu Anda dalam pemasangan iklan bisnis.",
     },
     {
       icon: <SupervisorAccountIcon />,
-      title: "Kelola Pelamar dalam 1 Dashboard",
-      description: "Pasang iklan loker & kelola pelamar masuk dengan Dashboard Perusahaan yang mudah digunakan",
+      title: "Proses cepat dan gak ribet",
+      description: "Hanya dengan menginputkan bisnis anda, maka data bisnis anda akan tampil ke dalam aplikasi mobile kami",
     },
   ];
 
@@ -208,7 +208,7 @@ const Menu = ({ currentPath }) => {
               <FeatureCard key={index} icon={feature.icon} title={feature.title} description={feature.description} isMobile={isMobile} />
             ))}
           </div>
-          <button className="btn font-bold">Pasang Loker Gratis!</button>
+          <button className="btn font-bold">Pasang Bisnis Gratis!</button>
         </div>
       )}
     </>

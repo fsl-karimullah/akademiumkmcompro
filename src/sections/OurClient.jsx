@@ -56,8 +56,8 @@ const OurClient = ({ currentPath, reversedClients, Clients }) => {
       ) : (
         <div className="flex flex-col gap-16 items-center justify-center p-10 md:p-0 ">
           <h1 className="text-2xl md:text-4xl font-bold text-center">
-            Kata Mereka Tentang Pasang Loker <br />
-            Gratis di KitaLulus
+            Kata Mereka Tentang Pasang Bisnis <br />
+            Gratis di Brand-in Indonesia
           </h1>
 
           <Slider

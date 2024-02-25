@@ -24,13 +24,13 @@ const FaqItem = ({ number, question, answer }) => (
 const faqData = [
   {
     number: "01",
-    question: "Apakah pasang iklan lowongan pekerjaan di KitaLulus berbayar?",
-    answer: "Saat ini, pasang iklan lowongan pekerjaan di KitaLulus gratis tidak dikenakan biaya administrasi atau biaya token/kredit. Anda dapat memasang iklan sesuai dengan kebutuhan perusahaan Anda.",
+    question: "Apakah pasang iklan lowongan pekerjaan di Brand-In berbayar?",
+    answer: "Saat ini, pemasangan iklan bisnis di dalam aplikasi kami gratis tidak dipungut biaya.",
   },
   {
     number: "02",
-    question: "Apakah pasang iklan lowongan pekerjaan di KitaLulus berbayar?",
-    answer: "Saat ini, pasang iklan lowongan pekerjaan di KitaLulus gratis tidak dikenakan biaya administrasi atau biaya token/kredit. Anda dapat memasang iklan sesuai dengan kebutuhan perusahaan Anda.",
+    question: "Apakah setelah memasang iklan bisnis saya sudah pasti sukses?",
+    answer: "Iklan disini tidak membuat bisnis anda langsung sukses, tetapi anda harus tetap mengikuti perkembangan teknologi untuk memajukan bisnis anda. jangan lupa sertakan sosial media dan branding yang baik.",
   },
 ];
 
