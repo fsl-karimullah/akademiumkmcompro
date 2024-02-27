@@ -1,6 +1,6 @@
 import React from "react";
 
-// const clients = ["Logo1.jpg", "Logo2.jpg"];
+// const clients = ["Logo1.webp", "Logo2.webp"];
 const ClientList = () => {
   const Clients = ["colosseum.webp", "donatnumnum.webp", "glazestore.webp", "L1.webp", "L2.webp"];
 

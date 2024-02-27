@@ -3,9 +3,9 @@ import CustomComponent from "../components/title/Title";
 import ClientListComponent from "../components/client/ClientList";
 
 const services = [
-  { title: "Order dengan Mudah", Desc: "Anda hanya perlu menginstall aplikasi Brand-In", img: "s1.png" },
-  { title: "Cari produk dan jasa dengan mudah", Desc: "Kami bekerjasama dengan berbagai partner bisnis produk dan jasa", img: "s2.png" },
-  { title: "Promosikan bisnis anda", Desc: "Anda bisa mempromosikan bisnis secara gratis melalui platform kami", img: "s3.png" },
+  { title: "Order dengan Mudah", Desc: "Anda hanya perlu menginstall aplikasi Brand-In", img: "s1.webp" },
+  { title: "Cari produk dan jasa dengan mudah", Desc: "Kami bekerjasama dengan berbagai partner bisnis produk dan jasa", img: "s2.webp" },
+  { title: "Promosikan bisnis anda", Desc: "Anda bisa mempromosikan bisnis secara gratis melalui platform kami", img: "s3.webp" },
 ];
 
 const Serve = ({ currentPath, Clients }) => {

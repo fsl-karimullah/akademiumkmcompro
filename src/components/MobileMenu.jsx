@@ -18,7 +18,7 @@ const MobileMenu = ({ currentPath }) => {
   console.log(currentPath);
   return (
     <div className="">
-      {!open ? <img src="open.png" alt="" width={20} height={20} onClick={() => setOpen(true)} /> : <img src="close.png" alt="" width={20} height={20} onClick={() => setOpen(false)} />}
+      {!open ? <img src="open.webp" alt="" width={20} height={20} onClick={() => setOpen(true)} /> : <img src="close.webp" alt="" width={20} height={20} onClick={() => setOpen(false)} />}
       <div
         className={`bg-red-400 text-white absolute left-0 top-20 w-screen h-[calc(100vh-5rem)] flex flex-col gap-8 items-center justify-center text-3xl z-50 transform origin-top-left ${
           open ? "scale-100 transition-transform duration-500" : "scale-0 transition-transform duration-500 pointer-events-none"

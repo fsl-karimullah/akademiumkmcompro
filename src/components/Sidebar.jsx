@@ -2,11 +2,11 @@ import React from "react";
 import TypeOfMenu from "./TypeOfMenu";
 
 const MenuType = [
-  { title: "Burger", type: "burger", img: "burger.jpg" },
-  { title: "Pizza", type: "pizza", img: "pizza.jpg" },
-  { title: "Cupcake", type: "cupcake", img: "cupcake.jpg" },
-  { title: "Ramen", type: "ramen", img: "ramen.jpg" },
-  { title: "Ice Cream", type: "icecream", img: "icecream.jpg" },
+  { title: "Burger", type: "burger", img: "burger.webp" },
+  { title: "Pizza", type: "pizza", img: "pizza.webp" },
+  { title: "Cupcake", type: "cupcake", img: "cupcake.webp" },
+  { title: "Ramen", type: "ramen", img: "ramen.webp" },
+  { title: "Ice Cream", type: "icecream", img: "icecream.webp" },
 ];
 
 const Sidebar = ({ handleMenuClick }) => {

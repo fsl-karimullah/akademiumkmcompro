@@ -9,22 +9,22 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 const burger = [
   {
     title: "Donat Kentang",
-    img: "donat-1.jpeg",
+    img: "donat-1.webp",
     price: "3.5K",
   },
   {
     title: "Paket 1",
-    img: "donat-2.jpeg",
+    img: "donat-2.webp",
     price: "6k",
   },
   {
     title: "Paket 2",
-    img: "donat-3.jpeg",
+    img: "donat-3.webp",
     price: "12K",
   },
   {
     title: "Paket Hampers",
-    img: "donat-4.jpeg",
+    img: "donat-4.webp",
     price: "35K",
   },
 ];
@@ -32,22 +32,22 @@ const burger = [
 const pizza = [
   {
     title: "Italian Pizza",
-    img: "piz1.avif",
+    img: "piz1.webp",
     price: "7.49",
   },
   {
     title: "Sausage Pizza",
-    img: "piz2.avif",
+    img: "piz2.webp",
     price: "6.04",
   },
   {
     title: "Twin Pizza",
-    img: "piz3.avif",
+    img: "piz3.webp",
     price: "8.00",
   },
   {
     title: "Large Pizza",
-    img: "piz4.avif",
+    img: "piz4.webp",
     price: "10.00",
   },
 ];
@@ -55,22 +55,22 @@ const pizza = [
 const cupCake = [
   {
     title: "Italian Cup Cake",
-    img: "cc1.avif",
+    img: "cc1.webp",
     price: "7.49",
   },
   {
     title: "Sausage Cup Cake",
-    img: "cc2.avif",
+    img: "cc2.webp",
     price: "6.04",
   },
   {
     title: "Twin Cup Cake",
-    img: "cc3.avif",
+    img: "cc3.webp",
     price: "8.00",
   },
   {
     title: "Large Cup Cake",
-    img: "cc4.avif",
+    img: "cc4.webp",
     price: "10.00",
   },
 ];
@@ -78,39 +78,39 @@ const cupCake = [
 const ramen = [
   {
     title: "Italian Ramen",
-    img: "r1.avif",
+    img: "r1.webp",
     price: "7.49",
   },
   {
     title: "Sausage Ramen",
-    img: "r2.avif",
+    img: "r2.webp",
     price: "6.04",
   },
   {
     title: "Twin Ramen",
-    img: "r3.avif",
+    img: "r3.webp",
     price: "8.00",
   },
   {
     title: "Large Ramen",
-    img: "r4.avif",
+    img: "r4.webp",
     price: "10.00",
   },
 ];
 const iceCream = [
   {
     title: "Italian Ice Cream",
-    img: "ic1.avif",
+    img: "ic1.webp",
     price: "7.49",
   },
   {
     title: "Sausage Ice Cream",
-    img: "ic2.avif",
+    img: "ic2.webp",
     price: "6.04",
   },
   {
     title: "Twin Ice Cream",
-    img: "ic3.avif",
+    img: "ic3.webp",
     price: "8.00",
   },
 ];
@@ -178,14 +178,7 @@ const Menu = ({ currentPath }) => {
         <div className="flex flex-col bg-red-100 h-[600px] p-2 md:p-10">
           {/* Header */}
           <header className="top-0 left-0 right-0 z-10 m-0 p-0 text-center md:text-left flex flex-col gap-4">
-            <CustomComponent
-              title1="Berapa partner kami"
-              title2="Produk dan Jasa Yang Selalu"
-              title3="Membuat anda jatuh cinta"
-              textColor1="#FF0000" 
-              textColor2="#000000" 
-              alignItems="start"
-            />
+            <CustomComponent title1="Berapa partner kami" title2="Produk dan Jasa Yang Selalu" title3="Membuat anda jatuh cinta" textColor1="#FF0000" textColor2="#000000" alignItems="start" />
           </header>
           {/* Main Content */}
           <div className="flex flex-col md:flex-row mt-6 overflow-y-auto items-center gap-4">
