@@ -7,7 +7,7 @@ const ClientList = () => {
   return (
     <div className="flex flex-nowrap justify-center gap-4">
       {Clients.map((client, index) => (
-        <div key={index} className="w-64">
+        <div key={index} className="w-[200px]">
           <img src={client} alt="" className="w-full" />
         </div>
       ))}
@@ -33,8 +33,14 @@ const ClientListComponent = ({ pageType, clients }) => {
           <h1 className="text-base md:text-xl font-semibold ">
             Kami telah membantu dan dipercayai oleh <span className="text-[var(--themeRed)]">100+ </span> umkm ternama
           </h1>
+          {/* Mobile View */}
+          <div className="text-wrapper-2 flex flex-col items-center justify-center">
+            <ClientList />
+          </div>
+
+          {/* Desktop View */}
           <div className="text-wrapper flex flex-row items-center justify-center">
-            <ClientList clients={clients} />
+            <ClientList />
           </div>
         </div>
       )}
