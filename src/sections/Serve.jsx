@@ -3,8 +3,8 @@ import CustomComponent from "../components/title/Title";
 import ClientListComponent from "../components/client/ClientList";
 
 const services = [
-  { title: "Order dengan Mudah", Desc: "Anda hanya perlu menginstall aplikasi Brand-In", img: "s1.webp" },
-  { title: "Cari produk dan jasa dengan mudah", Desc: "Kami bekerjasama dengan berbagai partner bisnis produk dan jasa", img: "s2.webp" },
+  { title: "Order dengan Mudah", Desc: "Anda hanya perlu menginstall aplikasi Brand-In dan mencari barand atau jasa yang anda butuhkan", img: "s1.webp" },
+  { title: "Cari produk dan jasa dengan mudah", Desc: "Kami bekerjasama dengan berbagai mitra bisnis produk dan jasa", img: "s2.webp" },
   { title: "Promosikan bisnis anda", Desc: "Anda bisa mempromosikan bisnis secara gratis melalui platform kami", img: "s3.webp" },
 ];
 
@@ -21,8 +21,8 @@ const Serve = ({ currentPath, Clients }) => {
             {services.map((service, index) => (
               <div key={index} className={`${index === 1 ? "bg-white" : "bg-red-400 md:bg-white text-white md:text-black"} w-full md:w-1/4 flex flex-col items-center gap-3 py-4 shadow-md`}>
                 <img src={service.img} alt="" className="object-cover w-96 md:w-48" />
-                <h1 className="font-bold text-lg">{service.title}</h1>
-                <span className="font-thin text-sm text-center">{service.Desc}</span>
+                <h1 className="font-bold text-lg mx-4 text-center">{service.title}</h1>
+                <span className="font-thin text-sm text-center mx-4">{service.Desc}</span>
               </div>
             ))}
           </div>

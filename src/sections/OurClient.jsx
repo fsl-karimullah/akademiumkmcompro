@@ -25,7 +25,7 @@ const OurClient = ({ currentPath, reversedClients, Clients }) => {
 
   const testimonials = [
     {
-      content: "Kinerja HR, manajemen, dll sudah baik, dan sudah sangat membantu perusahaan. Untuk saat ini kandidat sangat banyak dan kompeten. Semoga KitaLulus semakin menjaya.",
+      content: "Akhirnya bisnis saya bisa tampil di aplikasi sebagai.",
       name: "Suni Putri",
       position: "HRD PT. Mandiri Andalan Utama",
     },
@@ -64,7 +64,7 @@ const OurClient = ({ currentPath, reversedClients, Clients }) => {
             {...settings}
             style={{
               width: "100%",
-              margin: "center",
+              margin: "center", 
               marginBottom: "100px",
             }}
           >
