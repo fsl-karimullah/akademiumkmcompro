@@ -1,12 +1,14 @@
 import React from "react";
 import TypeOfMenu from "./TypeOfMenu";
 
+const Clients = ["donatnumnum.webp", "colosseum.webp", "glazestore.webp", "L1.webp", "L2.webp"];
+
 const MenuType = [
-  { title: "Burger", type: "burger", img: "burger.webp" },
-  { title: "Pizza", type: "pizza", img: "pizza.webp" },
-  { title: "Cupcake", type: "cupcake", img: "cupcake.webp" },
-  { title: "Ramen", type: "ramen", img: "ramen.webp" },
-  { title: "Ice Cream", type: "icecream", img: "icecream.webp" },
+  { title: "Donat Numnum", type: "Donat Numnum", img: Clients[0] },
+  { title: "Colloseum Furniture", type: "Colloseum Furniture", img: Clients[1] },
+  { title: "Batagor Geulish", type: "Batagor Geulish", img: Clients[2] },
+  { title: "Glaze Store", type: "Glaze Store", img: Clients[3] },
+  { title: "Beli Hp My Id", type: "Beli Hp My Id", img: Clients[4] },
 ];
 
 const Sidebar = ({ handleMenuClick }) => {

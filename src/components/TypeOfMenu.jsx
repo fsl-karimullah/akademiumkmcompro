@@ -6,7 +6,7 @@ const TypeOfMenu = ({ MenuType, handleClick }) => {
 
   return (
     <div>
-      <ul className={`flex flex-row md:flex-col gap-6 md:gap-2 p-2 md:p-0 rounded-xl bg-yellow-400  md:bg-transparent `}>
+      <ul className={`flex flex-row md:flex-col gap-6 md:gap-10 p-2 md:p-0 rounded-xl bg-yellow-400  md:bg-transparent `}>
         {MenuType.map((menu, index) => (
           <li
             key={index}
@@ -19,7 +19,7 @@ const TypeOfMenu = ({ MenuType, handleClick }) => {
               setTextMenu(menu.type);
             }}
           >
-            <button className={`flex items-center md:gap-2`}>
+            <button className={`flex items-center md:gap-1`}>
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center overflow-hidden shadow-2xl md:shadow-none">
                 <img src={`${menu.img}`} alt="" className="w-8 rounded-full object-cover" />
               </div>

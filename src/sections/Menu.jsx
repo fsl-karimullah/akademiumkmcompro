@@ -6,7 +6,8 @@ import PublicIcon from "@mui/icons-material/Public";
 import PercentIcon from "@mui/icons-material/Percent";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-const burger = [
+
+const DonatNumnum = [
   {
     title: "Donat Kentang",
     img: "donat-1.webp",
@@ -29,94 +30,59 @@ const burger = [
   },
 ];
 
-const pizza = [
+const colloseumFurniture = [
   {
-    title: "Italian Pizza",
-    img: "piz1.webp",
+    title: "Mossy",
+    img: "cf0.webp",
     price: "7.49",
   },
   {
-    title: "Sausage Pizza",
-    img: "piz2.webp",
+    title: "Footy",
+    img: "cf1.webp",
     price: "6.04",
-  },
-  {
-    title: "Twin Pizza",
-    img: "piz3.webp",
-    price: "8.00",
-  },
-  {
-    title: "Large Pizza",
-    img: "piz4.webp",
-    price: "10.00",
   },
 ];
 
-const cupCake = [
+const batagorGeulish = [
   {
-    title: "Italian Cup Cake",
-    img: "cc1.webp",
+    title: "Batagor Geulish",
+    img: "bg0.webp",
     price: "7.49",
   },
   {
-    title: "Sausage Cup Cake",
-    img: "cc2.webp",
+    title: "Batagor Geulish Sausage Peanut",
+    img: "bg1.webp",
     price: "6.04",
-  },
-  {
-    title: "Twin Cup Cake",
-    img: "cc3.webp",
-    price: "8.00",
-  },
-  {
-    title: "Large Cup Cake",
-    img: "cc4.webp",
-    price: "10.00",
   },
 ];
 
-const ramen = [
+const glazeStore = [
   {
-    title: "Italian Ramen",
-    img: "r1.webp",
+    title: "Glaze Store",
+    img: "gs0.webp",
     price: "7.49",
   },
   {
-    title: "Sausage Ramen",
-    img: "r2.webp",
+    title: "Glaze Store",
+    img: "gs1.webp",
     price: "6.04",
-  },
-  {
-    title: "Twin Ramen",
-    img: "r3.webp",
-    price: "8.00",
-  },
-  {
-    title: "Large Ramen",
-    img: "r4.webp",
-    price: "10.00",
   },
 ];
-const iceCream = [
+const beliHpMyId = [
   {
-    title: "Italian Ice Cream",
-    img: "ic1.webp",
+    title: "Hp Murah",
+    img: "hp0.webp",
     price: "7.49",
   },
   {
-    title: "Sausage Ice Cream",
-    img: "ic2.webp",
+    title: "Hp Murah",
+    img: "hp1.webp",
     price: "6.04",
-  },
-  {
-    title: "Twin Ice Cream",
-    img: "ic3.webp",
-    price: "8.00",
   },
 ];
 const Menu = ({ currentPath }) => {
   console.log(currentPath);
-  const [selectedMenu, setSelectedMenu] = useState("burger");
+  const [selectedMenu, setSelectedMenu] = useState("Donat Numnum");
   const handleMenuClick = (menu) => {
     setSelectedMenu(menu);
   };
@@ -186,11 +152,11 @@ const Menu = ({ currentPath }) => {
               <Sidebar handleMenuClick={handleMenuClick} />
             </div>
             <div className="flex flex-col w-10/12 overflow-y-auto items-center rounded-xl p-4">
-              <CardMenu news={selectedMenu === "burger" ? burger : []} />
-              <CardMenu news={selectedMenu === "pizza" ? pizza : []} />
-              <CardMenu news={selectedMenu === "cupcake" ? cupCake : []} />
-              <CardMenu news={selectedMenu === "ramen" ? ramen : []} />
-              <CardMenu news={selectedMenu === "icecream" ? iceCream : []} />
+              <CardMenu news={selectedMenu === "Donat Numnum" ? DonatNumnum : []} />
+              <CardMenu news={selectedMenu === "Colloseum Furniture" ? colloseumFurniture : []} />
+              <CardMenu news={selectedMenu === "Batagor Geulish" ? batagorGeulish : []} />
+              <CardMenu news={selectedMenu === "Glaze Store" ? glazeStore : []} />
+              <CardMenu news={selectedMenu === "Beli Hp My Id" ? beliHpMyId : []} />
             </div>
           </div>
         </div>
