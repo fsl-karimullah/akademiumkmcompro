@@ -144,7 +144,7 @@ const Menu = ({ currentPath }) => {
         <div className="flex flex-col bg-red-100 h-[600px] p-2 md:p-10">
           {/* Header */}
           <header className="top-0 left-0 right-0 z-10 m-0 p-0 text-center md:text-left flex flex-col gap-4">
-            <CustomComponent title1="Berapa partner kami" title2="Produk dan Jasa Yang Selalu" title3="Membuat anda jatuh cinta" textColor1="#FF0000" textColor2="#000000" alignItems="start" />
+            <CustomComponent title1="beberapa mitra kami" title2="Produk dan Jasa Yang Selalu" title3="Membuat anda jatuh cinta" textColor1="#FF0000" textColor2="#000000" alignItems="start" />
           </header>
           {/* Main Content */}
           <div className="flex flex-col md:flex-row mt-6 overflow-y-auto items-center gap-4">
@@ -167,7 +167,7 @@ const Menu = ({ currentPath }) => {
               <FeatureCard key={index} icon={feature.icon} title={feature.title} description={feature.description} isMobile={isMobile} />
             ))}
           </div>
-          <button className="btn font-bold">Pasang Bisnis Gratis!</button>
+          <a target="blank" href="http://ukm.sixeyestech.com/admin/login" className="btn font-bold">Pasang Bisnis Gratis!</a>
         </div>
       )}
     </>

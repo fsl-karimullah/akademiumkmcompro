@@ -25,19 +25,19 @@ const OurClient = ({ currentPath, reversedClients, Clients }) => {
 
   const testimonials = [
     {
-      content: "Akhirnya bisnis saya bisa tampil di aplikasi sebagai.",
-      name: "Suni Putri",
-      position: "HRD PT. Mandiri Andalan Utama",
+      content: "Akhirnya bisnis saya bisa tampil di aplikasi sebagai branding baru yang simpel.",
+      name: "Faruk Maulana",
+      position: "CO Founder Sixeyes Technologies",
     },
     {
-      content: "Kinerja HR, manajemen, dll sudah baik, dan sudah sangat membantu perusahaan. Untuk saat ini kandidat sangat banyak dan kompeten. Semoga KitaLulus semakin menjaya.",
-      name: "Suni Putri",
-      position: "HRD PT. Mandiri Andalan Utama",
+      content: "Alhamdulillah sixeyes bisa mendapatkan client pertama dengan mengiklankan di aplikasi brand-in.",
+      name: "Amir Faisal K",
+      position: "Co Founder Sixeyes Technologies",
     },
     {
-      content: "Kinerja HR, manajemen, dll sudah baik, dan sudah sangat membantu perusahaan. Untuk saat ini kandidat sangat banyak dan kompeten. Semoga KitaLulus semakin menjaya.",
-      name: "Suni Putri",
-      position: "HRD PT. Mandiri Andalan Utama",
+      content: "Brand-in sangat membantu para pelaku UMKM termasuk usaha saya dalam memasarkan donat NumNum, dan yang lebih lebih terbantukan dimana pemasarannya tidak dipungut biaya sepersen pun alias GRATIS!!! Terima Kasih Brand-in atas kerjasama dan bantuannya sukses terus ya.",
+      name: "Lia Indah Permatasari",
+      position: "Owner Donat Num Num",
     },
   ];
 

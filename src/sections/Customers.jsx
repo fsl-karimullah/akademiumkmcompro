@@ -112,7 +112,7 @@ const Customers = ({ currentPath }) => {
                   <span>Kelola bisnis anda dan tunggu customer menghubungi atau mengunjungi tempat anda</span>
                 </li>
               </ul>
-              <button className="btn font-bold">Pasang Bisnis Gratis!</button>
+              <a href="http://ukm.sixeyestech.com/admin/login" target="blank" className="btn font-bold">Pasang Bisnis Gratis!</a>
             </div>
           </div>
         </div>

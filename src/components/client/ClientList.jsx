@@ -23,7 +23,7 @@ const ClientListComponent = ({ pageType, clients }) => {
           <div className="text-[18px] font-semibold text-black text-center gap-4">
             <h1>Telah dipercaya membantu</h1>
             <h1>
-              <span className="text-[var(--themeRed)]">100 ribu+ </span>perusahaan ternama
+              <span className="text-[var(--themeRed)]">Beberapa </span>UMKM di Indonesia
             </h1>
           </div>
           <ClientList clients={clients} reversed />

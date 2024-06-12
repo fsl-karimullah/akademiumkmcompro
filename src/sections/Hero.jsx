@@ -24,9 +24,9 @@ const Hero = ({ currentPath }) => {
             <span className="md:w-[70%] text-[var(--gray)] font-semibold text-sm md:text-lg">
               Misi kami adalah memberikan jalan kepada pebisnis dan pengguna untuk saling berinteraksi dan sebagai bentuk dukungan kami kepada produk lokal indonesia
             </span>
-            <div>
+            {/* <div>
               <button className="btn btnCss">Download Aplikasi</button>
-            </div>
+            </div> */}
             {/* <div className="customer flex flex-row gap-2 items-center relative h-24 md:h-36 md:w-auto w-80 shadow-2xl p-2">
               <div className="containercustomer flex flex-row items-center justify-center">
                 <div className="containerImage flex flex-row items-center justify-center relative ">
@@ -89,8 +89,8 @@ const Hero = ({ currentPath }) => {
               <h1 className="text-[var(--themeRed)]">GRATIS!</h1>
             </div>
             <span className="md:text-xl font-light">Pasang Bisnis Anda Di Aplikasi Kami Gratis!</span>
-            <a target="blank" href="https://ukm.sixeyestech.com/admin/login" className="btn font-bold">
-              Pasang Bisnis Gratis
+            <a target="blank" href="https://www.youtube.com/watch?v=25RD3_TE33s" className="btn font-bold">
+              Lihat Tutorial Upload Bisnis Disini
             </a>
           </div>
         </div>
