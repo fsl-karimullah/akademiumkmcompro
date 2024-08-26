@@ -7,76 +7,42 @@ import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-const menu = ["About Us", "Services", "Menu", "Contact"];
+const menu = [
+  { name: "Home", path: "/" },
+  { name: "Branding UMKM", path: "/bantu-branding" },
+  { name: "Event dan Webinar", path: "/webinars" },
+  { name: "Promosi Bisnis", path: "/loginbisnis" },
+  { name: "Founder Playground", path: "/landing" },
+  { name: "Contact", path: "https://wa.me/6285281252199", external: true }
+];
 
-const Navbar = ({ currentPath }) => {
-  console.log(currentPath);
+const Navbar = () => {
+  const location = useLocation();
+
   return (
-    <div>
+    <div className="border-b-2 border-gray-200">
       <div className="h-14 m-5">
         <div className="flex flex-row items-center justify-between ">
           <Logo />
-          {/* <div className="hidden md:flex flex-row items-center gap-2 cursor-pointer">
+          <div className="hidden md:flex flex-row items-center gap-6 cursor-pointer">
             {menu.map((item, i) =>
-              item === "Services" || item === "Menu" ? (
-                <div key={i} className="gap-0 flex flex-row items-center">
-                  <a className="block text-decoration-none relative text-black transition-colors duration-300 ease-in-out hover:text-[var(--themeRed)]">{item}</a>
-                  <KeyboardArrowDownOutlinedIcon style={{ color: "red" }} />
-                </div>
-              ) : (
-                <div>
-                  <a key={i} className="block text-decoration-none relative text-black transition-colors duration-300 ease-in-out hover:text-[var(--themeRed)]">
-                    {item}
-                  </a>
-                </div>
-              )
-            )}
-          </div> */}
-          <div>
-            {currentPath === "/" ? (
-              <div className="hidden md:flex flex-row items-center gap-2">
-                {/* <SearchIcon style={{ cursor: "pointer" }} />
-                <ShoppingBag /> */}
-                <Link
-                  to="/loginbisnis"
-                  className="btnSec bisnis flex items-center gap-[5px] transition-colors duration-300 ease-in-out hover:text-[var(--themeRed)] hover:bg-[var(--themeBlack)]"
-                >
-                  <LoginIcon /> <span>Area Bisnis</span>
-                </Link>
-              </div>
-            ) : (
-              <div className="flex flex-row items-center gap-2">
-               <Link
-                  to="/videoedukasi"
-                  className="btnSec bisnis flex items-center gap-[5px] transition-colors duration-300 ease-in-out hover:text-[var(--themeRed)] hover:bg-[var(--themeBlack)]"
-                >
-                  <LoginIcon /> <span>Video Edukasi</span>
-                </Link>
-                <button className="btn hidden md:flex flex-row items-center gap-2">
-                  <LocalPhoneIcon style={{ color: "white" }} />
-                  <a
-                    href="https://wa.me/6285281252199"
-                    target="blank"
-                    className="text-white"
-                  >
-                    Konsultasi
-                  </a>
-                </button>
-
-                <div className="btn hidden md:flex flex-row items-center gap-2">
-                  <Link to="/" className="text-white flex items-center gap-1">
-                    <span>Kembali</span>
-                    <ExitToAppIcon style={{ color: "white" }} />
-                  </Link>
-                </div>
-              </div>
+              <a
+                key={i}
+                href={item.path}
+                target={item.external ? "_blank" : "_self"}
+                rel={item.external ? "noopener noreferrer" : ""}
+                className={`block text-decoration-none relative text-black transition-colors duration-300 ease-in-out hover:text-[var(--themeRed)] ${location.pathname === item.path ? 'border-b-2 border-[var(--themeRed)]' : ''
+                  }`}
+              >
+                {item.name}
+              </a>
             )}
           </div>
-          {/* mobile menu */}
+
           <div className="md:hidden">
-            <MobileMenu currentPath={currentPath} />
+            <MobileMenu currentPath={location.pathname} />
           </div>
         </div>
       </div>

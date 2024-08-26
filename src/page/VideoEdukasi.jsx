@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import ListIcon from '@mui/icons-material/List';
+import { endpoint } from '../endpoint/api';
 
 const VideoEdukasi = () => {
   const [videos, setVideos] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVideos = async () => {
-      try {
-        const response = await fetch('https://ukm.sixeyestech.com/api/education');
+      try { 
+        const token = localStorage.getItem('userToken');
+       
+        const response = await fetch(endpoint.getEducation, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
+ 
         const data = await response.json();
+        console.log(data.data);
         setVideos(data.data);
       } catch (error) {
         setError(error.message);
@@ -23,6 +33,10 @@ const VideoEdukasi = () => {
 
     fetchVideos();
   }, []);
+
+  const handleCardClick = (id) => {
+    navigate(`/videoedukasidetail/${id}`);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-800">
@@ -34,10 +48,10 @@ const VideoEdukasi = () => {
               <HomeIcon />
               <span>Home</span>
             </Link>
-            <Link to="/videos" className="flex items-center space-x-1">
+            {/* <Link to="/videos" className="flex items-center space-x-1">
               <ListIcon />
               <span>List Video</span>
-            </Link>
+            </Link> */}
           </nav>
         </div>
       </header>
@@ -57,7 +71,7 @@ const VideoEdukasi = () => {
             <h3 className="text-2xl font-bold mb-4">Video Terbaru</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {videos.map(video => (
-                <div key={video.id} className="bg-gray-100 p-4 rounded shadow">
+                <div key={video.id} className="bg-gray-100 p-4 rounded shadow cursor-pointer" onClick={() => handleCardClick(video.id)}>
                   <img src={video.thumbnail} alt={video.title} className="w-full h-48 object-cover rounded mb-2" />
                   <h4 className="text-xl font-bold">{video.title}</h4>
                   <p className="text-gray-700">{video.description}</p>

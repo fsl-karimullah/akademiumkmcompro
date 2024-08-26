@@ -46,7 +46,7 @@ const DownloadApp = ({ currentPath }) => {
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-0 ">
               <div className=" flex flex-col gap-4 md:gap-6 text-center md:text-left md:w-4/5">
                 <CustomComponent title1="Download app" title2="Get Started With" title3="Brand-in Indonesia Today" textColor1="#FF0000" textColor2="#000000" alignItems="start" />
-                <p className="text-[var(--gray)] text-sm md:text-3xl">Aplikasi akan tersedia di play store pada tanggal 1 april! sebelum rilis, YUK Upload bisnis dulu ke Brand-in !</p>
+                <p className="text-[var(--gray)] text-sm md:text-3xl">Aplikasi yang digunakan untuk membantu promosi umkm !</p>
                 <div>
                 <a target="blank" className="btn" href="http://ukm.sixeyestech.com/admin/login">Klik disini untuk upload bisnis</a>
                 </div>

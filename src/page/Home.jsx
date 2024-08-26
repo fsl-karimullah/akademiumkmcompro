@@ -10,13 +10,13 @@ import OurClient from "../sections/OurClient";
 import { useLocation } from "react-router-dom";
 
 const Home = ({ currentPath }) => {
-  console.log(currentPath);
+  console.log('asdasd',currentPath); 
   return (
     <main className="flex flex-col justify-around max-w-screen-xl mx-auto">
       <Navbar currentPath={currentPath} />
       <section className="p-4">
         <Hero currentPath={currentPath} />
-      </section>
+      </section> 
       <section className="p-4">
         <Serve currentPath={currentPath} />
       </section>

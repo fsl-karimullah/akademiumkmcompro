@@ -1,44 +1,115 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { endpoint } from '../endpoint/api';
+import { Container, Box, Typography, CircularProgress, Alert, Card, CardContent } from '@mui/material';
 
 const VideoEdukasiDetail = () => {
-  const videos = [
-    { id: 1, title: "Cara Memulai Bisnis", thumbnail: "https://via.placeholder.com/150" },
-    { id: 2, title: "Strategi Pemasaran Digital", thumbnail: "https://via.placeholder.com/150" },
-    { id: 3, title: "Mengelola Keuangan UMKM", thumbnail: "https://via.placeholder.com/150" },
-    // Add more dummy video data as needed
-  ];
+  const { id } = useParams();
+  const [video, setVideo] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchVideoDetail = async () => {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await fetch(`${endpoint.getEducationById(id)}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setVideo(data.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchVideoDetail();
+  }, [id]);
+
+  const getGoogleDriveEmbedUrl = (url) => {
+    const fileIdMatch = url.match(/\/d\/(.+?)\//);
+    if (fileIdMatch && fileIdMatch[1]) {
+      return `https://drive.google.com/file/d/${fileIdMatch[1]}/preview`;
+    }
+    return null;
+  };
+
+  if (error) {
+    return (
+      <Container>
+        <Alert severity="error" className="text-center">
+          Error: {error}
+        </Alert>
+      </Container>
+    );
+  }
+
+  if (!video) {
+    return (
+      <Container>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
+          <CircularProgress />
+        </Box>
+      </Container>
+    );
+  }
+
+  const embedUrl = getGoogleDriveEmbedUrl(video.gdrive_link);
 
   return (
-    <div className="bg-white text-gray-800">
-      <header className="bg-blue-500 text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Daftar Video Edukasi UMKM</h1>
-          <nav>
-            <Link to="/" className="px-4">Home</Link>
-            <Link to="/videos" className="px-4">List Video</Link>
-          </nav>
-        </div>
-      </header>
-      
-      <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-4">Semua Video Edukasi</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {videos.map(video => (
-            <div key={video.id} className="bg-gray-100 p-4 rounded shadow">
-              <img src={video.thumbnail} alt={video.title} className="w-full h-48 object-cover rounded mb-2" />
-              <h4 className="text-xl font-bold">{video.title}</h4>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      <footer className="bg-gray-800 text-white p-4 mt-8">
-        <div className="container mx-auto text-center">
-          &copy; 2024 Video Edukasi UMKM. All rights reserved.
-        </div>
-      </footer>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#f5f5f5', 
+        paddingTop: '40px',
+      }}
+    >
+      <Container maxWidth="md">
+        <Card sx={{ boxShadow: '0 4px 8px rgba(0,0,0,0.2)' }}>
+          <CardContent>
+            <Typography variant="h4" component="h1" gutterBottom>
+              {video.title}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary" paragraph>
+              {video.description}
+            </Typography>
+            <Box sx={{ mb: 4, textAlign: 'center' }}>
+              {embedUrl ? (
+                <iframe
+                  src={embedUrl}
+                  width="100%"
+                  height="480"
+                  allow="autoplay"
+                  title={video.title}
+                  style={{ borderRadius: '8px' }}
+                ></iframe>
+              ) : (
+                <Alert severity="error" className="text-center">
+                  Terjadi kesalahan silahkan hubungi admin
+                </Alert>
+              )}
+            </Box>
+            <Typography variant="body1" color="textPrimary" paragraph>
+              <div dangerouslySetInnerHTML={{ __html: video.content }} />
+            </Typography>
+            <Box mt={2} textAlign="right">
+              <Typography variant="caption" color="textSecondary">
+                Dibuat pada: {new Date(video.created_at).toLocaleDateString('id-ID')}
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      </Container>
+    </Box>
   );
 };
 
