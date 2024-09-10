@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import {
   Box,
   Container,
@@ -28,9 +28,27 @@ import sosmedImage from "../../public/mahal.png";
 import brandingImg1 from "../../public/branding.png";
 import brandingImg2 from "../../public/rebranding-bro.png";
 import Navbar from "../components/Navbar";
+import axios from "axios";
+import { endpoint } from "../endpoint/api";
 
 const BantuBranding = ({ currentPath }) => {
   const navigate = useNavigate();
+  const [templates, setTemplates] = useState([]);
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const response = await axios.get(endpoint.getPackage);
+        setTemplates(response.data.data);
+        console.log(response);
+        
+      } catch (error) {
+        console.error("Error fetching templates:", error);
+      }
+    };
+
+    fetchTemplates();
+  }, []);
 
   const handleReturnHome = () => {
     const message = encodeURIComponent(`Halo kak, saya ingin konsultasi`);
@@ -463,17 +481,19 @@ const BantuBranding = ({ currentPath }) => {
                           </ListItem>
                         ))}
                       </List>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          backgroundColor: "var(--themeRed)",
-                          mt: 2,
-                          borderRadius: "8px",
-                        }}
-                        onClick={() => handleWhatsAppClick(card.packetNumber)}
-                      >
-                        Hubungi via WhatsApp
-                      </Button>
+                      <div className="flex justify-center">
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "var(--themeRed)",
+                            mt: 2,
+                            borderRadius: "8px",
+                          }}
+                          onClick={() => handleWhatsAppClick(card.packetNumber)}
+                        >
+                          Hubungi via WhatsApp
+                        </Button>
+                      </div>
                     </CardContent>
                   </CardActionArea>
                 </Card>
@@ -482,149 +502,177 @@ const BantuBranding = ({ currentPath }) => {
           </Grid>
         </Container>
       </Box>
-      <Box sx={{ mt: 8 }}>
-        <Typography
-          variant="h3"
-          component="h2"
-          gutterBottom
-          sx={{
-            textAlign: "center",
-            fontWeight: "bold",
-            marginBottom: "1rem",
-            animation: "fadeIn 1s ease-in-out",
-          }}
-        >
-          Paket Branding Website
-        </Typography>
-        <Typography
-          variant="body1"
-          component="p"
-          gutterBottom
-          sx={{
-            textAlign: "center",
-            fontSize: "1.25rem",
-            marginBottom: "2rem",
-            animation: "fadeIn 1.5s ease-in-out",
-          }}
-        >
-          Pilih Template Website yang anda inginkan.
-        </Typography>
-        <Typography
-          variant="body1"
-          component="p"
-          gutterBottom
-          sx={{
-            textAlign: "center",
-            fontSize: "1.25rem",
-            marginBottom: "2rem",
-            animation: "fadeIn 1.5s ease-in-out",
-            color: "red",
-          }}
-        >
-          Gunakan Kode Voucher "BRANDINMERDEKA" Untuk Mendapatkan Harga Spesial
-          500.000 Termurah se indonesia!
-        </Typography>
-        <Grid container spacing={4}>
-          {[
-            {
-              title: "Simple Company Profile Jasa",
-              desc: "Website company profile simpel cocok untuk berbagai macam bisnis",
-              imgSrc:
-                "https://raw.githubusercontent.com/fsl-karimullah/my-img-source/main/website-1.png",
-              url: "https://company-v2.vercel.app",
-            },
-            {
-              title: "Simple Company Profile Manufaktur Tech",
-              desc: "Website company profile simpel cocok untuk bisnis manufaktur",
-              imgSrc:
-                "https://raw.githubusercontent.com/fsl-karimullah/my-img-source/main/website-2.png",
-              url: "https://fsl-karimullah.github.io/Company-Tech/",
-            },
-            {
-              title: "Simple Portofolio",
-              desc: "Website portofolio yang cocok untuk perusahaan perorangan",
-              imgSrc:
-                "https://raw.githubusercontent.com/fsl-karimullah/my-img-source/main/website-3.png",
-              url: "https://fsl-karimullah.github.io/porto/",
-            },
-          ].map((template, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Card
-                sx={{
-                  borderRadius: "16px",
-                  boxShadow: "0 0 15px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                <CardActionArea>
-                  <CardContent>
-                    <img
-                      style={{
-                        width: "100%",
-                        height: 200,
-                        objectFit: "cover",
-                        borderRadius: "8px",
-                        marginBottom: "16px",
+      <Box sx={{ mt: 8, mx: 3 }}>
+      <Typography
+        variant="h3"
+        component="h2"
+        gutterBottom
+        sx={{
+          textAlign: "center",
+          fontWeight: "bold",
+          marginBottom: "1rem",
+          animation: "fadeIn 1s ease-in-out",
+        }}
+      >
+        Paket Branding Website
+      </Typography>
+      <Typography
+        variant="body1"
+        component="p"
+        gutterBottom
+        sx={{
+          textAlign: "center",
+          fontSize: "1.25rem",
+          marginBottom: "2rem",
+          animation: "fadeIn 1.5s ease-in-out",
+        }}
+      >
+        Pilih Template Website yang anda inginkan.
+      </Typography>
+      <Typography
+        variant="body1"
+        component="p"
+        gutterBottom
+        sx={{
+          textAlign: "center",
+          fontSize: "1.25rem",
+          marginBottom: "2rem",
+          animation: "fadeIn 1.5s ease-in-out",
+          color: "red",
+        }}
+      >
+        Gunakan Kode Voucher "BRANDINMERDEKA" Untuk Mendapatkan Harga Spesial
+        500.000 Termurah se indonesia!
+      </Typography>
+      <Grid container spacing={4}>
+        {templates.slice(0, 3).map((template, index) => (
+          <Grid item xs={12} md={4} key={index}>
+            <Card
+              sx={{
+                borderRadius: "16px",
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
+                },
+              }}
+            >
+              <CardActionArea>
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "100%",
+                      height: 200,
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                      marginBottom: "16px",
+                    }}
+                    alt={`Thumbnail for ${template.name}`}
+                    src={template.thumbnail}
+                  />
+                  <Typography
+                    variant="h5"
+                    component="h3"
+                    gutterBottom
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {template.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    component="p"
+                    sx={{
+                      flexGrow: 1,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    {template.description}
+                  </Typography>
+                  <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "var(--themeRed)",
+                        marginRight: 1,
+                        minWidth: 100,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        "&:hover": {
+                          backgroundColor: "#d32f2f",
+                        },
                       }}
-                      alt={`Thumbnail for ${template.title}`}
-                      src={template.imgSrc}
-                    />
-
-                    <Typography variant="h5" component="h3" gutterBottom>
-                      {template.title}
-                    </Typography>
-                    <Typography variant="body1" component="p" gutterBottom>
-                      {template.desc}
-                    </Typography>
-                    <Box
-                      sx={{ display: "flex", justifyContent: "center", mt: 2 }}
+                      onClick={() => handleWhatsAppClick(template.name)}
                     >
-                      <Button
-                        variant="contained"
+                      <ShoppingCart
                         sx={{
-                          backgroundColor: "var(--themeRed)",
-                          marginRight: 1,
-                          minWidth: 50,
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
+                          fontSize: { xs: 20, md: 20 },
+                          color: "white",
                         }}
-                        onClick={() =>
-                          handleWhatsAppClickWebsite(template.title)
-                        }
-                      >
-                        <ShoppingCart
-                          sx={{
-                            fontSize: { xs: 20, md: 20 },
-                            color: "white",
-                          }}
-                        />
-                      </Button>
-                      <Button
-                        variant="contained"
+                      />
+                      &nbsp; 
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "var(--themeBlack)",
+                        minWidth: 100,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        "&:hover": {
+                          backgroundColor: "#333",
+                        },
+                      }}
+                      onClick={() => window.open(template.url_preview, "_blank")}
+                    >
+                      <Visibility
                         sx={{
-                          backgroundColor: "var(--themeBlack)",
-                          minWidth: 50,
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
+                          fontSize: { xs: 20, md: 20 },
+                          color: "white",
                         }}
-                        onClick={() => window.open(template.url, "_blank")}
-                      >
-                        <Visibility
-                          sx={{
-                            fontSize: { xs: 20, md: 20 },
-                            color: "white",
-                          }}
-                        />
-                      </Button>
-                    </Box>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                      />
+                      &nbsp; 
+                    </Button>
+                  </Box>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      <Box sx={{ textAlign: "center", mt: 4, mb:4 }}>
+        <Button
+          variant="outlined"
+          sx={{
+            padding: "10px 30px",
+            fontSize: "1rem",
+            color: "var(--themeBlack)",
+            borderColor: "var(--themeBlack)",
+            "&:hover": {
+              backgroundColor: "var(--themeBlack)",
+              color: "white",
+            },
+          }}
+          onClick={() => window.open("/list-templates", "_blank")}
+        >
+          Lihat Semua Template
+        </Button>
       </Box>
+    </Box>
+
       <Box
         sx={{
           minHeight: "100vh",

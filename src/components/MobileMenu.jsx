@@ -10,7 +10,9 @@ import { Link } from "react-router-dom";
 const links = [
   { name: "Home", path: "/" },
   { name: "Branding UMKM", path: "/bantu-branding" },
+  { name: "Event dan Webinar", path: "/webinars" },
   { name: "Promosi Bisnis", path: "/loginbisnis" },
+  { name: "Konsultasi Bisnis", path: "/konsultasi" },
   { name: "Founder Playground", path: "/landing" },
   { name: "Contact", path: "https://wa.me/6285281252199", external: true }
 ];
@@ -54,7 +56,7 @@ const MobileMenu = ({ currentPath }) => {
               target={item.external ? "_blank" : "_self"}
               rel={item.external ? "noopener noreferrer" : ""}
             >
-              {item.name} {item.name === "Promosi Bisnis" || item.name === "Founder Playground" ? <KeyboardArrowDownOutlinedIcon style={{ color: "white" }} /> : null}
+              {item.name} 
             </Link>
           ))}
         {currentPath === "/" ? (

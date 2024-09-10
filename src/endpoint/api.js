@@ -11,6 +11,8 @@ export const endpoint = {
   getProfile: `${prod_url}/api/me`,
   getEducation: `${prod_url}/api/education`,
   getWebinars: `${prod_url}/api/webinars`,
+  getPackage: `${prod_url}/api/packages`,
+  getMentor: `${prod_url}/api/mentors`,
   getWebinarsById:(id) => `${prod_url}/api/webinars/${id}`,
   getEducationById:(id) => `${prod_url}/api/education/${id}`,
   searchShop: (lat, lng, value) => `${prod_url}/api/shops?q=${value}&lat=${lat}&lng=${lng}`,

@@ -17,6 +17,7 @@ import UnderConstructionScreen from './page/Construction';
 import BantuBranding from './page/BantuBranding';
 import WebinarsPage from './page/WebinarsPage';
 import WebinarDetail from './page/WebinarDetail';
+import ListTemplate from './page/ListTemplate';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<Home currentPath={currentPath} />} />
       <Route path="/webinars" element={<WebinarsPage currentPath={currentPath} />} />
+      <Route path="/list-templates" element={<ListTemplate currentPath={currentPath} />} />
       <Route path="/webinars/:id" element={<WebinarDetail currentPath={currentPath} />} />
       <Route path="/bantu-branding" element={<BantuBranding currentPath={currentPath} />} />
       <Route path="/coming-soon" element={<UnderConstructionScreen currentPath={currentPath} />} />
@@ -59,7 +61,7 @@ function AppContent() {
       <Route path="/forgot-password" element={<ForgotPassword currentPath={currentPath} />} />
       <Route path="/forgot-password-success" element={<ForgotPasswordSuccess currentPath={currentPath} />} />
       <Route path="/landing" element={isAuthenticated ? <LandingPage  currentPath={currentPath}/> : <Navigate to="/login" />} />
-      <Route path="/konsultasi" element={isAuthenticated ? <Consulting currentPath={currentPath} /> : <Navigate to="/login" />} />
+      <Route path="/konsultasi" element={<Consulting currentPath={currentPath} />} />
       <Route path="/pendanaan" element={isAuthenticated ? <Funding currentPath={currentPath} /> : <Navigate to="/login" />} />
     </Routes>
   );

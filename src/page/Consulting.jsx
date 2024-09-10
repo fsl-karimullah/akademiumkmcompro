@@ -1,104 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Tooltip } from "react-tooltip";
+import { endpoint } from "../endpoint/api";
+import Navbar from "../components/Navbar";
 
-const mentors = [
-  {
-    id: 1,
-    name: "Miftahurrozak",
-    jabatan: "Digital Marketing Specialist (Meta Ads, Google Ads)",
-    currentPosition: "Digital Marketing Specialist",
-    whatsapp: "+6285281252199",
-    socialMedia: "Senin Sd Jumat Jam 19.00 - 21.00",
-    photo:
-      "https://github.com/fsl-karimullah/my-img-source/blob/main/mifta.jpeg?raw=true",
-    available: true,
-    googleFormLink: "https://forms.gle/v8t9tGLxRTo9mwiU9",
-  },
-  {
-    id: 2,
-    name: "Mohammad Al Katiri",
-    jabatan: "Digital Marketing Specialist",
-    currentPosition: "Digital Marketing Specialist (Meta Ads, Google Ads)",
-    whatsapp: "+6285281252199",
-    socialMedia: "Senin Sd Jumat Jam 20.00 - 22.00",
-    photo:
-      "https://github.com/fsl-karimullah/my-img-source/blob/main/mohammad.jpeg?raw=true",
-    available: true,
-    googleFormLink: "https://forms.gle/v8t9tGLxRTo9mwiU9",
-  },
-  {
-    id: 3,
-    name: "Mihran Mubarak",
-    jabatan: "Business Strategist",
-    currentPosition: "Indiepreneur at Konfeti & Co-Founder Naco",
-    whatsapp: "+6285281252199",
-    socialMedia: "Senin Sd Minggu Jam 20.00 - 22.00",
-    photo:
-      "https://github.com/fsl-karimullah/my-img-source/blob/main/mihran.jpeg?raw=true",
-    available: true,
-    googleFormLink: "https://forms.gle/v8t9tGLxRTo9mwiU9",
-  },
-];
-
-const Consulting = () => {
+const Consulting = ({currentPath}) => {
+  const [mentors, setMentors] = useState([]);
   const [selectedMentor, setSelectedMentor] = useState(null);
   const [showTerms, setShowTerms] = useState(false);
 
+  useEffect(() => {
+    const fetchMentors = async () => {
+      try {
+        const response = await axios.get(endpoint.getMentor);
+        setMentors(response.data.data);
+      } catch (error) {
+        console.error("Error fetching mentor data", error);
+      }
+    };
+
+    fetchMentors();
+  }, []);
+
   const handleScheduleConsultation = (mentor) => {
-    setSelectedMentor(mentor);
+    const whatsAppLink = getWhatsAppLink(mentor);
+    window.open(whatsAppLink, "_blank");
   };
 
   const getWhatsAppLink = (mentor) => {
     const message = `Halo min, saya ingin berkonsultasi dengan mentor ${mentor.name} pada tanggal jam.`;
-    return `https://wa.me/${mentor.whatsapp.replace(
-      "+",
-      ""
-    )}?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/6285281252199?text=${encodeURIComponent(message)}`;
   };
+  
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
+   <div>
+     <Navbar currentPath={currentPath} />
+     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
       <h1 className="text-4xl font-bold mb-4">Konsultasi Bisnis</h1>
       <p className="text-lg mb-8">
         Halaman ini akan menyediakan layanan konsultasi bisnis untuk UMKM.
       </p>
       <div className="flex flex-wrap justify-center gap-8">
-        {mentors.map((mentor, index) => (
+        {mentors.map((mentor) => (
           <div
-            key={index}
+            key={mentor.id}
             className="relative border border-gray-300 rounded-lg p-6 w-72 shadow-md hover:shadow-lg transition-shadow duration-300 bg-white"
           >
             <img
-              src={mentor.photo}
+              src={mentor.thumbnail}
               alt={`${mentor.name} photo`}
               className="w-full h-48 object-cover rounded-lg mb-4"
             />
-            <span
-              className={`absolute top-2 right-2 text-white text-xs font-semibold px-2 py-1 rounded-full ${
-                mentor.available ? "bg-green-500" : "bg-red-500"
-              }`}
-            >
-              {mentor.available ? "Gratis" : "Tidak Tersedia"}
-            </span>
             <h2 className="text-2xl font-semibold mb-2">{mentor.name}</h2>
             <p className="mb-1">
-              <strong>Jabatan:</strong> {mentor.jabatan}
+              <strong>Jabatan:</strong> {mentor.position}
             </p>
             <p className="mb-1">
-              <strong>Posisi Saat Ini:</strong> {mentor.currentPosition}
+              <strong>Hari Tersedia:</strong> {mentor.day_start_available} - {mentor.day_end_available}
             </p>
-            <p>
-              <strong>Jadwal:</strong> {mentor.socialMedia}
+            <p className="mb-1">
+              <strong>Jam Operasional:</strong> {mentor.opening_hour} - {mentor.closing_hour}
             </p>
             <button
               onClick={() => handleScheduleConsultation(mentor)}
               className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-              disabled={!mentor.available}
             >
               Jadwalkan Konsultasi
             </button>
             <Tooltip
-              content="Konsultasi tersedia secara gratis jika mentor tersedia. Klik untuk jadwalkan!"
+              content="Konsultasi tersedia melalui WhatsApp. Klik untuk jadwalkan!"
               direction="top"
             >
               <span className="text-xs text-gray-500 cursor-pointer">
@@ -120,7 +91,7 @@ const Consulting = () => {
             </button>
             <h2 className="text-2xl font-bold mb-4">Detail Mentor</h2>
             <img
-              src={selectedMentor.photo}
+              src={selectedMentor.thumbnail}
               alt={`${selectedMentor.name} photo`}
               className="w-full h-48 object-cover rounded-lg mb-4"
             />
@@ -128,20 +99,20 @@ const Consulting = () => {
               {selectedMentor.name}
             </h2>
             <p className="mb-1">
-              <strong>Jabatan:</strong> {selectedMentor.jabatan}
+              <strong>Jabatan:</strong> {selectedMentor.position}
             </p>
             <p className="mb-1">
-              <strong>Posisi Saat Ini:</strong> {selectedMentor.currentPosition}
+              <strong>Hari Tersedia:</strong> {selectedMentor.day_start_available} - {selectedMentor.day_end_available}
             </p>
             <p className="mb-1">
-              <strong>Jadwal:</strong> {selectedMentor.socialMedia}
+              <strong>Jam Operasional:</strong> {selectedMentor.opening_hour} - {selectedMentor.closing_hour}
             </p>
             <p className="mb-1">
               <strong>Daftar Disini:</strong>{" "}
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={"https://forms.gle/v8t9tGLxRTo9mwiU9"}
+                href={selectedMentor.googleFormLink}
                 className="text-blue-500"
               >
                 Booking Mentormu Disini
@@ -168,43 +139,7 @@ const Consulting = () => {
             </button>
             <h2 className="text-2xl font-bold mb-4">Syarat dan Ketentuan</h2>
             <ol className="list-decimal list-inside">
-              <li>
-                BOOKING 1 HARI SEBELUM JADWAL KONSULTASI SESUAI DENGAN JAM YANG
-                DISEDIAKAN.
-              </li>
-              <li>JIKA INGIN RESCHEDULE, HARUS 1 HARI SEBELUM JADWAL.</li>
-              <li>
-                SESI KONSULTASI BERLANGSUNG 30 MENIT JIKA INGIN TAMBAHAN WAKTU,
-                MAKA HARUS MEMBUAT JADWAL LAGI.
-              </li>
-              <li>
-                PEMBAYARAN DILAKUKAN DENGAN MENGUPLOAD BUKTI PEMBAYARAN DI
-                GOOGLE FORM.
-              </li>
-              <li>
-                JIKA TIDAK HADIR DALAM GMEET, MAKA BIAYA KONSULTASI TIDAK BISA
-                DIKEMBALIKAN.
-              </li>
-              <li>
-                DILARANG MENGAJAK BEKERJASAMA DENGAN MENTOR BRAND-IN INDONESIA.
-              </li>
-              <li>
-                DILARANG MENANYAKAN SESUATU DILUAR DARI TOPIK YANG DIBAHAS.
-              </li>
-              <li>
-                MEMBER HARUS HADIR TEPAT WAKTU, KITA AKAN MEMBERIKAN WAKTU
-                TAMBAHAN UNTUK MEMBER 10 MENIT. JIKA MASIH TIDAK HADIR, MAKA
-                KONSULTASI DINYATAKAN SELESAI.
-              </li>
-              <li>
-                KONSULTAN AKAN MEMBERIKAN SEGALA MASUKAN UNTUK BISNIS MEMBER,
-                NAMUN KEPUTUSAN AKHIR DAN TANGGUNG JAWAB BERADA DI TANGAN
-                MEMBER.
-              </li>
-              <li>
-                PASTIKAN MEMILIH MENTOR YANG TEPAT SUPAYA BISA ALIGN ATAU MASUK
-                DENGAN PERMASALAHAN BISNIS MEMBER.
-              </li>
+              <li>BOOKING 1 HARI SEBELUM JADWAL KONSULTASI SESUAI DENGAN JAM YANG DISEDIAKAN.</li>
             </ol>
           </div>
         </div>
@@ -230,6 +165,7 @@ const Consulting = () => {
         </a>
       </div>
     </div>
+   </div>
   );
 };
 
