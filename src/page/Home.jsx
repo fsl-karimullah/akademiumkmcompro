@@ -8,6 +8,7 @@ import Footer from "../sections/Footer";
 import Navbar from "../components/Navbar";
 import OurClient from "../sections/OurClient";
 import { useLocation } from "react-router-dom";
+import News from "../sections/News";
 
 const Home = ({ currentPath }) => {
   console.log('asdasd',currentPath); 
@@ -28,6 +29,9 @@ const Home = ({ currentPath }) => {
       </section>
       <section className="p-4">
         <OurClient currentPath={currentPath} />
+      </section>
+      <section className="p-4">
+        <News currentPath={currentPath} />
       </section>
       <section className="p-4">
         <DownloadApp currentPath={currentPath} />

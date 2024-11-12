@@ -17,6 +17,7 @@ const ListTemplate = ({ currentPath }) => {
   const navigate = useNavigate();
   const [templates, setTemplates] = useState([]);
 
+
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
@@ -25,7 +26,7 @@ const ListTemplate = ({ currentPath }) => {
       } catch (error) {
         console.error("Error fetching templates:", error);
       }
-    };
+    }; 
 
     fetchTemplates();
   }, []);
