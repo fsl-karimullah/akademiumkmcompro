@@ -8,79 +8,108 @@ import {
   WhatsApp,
 } from "@mui/icons-material";
 
+// ✅ **Social Media Links Component**
+const SocialMediaLinks = () => (
+  <div className="flex gap-4 mt-4 md:mt-0">
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://www.instagram.com/brandin_indo/"
+      className="hover:scale-110 transition-transform"
+    >
+      <Instagram style={{ color: "var(--themeRed)", fontSize: "28px" }} />
+    </a>
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://wa.me/6285281252199"
+      className="hover:scale-110 transition-transform"
+    >
+      <WhatsApp style={{ color: "var(--themeRed)", fontSize: "28px" }} />
+    </a>
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://www.facebook.com/"
+      className="hover:scale-110 transition-transform"
+    >
+      <Facebook style={{ color: "var(--themeRed)", fontSize: "28px" }} />
+    </a>
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://twitter.com/"
+      className="hover:scale-110 transition-transform"
+    >
+      <Twitter style={{ color: "var(--themeRed)", fontSize: "28px" }} />
+    </a>
+  </div>
+);
+
+// ✅ **Footer Section Component**
+const FooterSection = ({ title, links }) => (
+  <div className="flex flex-col gap-2 text-center md:text-left">
+    <h2 className="font-bold text-lg text-[var(--themeRed)]">{title}</h2>
+    <ul className="text-gray-600 text-sm flex flex-col gap-1">
+      {links.map((link, index) => (
+        <li key={index} className="hover:text-[var(--themeRed)] cursor-pointer">
+          {link}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+// ✅ **Main Footer Component**
 const Footer = () => {
   return (
-    <div>
-      <div className="flex flex-col md:flex-row gap-8 justify-center p-2 md:py-4 md:px-2">
-        <div className="w-full md:w-1/3 gap-2 flex flex-col justify-start  ">
+    <footer className="bg-gray-50 py-8 px-6 md:px-16 text-gray-700">
+      {/* ✅ **Top Section** */}
+      <div className="flex flex-col md:flex-row gap-8 justify-between">
+        {/* ✅ **Logo & Description Section** */}
+        <div className="md:w-1/3 flex flex-col gap-4 items-center md:items-start">
           <Logo />
-          <span className="text-[12px] md:text-sm">
-            Hubungi kami untuk informasi lebih lanjut. tekan tombol sosial media
-            dibawah
-          </span>
-          <div className="flex flex-row items-center gap-2  md:gap-4 md:justify-around"></div>
+          <p className="text-sm text-center md:text-left">
+            Hubungi kami untuk informasi lebih lanjut. Tekan tombol sosial media
+            di bawah untuk terhubung langsung dengan kami.
+          </p>
+          <SocialMediaLinks />
         </div>
-        <div className="md:w-2/3 flex flex-row text-[12px] gap-5 justify-around px-4">
-          <div className="md:w-1/2 flex flex-col justify-center items-center gap-2">
-            <h1 className="font-bold text-[14px]">About</h1>
-            <ul className="text-[10px] md:text-sm flex flex-col gap-2">
-              <li>About Us</li>
-              <li>Features</li>
-              <li>News</li>
-              <li>Menu</li>
-            </ul>
-          </div>
-          <div className="md:w-1/2 flex flex-col justify-center items-center gap-2">
-            <h1 className="font-bold text-[14px]">Company</h1>
-            <ul className="text-[10px] md:text-sm flex flex-col gap-2">
-              <li>Why Brand-in?</li>
-              <li>Partner with Us</li>
-              <li>FAQ</li>
-              <li>Blog</li>
-            </ul>
-          </div>
-          {/* <div className="md:w-1/5 flex flex-col gap-2">
-            <h1 className="font-bold">Support</h1>
-            <ul className="text-[10px] md:text-sm flex flex-col gap-2">
-              <li>Account</li>
-              <li>Support Center</li>
-              <li>Feedback</li>
-              <li>Contact Us</li>
-              <li>Accessibility</li>
-            </ul>
-          </div>
-          <div className="md:w-1/5 flex flex-col gap-2">
-            <h1 className="font-bold">Get in Touch</h1>
-            <ul className="text-[10px] md:text-sm flex flex-col gap-2">
-              <li>Question or feedback</li>
-              <li>We'd love to hear from you</li>
-            </ul>
-            <button className="btn">
-              <span className="text-[12px] md:text-sm">Email Address</span>
-              <ArrowRightAltOutlined style={{ color: "white" }} />
-            </button>
-          </div> */}
+
+        {/* ✅ **Links Section** */}
+        <div className="md:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <FooterSection
+            title="About"
+            links={["About Us", "Features", "News", "Menu"]}
+          />
+          <FooterSection
+            title="Company"
+            links={["Why Brand-in?", "Partner with Us", "FAQ", "Blog"]}
+          />
+          <FooterSection
+            title="Support"
+            links={["Account", "Support Center", "Feedback", "Contact Us"]}
+          />
+          <FooterSection
+            title="Get in Touch"
+            links={[
+              "Have a question?",
+              "We'd love to hear from you!",
+              "Contact Us",
+            ]}
+          />
         </div>
       </div>
-      <div className="md:flex flex-row items-center justify-start gap-2 p-2 hidden">
-        <a target="blank" href="https://www.instagram.com/brandin_indo/">
-          <Instagram style={{ color: "var(--themeRed)" }} />
-        </a>
-        <a target="blank" href="https://wa.me/6285281252199">
-          <WhatsApp style={{ color: "var(--themeRed)" }} />
-        </a>
-       
+
+      {/* ✅ **Bottom Section** */}
+      <div className="flex flex-col md:flex-row items-center justify-between mt-8 border-t pt-4 text-sm text-gray-500">
+        <p>&copy; {new Date().getFullYear()} Brand-In Indonesia. All Rights Reserved.</p>
+        <button className="flex items-center gap-2 mt-4 md:mt-0 bg-[var(--themeRed)] text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+          <span>Email Us</span>
+          <ArrowRightAltOutlined style={{ fontSize: "20px" }} />
+        </button>
       </div>
-      <div className="flex flex-row items-center justify-start gap-2 p-2 md:hidden">
-        <a target="blank" href="https://www.instagram.com/brandin_indo/">
-          <Instagram style={{ color: "var(--themeRed)" }} />
-        </a>
-        <a target="blank" href="https://wa.me/6285281252199">
-          <WhatsApp style={{ color: "var(--themeRed)" }} />
-        </a>
-       
-      </div>
-    </div>
+    </footer>
   );
 };
 

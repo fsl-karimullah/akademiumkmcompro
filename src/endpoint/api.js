@@ -1,4 +1,4 @@
-const prod_url = 'https://ukm.sixeyestech.com';
+const prod_url = 'https://api.akademiumkm.id';
 const url = 'http://127.0.0.1:8000';
 export const endpoint = {
   registerUser: `${prod_url}/api/auth/register`,
