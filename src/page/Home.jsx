@@ -13,7 +13,7 @@ import News from "../sections/News";
 const Home = ({ currentPath }) => {
   console.log('asdasd',currentPath); 
   return (
-    <main className="flex flex-col justify-around max-w-screen-xl mx-auto">
+    <main className="flex flex-col justify-around ">
       <Navbar currentPath={currentPath} />
       <section className="p-4">
         <Hero currentPath={currentPath} />

@@ -20,6 +20,8 @@ import WebinarDetail from './page/WebinarDetail';
 import ListTemplate from './page/ListTemplate';
 import NewsDetails from './page/NewsDetails';
 import AllNews from './page/AllNews';
+import Edukasi from './page/Edukasi';
+import EdukasiDetail from './page/EdukasiDetail';
 
 function App() {
   return (
@@ -60,6 +62,8 @@ function AppContent() {
       <Route path="/coming-soon" element={<UnderConstructionScreen currentPath={currentPath} />} />
       <Route path="/loginbisnis" element={<LoginBisnis currentPath={currentPath} />} />
       <Route path="/videoedukasi" element={isAuthenticated ? <VideoEdukasi currentPath={currentPath} /> : <Navigate to="/login" />} />
+      <Route path="/course" element={isAuthenticated ? <Edukasi currentPath={currentPath} /> : <Navigate to="/login" />} />
+      <Route path="/course/:id" element={isAuthenticated ? <EdukasiDetail currentPath={currentPath} /> : <Navigate to="/login" />} />
       <Route path="/videoedukasidetail/:id" element={isAuthenticated ? <VideoEdukasiDetail currentPath={currentPath} /> : <Navigate to="/login" />} />
       <Route path="/register" element={<Register currentPath={currentPath} />} />
       <Route path="/login" element={<Login currentPath={currentPath} />} />

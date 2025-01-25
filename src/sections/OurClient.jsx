@@ -1,152 +1,62 @@
 import React from "react";
-import Slider from "react-slick";
-import ClientListComponent from "../components/client/ClientList";
-import StarIcon from "@mui/icons-material/Star";
+import CustomComponent from "../components/title/Title";
 
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#d61355",
-        borderRadius: "50%",
-        color: "white",
-        fontSize: "20px",
-        width: "40px",
-        height: "40px",
-      }}
-      onClick={onClick}
-    >
-      ➡️
-    </div>
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#d61355",
-        borderRadius: "50%",
-        color: "white",
-        fontSize: "20px",
-        width: "40px",
-        height: "40px",
-      }}
-      onClick={onClick}
-    >
-      ⬅️
-    </div>
-  );
-}
-
-// 📊 **Testimonials Data**
-const testimonials = [
+const cards = [
   {
-    content:
-      "Akhirnya bisnis saya bisa tampil di aplikasi sebagai branding baru yang simpel.",
-    name: "Faruk Maulana",
-    position: "CO Founder Sixeyes Technologies",
+    title: "orang yang mau melompat untuk merubah hidupnya",
+    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Business%20vision-rafiki.png?raw=true",
   },
   {
-    content:
-      "Alhamdulillah sixeyes bisa mendapatkan client pertama dengan mengiklankan di aplikasi brand-in.",
-    name: "Amir Faisal K",
-    position: "Co Founder Sixeyes Technologies",
-  },
-  {
-    content:
-      "Brand-in sangat membantu para pelaku UMKM termasuk usaha saya dalam memasarkan donat NumNum, dan yang lebih lebih terbantukan dimana pemasarannya tidak dipungut biaya sepersen pun alias GRATIS!!! Terima Kasih Brand-in atas kerjasama dan bantuannya sukses terus ya.",
-    name: "Lia Indah Permatasari",
-    position: "Owner Donat Num Num",
+    title: "dan yang mau berdiam diri",
+    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Anxiety-amico.png?raw=true",
   },
 ];
 
-// ✅ **Testimonial Card Component**
-const TestimonialCard = ({ content, name, position }) => (
-  <div className="flex flex-col items-center justify-center text-center gap-4 bg-white rounded-lg shadow-md p-6 md:p-8 hover:shadow-lg transition-transform transform hover:scale-105">
-    <StarIcon style={{ color: "#FFD700", fontSize: "40px" }} />
-    <p className="text-lg md:text-xl italic text-gray-700 leading-relaxed">
-      "{content}"
-    </p>
-    <h3 className="text-xl md:text-2xl font-bold text-[var(--themeRed)]">
-      {name}
-    </h3>
-    <p className="text-sm md:text-base text-gray-600">{position}</p>
-  </div>
-);
-
-// ✅ **Main Component**
-const OurClient = ({ currentPath, Clients }) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+const WebinarValueSection = ({ currentPath }) => {
+  console.log(currentPath);
 
   return (
-    <div className="flex flex-col gap-6 py-10 px-6 md:px-16 bg-gray-50">
-      {/* ✅ Conditional Rendering */}
+    <div className="bg-white text-[var(--themeRed)] py-12">
       {currentPath === "/" ? (
-        <ClientListComponent pageType="/" clients={Clients} />
-      ) : (
-        <div className="flex flex-col gap-12 items-center justify-center">
-          {/* ✅ **Section Title** */}
-          <h1 className="text-2xl md:text-4xl font-bold text-center text-[var(--themeRed)]">
-            Kata Mereka Tentang Pasang Bisnis <br /> Gratis di Akademi UMKM
-          </h1>
-
-          {/* ✅ **Testimonials Slider** */}
-          <div className="w-full md:w-2/3 lg:w-1/2">
-            <Slider {...settings}>
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="px-2">
-                  <TestimonialCard
-                    content={testimonial.content}
-                    name={testimonial.name}
-                    position={testimonial.position}
-                  />
-                </div>
-              ))}
-            </Slider>
+        <div className="flex flex-col gap-16 mt-10 w-full">
+          <div>
+            <CustomComponent
+              title1="Kamu ada di tipe mana ?"
+              title2="Di Dunia ini Ada 2 Tipe Orang"
+              title3=""
+              textColor1="var(--themeRed)"
+              textColor2="#000000"
+              alignItems="center"
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-6 md:px-16">
+            {cards.map((card, index) => (
+              <div
+                key={index}
+                className="relative flex items-center justify-center bg-gray-50 p-4 rounded-xl shadow-md  transition-transform transform  overflow-hidden"
+              >
+                <img
+                  src={card.img}
+                  alt={card.title}
+                  className="w-full h-full object-cover rounded-xl opacity-80"
+                />
+                <h1 className="absolute bottom-8 text-2xl md:text-4xl font-bold text-black text-center px-4">
+                  {card.title}
+                </h1>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-center mt-8">
+            <a href="/landing" target="_blank" rel="noopener noreferrer"
+              className="bg-[var(--themeRed)] text-white px-6 py-3 rounded-lg font-bold  transition-transform transform "
+            >
+              🚀 Take Action Sekarang
+            </a>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
 
-export default OurClient;
+export default WebinarValueSection;

@@ -18,7 +18,7 @@ const WebinarDetail = () => {
         const response = await axios.get(endpoint.getWebinarsById(id)); 
         setWebinar(response.data.data); 
       } catch (error) {
-        setError('Failed to fetch webinar details');
+        setError('Failed to fetch product details');
       } finally {
         setLoading(false);
       }
@@ -32,7 +32,7 @@ const WebinarDetail = () => {
 
   return (
     <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
-      {/* <Navbar currentPath="/webinars" /> */}
+      <Navbar currentPath="/webinars" />
       <Container maxWidth="lg" sx={{ py: 8 }}>
         {webinar ? (
           <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, boxShadow: 3, borderRadius: 2 }}>
@@ -53,6 +53,12 @@ const WebinarDetail = () => {
                 <Typography variant="body1" paragraph>
                   {webinar.description}
                 </Typography>
+                <Typography variant="h6" sx={{ mt: 2, color: 'gray' }}>
+                  💻 Format: Digital Product
+                </Typography>
+                <Typography variant="h6" sx={{ mt: 1, color: 'gray' }}>
+                  📦 Category: {webinar.category || 'General'}
+                </Typography>
               </CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 2 }}>
                 <Button
@@ -68,7 +74,7 @@ const WebinarDetail = () => {
                   target='_blank'
                   onClick={() => window.location.href = webinar.registration_url}
                 >
-                  Daftar Sekarang
+                  Dapatkan Sekarang
                 </Button>
               </Box> 
             </Box>

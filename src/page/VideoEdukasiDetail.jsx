@@ -1,17 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { endpoint } from '../endpoint/api';
-import { Container, Box, Typography, CircularProgress, Alert, Card, CardContent } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { endpoint } from "../endpoint/api";
+import {
+  Container,
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
+  Card,
+  CardContent,
+  Button,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const VideoEdukasiDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [video, setVideo] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchVideoDetail = async () => {
       try {
-        const token = localStorage.getItem('userToken');
+        const token = localStorage.getItem("userToken");
         const response = await fetch(`${endpoint.getEducationById(id)}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -19,7 +31,7 @@ const VideoEdukasiDetail = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
 
         const data = await response.json();
@@ -65,24 +77,73 @@ const VideoEdukasiDetail = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5', 
-        paddingTop: '40px',
+        backgroundColor: "#f9f9f9",
+        minHeight: "100vh",
+        paddingBottom: "40px",
       }}
     >
+      {/* Back Button */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          padding: 2,
+          backgroundColor: "#fff",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          position: "sticky",
+          top: 0,
+          zIndex: 1000,
+        }}
+      >
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate(-1)}
+          sx={{ color: "#d61355", fontWeight: "bold" }}
+        >
+          Kembali
+        </Button>
+      </Box>
+
       <Container maxWidth="md">
-        <Card sx={{ boxShadow: '0 4px 8px rgba(0,0,0,0.2)' }}>
+        <Card
+          sx={{
+            boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+            borderRadius: "12px",
+            marginTop: 4,
+            overflow: "hidden",
+          }}
+        >
           <CardContent>
-            <Typography variant="h4" component="h1" gutterBottom>
+            {/* Video Title */}
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              color="#d61355"
+              gutterBottom
+              textAlign="center"
+            >
               {video.title}
             </Typography>
-            <Typography variant="subtitle1" color="textSecondary" paragraph>
+
+            {/* Video Description */}
+            <Typography
+              variant="subtitle1"
+              color="textSecondary"
+              textAlign="center"
+              sx={{ marginBottom: 4 }}
+            >
               {video.description}
             </Typography>
-            <Box sx={{ mb: 4, textAlign: 'center' }}>
+
+            {/* Video Player */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: 4,
+              }}
+            >
               {embedUrl ? (
                 <iframe
                   src={embedUrl}
@@ -90,7 +151,10 @@ const VideoEdukasiDetail = () => {
                   height="480"
                   allow="autoplay"
                   title={video.title}
-                  style={{ borderRadius: '8px' }}
+                  style={{
+                    borderRadius: "12px",
+                    border: "2px solid #ddd",
+                  }}
                 ></iframe>
               ) : (
                 <Alert severity="error" className="text-center">
@@ -98,13 +162,39 @@ const VideoEdukasiDetail = () => {
                 </Alert>
               )}
             </Box>
-            <Typography variant="body1" color="textPrimary" paragraph>
+
+            {/* Content */}
+            <Typography variant="body1" sx={{ lineHeight: 1.8, marginBottom: 4 }}>
               <div dangerouslySetInnerHTML={{ __html: video.content }} />
             </Typography>
-            <Box mt={2} textAlign="right">
+
+            {/* Footer */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                borderTop: "1px solid #ddd",
+                paddingTop: 2,
+                marginTop: 4,
+              }}
+            >
               <Typography variant="caption" color="textSecondary">
-                Dibuat pada: {new Date(video.created_at).toLocaleDateString('id-ID')}
+                Dibuat pada: {new Date(video.created_at).toLocaleDateString("id-ID")}
               </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#d61355",
+                  color: "#fff",
+                  "&:hover": {
+                    backgroundColor: "#bf1048",
+                  },
+                }}
+                onClick={() => navigate(-1)}
+              >
+                Kembali ke Daftar Video
+              </Button>
             </Box>
           </CardContent>
         </Card>

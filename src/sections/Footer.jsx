@@ -8,13 +8,14 @@ import {
   WhatsApp,
 } from "@mui/icons-material";
 
+
 // ✅ **Social Media Links Component**
 const SocialMediaLinks = () => (
   <div className="flex gap-4 mt-4 md:mt-0">
     <a
       target="_blank"
       rel="noopener noreferrer"
-      href="https://www.instagram.com/brandin_indo/"
+      href="https://www.instagram.com/akademiumkm.id/"
       className="hover:scale-110 transition-transform"
     >
       <Instagram style={{ color: "var(--themeRed)", fontSize: "28px" }} />
@@ -62,6 +63,16 @@ const FooterSection = ({ title, links }) => (
 
 // ✅ **Main Footer Component**
 const Footer = () => {
+
+  const handleEmailClick = () => {
+    // const recipient = "akademiumkm18@gmail.com";
+    const recipient = "team@akademiumkm.id";
+    const subject = encodeURIComponent("Inquiry About Branding Services");
+    const body = encodeURIComponent("Hello, I would like to know more about your services.");
+
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+  };
+
   return (
     <footer className="bg-gray-50 py-8 px-6 md:px-16 text-gray-700">
       {/* ✅ **Top Section** */}
@@ -84,7 +95,7 @@ const Footer = () => {
           />
           <FooterSection
             title="Company"
-            links={["Why Brand-in?", "Partner with Us", "FAQ", "Blog"]}
+            links={["Why Akademi Umkm?", "Partner with Us", "FAQ", "Blog"]}
           />
           <FooterSection
             title="Support"
@@ -103,11 +114,15 @@ const Footer = () => {
 
       {/* ✅ **Bottom Section** */}
       <div className="flex flex-col md:flex-row items-center justify-between mt-8 border-t pt-4 text-sm text-gray-500">
-        <p>&copy; {new Date().getFullYear()} Brand-In Indonesia. All Rights Reserved.</p>
-        <button className="flex items-center gap-2 mt-4 md:mt-0 bg-[var(--themeRed)] text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
-          <span>Email Us</span>
-          <ArrowRightAltOutlined style={{ fontSize: "20px" }} />
-        </button>
+        <p>&copy; {new Date().getFullYear()} Akademi UMKM. All Rights Reserved.</p>
+        <button
+      onClick={handleEmailClick}
+      className="flex items-center gap-2 mt-4 md:mt-0 bg-[var(--themeRed)] text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+    >
+      <span>Email Us</span>
+      <ArrowRightAltOutlined style={{ fontSize: "20px" }} />
+      team@akademiumkm.id
+    </button>
       </div>
     </footer>
   );

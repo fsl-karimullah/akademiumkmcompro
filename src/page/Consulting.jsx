@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Tooltip } from "react-tooltip";
-import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
+import { endpoint } from "../endpoint/api";
+import { Tooltip } from "react-tooltip";
+import {
+  CalendarToday,
+  WatchLater,
+  Person,
+  WhatsApp,
+  Info,
+} from "@mui/icons-material";
 
-const Consulting = ({currentPath}) => {
+const Consulting = ({ currentPath }) => {
   const [mentors, setMentors] = useState([]);
   const [selectedMentor, setSelectedMentor] = useState(null);
   const [showTerms, setShowTerms] = useState(false);
@@ -31,141 +38,98 @@ const Consulting = ({currentPath}) => {
     const message = `Halo min, saya ingin berkonsultasi dengan mentor ${mentor.name} pada tanggal jam.`;
     return `https://wa.me/6285281252199?text=${encodeURIComponent(message)}`;
   };
-  
 
   return (
-   <div>
-     <Navbar currentPath={currentPath} />
-     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
-      <h1 className="text-4xl font-bold mb-4">Konsultasi Bisnis</h1>
-      <p className="text-lg mb-8">
-        Halaman ini akan menyediakan layanan konsultasi bisnis untuk UMKM.
-      </p>
-      <div className="flex flex-wrap justify-center gap-8">
-        {mentors.map((mentor) => (
-          <div
-            key={mentor.id}
-            className="relative border border-gray-300 rounded-lg p-6 w-72 shadow-md hover:shadow-lg transition-shadow duration-300 bg-white"
+    <div className="bg-gray-50 min-h-screen">
+      <Navbar currentPath={currentPath} />
+
+      {/* ✅ Hero Section */}
+      <div className="text-center py-16 md:py-24 bg-gradient-to-r from-[var(--themeRed)] to-[#d61355] text-white">
+        <div className="container mx-auto px-4 md:px-8">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 animate-fadeIn">
+            Layanan Konsultasi Bisnis
+          </h1>
+          <p className="text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto mb-6 animate-fadeIn delay-200">
+            Terhubung langsung dengan mentor berpengalaman untuk membangun
+            bisnis Anda dengan lebih efektif dan efisien.
+          </p>
+          <a
+            href="https://wa.me/6285281252199"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-4 bg-white text-[var(--themeRed)] font-semibold px-6 py-3 rounded-md hover:bg-gray-200 transition duration-300"
           >
-            <img
-              src={mentor.thumbnail}
-              alt={`${mentor.name} photo`}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-            />
-            <h2 className="text-2xl font-semibold mb-2">{mentor.name}</h2>
-            <p className="mb-1">
-              <strong>Jabatan:</strong> {mentor.position}
-            </p>
-            <p className="mb-1">
-              <strong>Hari Tersedia:</strong> {mentor.day_start_available} - {mentor.day_end_available}
-            </p>
-            <p className="mb-1">
-              <strong>Jam Operasional:</strong> {mentor.opening_hour} - {mentor.closing_hour}
-            </p>
-            <button
-              onClick={() => handleScheduleConsultation(mentor)}
-              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-            >
-              Jadwalkan Konsultasi
-            </button>
-            <Tooltip
-              content="Konsultasi tersedia melalui WhatsApp. Klik untuk jadwalkan!"
-              direction="top"
-            >
-              <span className="text-xs text-gray-500 cursor-pointer">
-                Info lebih lanjut
-              </span>
-            </Tooltip>
-          </div>
-        ))}
+            Hubungi Kami di WhatsApp
+          </a>
+        </div>
       </div>
 
-      {selectedMentor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-          <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <button
-              onClick={() => setSelectedMentor(null)}
-              className="text-white font-bold absolute top-2 right-2 hover:text-gray-900 bg-black px-2 py-1 rounded"
+      {/* ✅ Mentor Cards */}
+      <div className="container mx-auto p-8">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-center text-[var(--themeRed)]">
+          Daftar Mentor Kami
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {mentors.map((mentor) => (
+            <div
+              key={mentor.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
             >
-              ×
-            </button>
-            <h2 className="text-2xl font-bold mb-4">Detail Mentor</h2>
-            <img
-              src={selectedMentor.thumbnail}
-              alt={`${selectedMentor.name} photo`}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-            />
-            <h2 className="text-2xl font-semibold mb-2">
-              {selectedMentor.name}
-            </h2>
-            <p className="mb-1">
-              <strong>Jabatan:</strong> {selectedMentor.position}
-            </p>
-            <p className="mb-1">
-              <strong>Hari Tersedia:</strong> {selectedMentor.day_start_available} - {selectedMentor.day_end_available}
-            </p>
-            <p className="mb-1">
-              <strong>Jam Operasional:</strong> {selectedMentor.opening_hour} - {selectedMentor.closing_hour}
-            </p>
-            <p className="mb-1">
-              <strong>Daftar Disini:</strong>{" "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={selectedMentor.googleFormLink}
-                className="text-blue-500"
-              >
-                Booking Mentormu Disini
-              </a>
-            </p>
-            <button
-              onClick={() => setShowTerms(true)}
-              className="mt-4 w-full bg-gray-300 text-black py-2 rounded-lg hover:bg-gray-500 transition-colors duration-300"
-            >
-              Baca Syarat dan Ketentuan
-            </button>
-          </div>
+              <img
+                src={mentor.thumbnail}
+                alt={mentor.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-xl font-semibold mb-1">{mentor.name}</h3>
+                <p className="text-sm text-gray-500 mb-3">{mentor.position}</p>
+                <div className="flex items-center gap-2 text-gray-700 text-sm mb-1">
+                  <CalendarToday fontSize="small" />
+                  <span>
+                    {mentor.day_start_available} - {mentor.day_end_available}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-700 text-sm mb-1">
+                  <WatchLater fontSize="small" />
+                  <span>
+                    {mentor.opening_hour} - {mentor.closing_hour}
+                  </span>
+                </div>
+                <button
+                  onClick={() => handleScheduleConsultation(mentor)}
+                  className="mt-4 w-full bg-[var(--themeRed)] text-white py-2 rounded-md hover:bg-[#b50d44] transition duration-300 flex items-center justify-center gap-2"
+                >
+                  <WhatsApp fontSize="small" />
+                  Jadwalkan Konsultasi
+                </button>
+                <Tooltip content="Konsultasi tersedia melalui WhatsApp. Klik untuk jadwalkan!" direction="top">
+                  <span className="text-xs text-gray-500 block text-center mt-1 cursor-pointer">
+                    Info lebih lanjut
+                  </span>
+                </Tooltip>
+              </div>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
 
-      {showTerms && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-          <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <button
-              onClick={() => setShowTerms(false)}
-              className="text-white font-bold absolute top-2 right-2 hover:text-gray-900 bg-black px-2 py-1 rounded"
-            >
-              ×
-            </button>
-            <h2 className="text-2xl font-bold mb-4">Syarat dan Ketentuan</h2>
-            <ol className="list-decimal list-inside">
-              <li>BOOKING 1 HARI SEBELUM JADWAL KONSULTASI SESUAI DENGAN JAM YANG DISEDIAKAN.</li>
-            </ol>
-          </div>
-        </div>
-      )}
-      <div className="mt-12 bg-blue-100 p-8 rounded-lg text-center">
-        <h2 className="text-3xl font-bold mb-4">Charity Initiative</h2>
-        <p className="text-lg mb-4">
-          Hasil dari mentoring ini sampai dengan 1 bulan kedepan, akan kami
-          donasikan 100% charity untuk palestina dan orang yang membutuhkan di
-          indonesia melalui ayobuatbaik dan kitabisa
-        </p>
-        <p className="text-lg mb-4">
-          Kami juga mendukung berbagai kegiatan amal. Anda dapat berkontribusi
-          untuk mendukung UMKM lokal.
+      {/* ✅ Charity Section */}
+      <div className="bg-[var(--themeRed)] py-8 mt-12 text-center text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">Charity Initiative</h2>
+        <p className="text-lg md:text-xl mb-4">
+          Semua hasil konsultasi dalam bulan ini akan didonasikan ke Palestina dan
+          masyarakat Indonesia.
         </p>
         <a
           href="https://forms.gle/v8t9tGLxRTo9mwiU9"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-300 text-center block w-full md:w-auto"
+          className="bg-white text-[var(--themeRed)] py-2 px-4 rounded-lg hover:bg-gray-100 transition"
         >
           Lakukan Mentoring & Donasi Sekarang
         </a>
       </div>
     </div>
-   </div>
   );
 };
 

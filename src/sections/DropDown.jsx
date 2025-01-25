@@ -24,7 +24,7 @@ const FaqItem = ({ number, question, answer }) => (
 const faqData = [
   {
     number: "01",
-    question: "Apakah pasang iklan di Brand-In berbayar?",
+    question: "Apakah pasang iklan di Akademi UMKM berbayar?",
     answer: "Saat ini, pemasangan iklan bisnis di dalam aplikasi kami gratis tidak dipungut biaya.",
   },
   {

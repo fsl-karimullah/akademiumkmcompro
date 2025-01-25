@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -6,17 +7,19 @@ import {
   CardMedia,
   Typography,
   Button,
+  Chip,
+  Tooltip,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
+import { ShoppingCart, Visibility } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const ListTemplate = ({ currentPath }) => {
   const navigate = useNavigate();
   const [templates, setTemplates] = useState([]);
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -25,8 +28,10 @@ const ListTemplate = ({ currentPath }) => {
         setTemplates(response.data.data);
       } catch (error) {
         console.error("Error fetching templates:", error);
+      } finally {
+        setLoading(false);
       }
-    }; 
+    };
 
     fetchTemplates();
   }, []);
@@ -43,94 +48,157 @@ const ListTemplate = ({ currentPath }) => {
     window.open(previewUrl, "_blank");
   };
 
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h6">Loading templates...</Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <Navbar currentPath={currentPath} />
-      <Box sx={{ p: 4 }}>
+      <Box sx={{ p: 4, backgroundColor: "#f9fafc" }}>
         <Typography
           variant="h3"
           component="h2"
           gutterBottom
-          sx={{ textAlign: "center", fontWeight: "bold", mb: 4 }}
+          sx={{
+            textAlign: "center",
+            fontWeight: "bold",
+            color: "var(--themeRed)",
+            mb: 4,
+          }}
         >
-          Template Website
+          Daftar Template Website
         </Typography>
 
-        <Grid container spacing={3}>
-          {templates.map((template) => (
-            <Grid item xs={12} sm={6} md={4} key={template.id}>
-              <Card
-                sx={{
-                  borderRadius: "12px", // Smaller border radius for a compact look
-                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)", // Reduced shadow size
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="150" // Reduced height of the image
-                  image={template.thumbnail}
-                  alt={template.name}
-                  sx={{ borderRadius: "12px 12px 0 0" }}
-                />
-                <CardContent sx={{ p: 2 }}>
-                  {" "}
-                  {/* Reduced padding */}
-                  <Typography variant="h6" component="h3" gutterBottom>
-                    {" "}
-                    {/* Smaller font size */}
-                    {template.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mb: 1.5 }}
-                  >
-                    {template.description}
-                  </Typography>
-                  <Typography variant="h6" color="primary" sx={{ mb: 1.5 }}>
-                    Rp {template.price.toLocaleString("id-ID")}
-                  </Typography>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <Button
-                      variant="contained"
+        {templates.length === 0 ? (
+          <Typography variant="h6" sx={{ textAlign: "center", mt: 4 }}>
+            Tidak ada template yang tersedia saat ini.
+          </Typography>
+        ) : (
+          <Grid container spacing={4}>
+            {templates.map((template) => (
+              <Grid item xs={12} sm={6} md={4} key={template.id}>
+                <Card
+                  sx={{
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
+                    transition: "transform 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "translateY(-5px)",
+                      boxShadow: "0 8px 15px rgba(0,0,0,0.15)",
+                    },
+                  }}
+                >
+                  {/* ✅ Template Thumbnail */}
+                  <CardMedia
+                    component="img"
+                    height="180"
+                    image={template.thumbnail}
+                    alt={template.name}
+                    sx={{ objectFit: "cover" }}
+                  />
+
+                  {/* ✅ Template Info */}
+                  <CardContent sx={{ p: 3 }}>
+                    <Typography
+                      variant="h6"
                       sx={{
+                        fontWeight: "bold",
+                        mb: 1,
+                        color: "var(--themeBlack)",
+                      }}
+                    >
+                      {template.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        mb: 2,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {template.description}
+                    </Typography>
+                    <Chip
+                      label={`Rp ${template.price.toLocaleString("id-ID")}`}
+                      color="primary"
+                      sx={{
+                        fontSize: "0.9rem",
+                        fontWeight: "bold",
                         backgroundColor: "var(--themeRed)",
                         color: "white",
-                        textTransform: "none",
-                        fontWeight: "bold",
-                        fontSize: "0.85rem", // Slightly smaller font
-                        "&:hover": {
-                          backgroundColor: "darkred",
-                        },
+                        mb: 2,
                       }}
-                      onClick={() => handleBuyClick(template.name)}
-                    >
-                      Beli
-                    </Button>
-                    <Button
-                      variant="contained"
+                    />
+
+                    {/* ✅ CTA Buttons */}
+                    <Box
                       sx={{
-                        backgroundColor: "var(--themeBlack)",
-                        color: "white",
-                        textTransform: "none",
-                        fontWeight: "bold",
-                        fontSize: "0.85rem", // Slightly smaller font
-                        "&:hover": {
-                          backgroundColor: "#333",
-                        },
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mt: 2,
                       }}
-                      onClick={() => handlePreviewClick(template.url_preview)}
                     >
-                      Preview
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                      <Tooltip title="Beli Template">
+                        <Button
+                          variant="contained"
+                          startIcon={<ShoppingCart />}
+                          sx={{
+                            backgroundColor: "var(--themeRed)",
+                            color: "white",
+                            fontWeight: "bold",
+                            textTransform: "none",
+                            "&:hover": {
+                              backgroundColor: "#b50d44",
+                            },
+                          }}
+                          onClick={() => handleBuyClick(template.name)}
+                        >
+                          Beli
+                        </Button>
+                      </Tooltip>
+                      <Tooltip title="Lihat Preview">
+                        <Button
+                          variant="outlined"
+                          startIcon={<Visibility />}
+                          sx={{
+                            borderColor: "var(--themeBlack)",
+                            color: "var(--themeBlack)",
+                            fontWeight: "bold",
+                            textTransform: "none",
+                            "&:hover": {
+                              borderColor: "#333",
+                              backgroundColor: "#f0f0f0",
+                            },
+                          }}
+                          onClick={() => handlePreviewClick(template.url_preview)}
+                        >
+                          Preview
+                        </Button>
+                      </Tooltip>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </Box>
   );

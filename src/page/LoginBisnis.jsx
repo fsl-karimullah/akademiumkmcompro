@@ -12,7 +12,7 @@ import Footer from "../sections/Footer";
 const LoginBisnis = ({ currentPath }) => {
   console.log(currentPath);
   return (
-    <main className="flex flex-col justify-around max-w-screen-xl mx-auto">
+    <main className="flex flex-col justify-around">
       <Navbar currentPath={currentPath} />
       <section className="p-4">
         <Hero currentPath={currentPath} />

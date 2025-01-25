@@ -1,30 +1,19 @@
 import React from "react";
 import CustomComponent from "../components/title/Title";
 
-// 📊 **Menu Type Data**
-const MenuType = [
-  { title: "Burger", type: "burger", img: "burger.webp" },
-  { title: "Pizza", type: "pizza", img: "pizza.webp" },
-  { title: "Cupcake", type: "cupcake", img: "cupcake.webp" },
-];
-
-const handleClick = () => {
-  console.log("clicked");
-};
-
 // 📊 **Guide Items Data**
 const items = [
   {
     imageSrc: "panduan1.webp",
-    title: "Gunakan Data yang Lengkap",
+    title: "Tulis Data Bisnis dengan Jelas",
     description:
-      "Sebisa mungkin tulis data bisnis Anda dengan lengkap untuk memberikan informasi kepada customer.",
+      "Berikan informasi yang lengkap dan profesional agar calon customer memahami bisnis Anda.",
   },
   {
     imageSrc: "panduan2.webp",
-    title: "Jangan Lupa Sertakan Contact Service",
+    title: "Gunakan Media Sosial",
     description:
-      "Gunakan sosial media sebagai alat customer untuk menghubungi bisnis Anda!",
+      "Manfaatkan media sosial untuk menjalin komunikasi dengan customer secara mudah dan cepat.",
   },
 ];
 
@@ -43,7 +32,7 @@ const GuideCard = ({ imageSrc, title, description }) => (
   </div>
 );
 
-// ✅ **Main DownloadApp Component**
+// ✅ **Main Component**
 const DownloadApp = ({ currentPath }) => {
   return (
     <div className="bg-red-50 flex flex-col md:flex-row items-center gap-8 p-6 md:p-12 rounded-lg shadow-md">
@@ -53,25 +42,26 @@ const DownloadApp = ({ currentPath }) => {
           {/* ✅ **Left Section** */}
           <div className="md:w-1/2 flex flex-col gap-6 text-center md:text-left">
             <CustomComponent
-              title1="Download App"
-              title2="Get Started With"
-              title3="Akademi UMKM Today"
+              title1="Belajar dan Berkembang"
+              title2="Gabung dengan"
+              title3="Akademi UMKM Sekarang"
               textColor1="var(--themeRed)"
               textColor2="#000000"
               alignItems="start"
             />
             <p className="text-gray-700 text-sm md:text-lg">
-              Aplikasi yang digunakan untuk membantu promosi UMKM secara cepat
-              dan mudah!
+              Bergabunglah dengan platform kami untuk mengakses panduan dan
+              kursus yang dirancang khusus untuk mendukung UMKM, mahasiswa, dan
+              profesional.
             </p>
             <div>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="http://ukm.sixeyestech.com/admin/login"
+                href="/landing"
                 className="bg-[var(--themeRed)] text-white px-6 py-2 rounded-md font-bold hover:bg-red-700 transition-transform transform hover:scale-105"
               >
-                🚀 Klik di sini untuk upload bisnis
+                🚀 Klik di sini untuk Bergabung
               </a>
             </div>
           </div>
@@ -79,8 +69,8 @@ const DownloadApp = ({ currentPath }) => {
           {/* ✅ **Right Section (Image)** */}
           <div className="md:w-1/2 flex justify-center">
             <img
-              src="phone.webp"
-              alt="Download App"
+              src="https://github.com/fsl-karimullah/my-img-source/blob/main/Growth%20curve-cuate.png?raw=true"
+              alt="Learn and Grow"
               className="w-[250px] md:w-[400px] object-contain"
             />
           </div>
@@ -90,7 +80,7 @@ const DownloadApp = ({ currentPath }) => {
         <div className="flex flex-col gap-12 w-full">
           {/* ✅ **Title Section** */}
           <h1 className="text-3xl font-bold text-center text-[var(--themeRed)]">
-            📚 Panduan Pasang Bisnis
+            📚 Panduan Bergabung di Akademi UMKM
           </h1>
 
           {/* ✅ **Guide Cards Grid** */}
@@ -110,7 +100,7 @@ const DownloadApp = ({ currentPath }) => {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="http://ukm.sixeyestech.com/admin/login"
+              href="/landing"
               className="bg-[var(--themeRed)] text-white px-6 py-2 rounded-md font-bold hover:bg-red-700 transition-transform transform hover:scale-105"
             >
               🚀 Daftar Sekarang!
