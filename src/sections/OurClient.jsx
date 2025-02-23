@@ -33,7 +33,7 @@ const WebinarValueSection = ({ currentPath }) => {
             {cards.map((card, index) => (
               <div
                 key={index}
-                className="relative flex items-center justify-center bg-gray-50 p-4 rounded-xl shadow-md  transition-transform transform  overflow-hidden"
+                className="relative flex items-center justify-center bg-gray-300 p-4 rounded-xl shadow-md  transition-transform transform  overflow-hidden"
               >
                 <img
                   src={card.img}

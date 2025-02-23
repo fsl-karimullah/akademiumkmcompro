@@ -97,7 +97,7 @@ const VideoEdukasiDetail = () => {
       >
         <Button
           startIcon={<ArrowBackIcon />}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/videoedukasi')}
           sx={{ color: "#d61355", fontWeight: "bold" }}
         >
           Kembali

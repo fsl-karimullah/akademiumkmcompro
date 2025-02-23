@@ -22,6 +22,7 @@ import NewsDetails from './page/NewsDetails';
 import AllNews from './page/AllNews';
 import Edukasi from './page/Edukasi';
 import EdukasiDetail from './page/EdukasiDetail';
+import MentorPage from './page/Mentor/MentorPage';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<Home currentPath={currentPath} />} />
       <Route path="/webinars" element={<WebinarsPage currentPath={currentPath} />} />
+      <Route path="/mentor" element={<MentorPage currentPath={currentPath} />} />
       <Route path="/news/:id" element={<NewsDetails currentPath={currentPath} />} />
       <Route path="/allnews" element={<AllNews currentPath={currentPath} />} />
       <Route path="/list-templates" element={<ListTemplate currentPath={currentPath} />} />

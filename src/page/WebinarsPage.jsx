@@ -13,22 +13,23 @@ const WebinarsPage = ({ currentPath }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchWebinars = async () => {
-      try {
-        const response = await axios.get(endpoint.getWebinars);
-        if (response.data && Array.isArray(response.data.data)) {
-          setWebinars(response.data.data);
-        } else {
-          setError("Unexpected response format");
-        }
-      } catch (error) {
-        setError("Failed to fetch digital products. Please try again.");
-      } finally {
-        setLoading(false);
+  // Moved outside useEffect so it can be reused for retrying
+  const fetchWebinars = async () => {
+    try {
+      const response = await axios.get(endpoint.getWebinars);
+      if (response.data && Array.isArray(response.data.data)) {
+        setWebinars(response.data.data);
+      } else {
+        setError("Unexpected response format");
       }
-    };
+    } catch (err) {
+      setError("Failed to fetch digital products. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchWebinars();
   }, []);
 
@@ -49,25 +50,47 @@ const WebinarsPage = ({ currentPath }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "60vh",
+          minHeight: "70vh",
           backgroundColor: "#fef3f2",
-          textAlign: "center",
-          padding: "2rem 1rem",
+          padding: "3rem 1rem",
         }}
       >
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
-            {/* ✅ Left Content */}
-            <Grid item xs={12} md={6}>
+            {/* ✅ Hero Image */}
+            <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <img
+                  src={heroImage}
+                  alt="Digital Products Hero"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+                  }}
+                />
+              </Box>
+            </Grid>
+
+            {/* ✅ Hero Text */}
+            <Grid
+              item
+              xs={12}
+              md={6}
+              order={{ xs: 2, md: 1 }}
+              sx={{ textAlign: { xs: "center", md: "left" } }}
+            >
               <Typography
                 variant="h3"
                 sx={{
                   fontWeight: "bold",
                   mb: 2,
-                  fontSize: { xs: "2rem", md: "2.5rem" },
+                  fontSize: { xs: "2rem", md: "2.8rem" },
                 }}
               >
-                🚀 Tingkatkan Bisnis Anda dengan <span className="text-red-500">Produk Digital</span>!
+                🚀 Tingkatkan Bisnis Anda dengan{" "}
+                <span style={{ color: "#d32f2f" }}>Produk Digital</span>!
               </Typography>
               <Typography
                 variant="body1"
@@ -77,9 +100,9 @@ const WebinarsPage = ({ currentPath }) => {
                   color: "gray",
                 }}
               >
-                Jelajahi berbagai produk digital seperti template bisnis, e-book strategi, 
-                dan panduan praktis yang dirancang khusus untuk membantu UMKM, mahasiswa, 
-                dan profesional menjadi lebih kompetitif di era digital.
+                Jelajahi berbagai produk digital seperti template bisnis, e-book
+                strategi, dan panduan praktis yang dirancang khusus untuk membantu
+                UMKM, mahasiswa, dan profesional menjadi lebih kompetitif di era digital.
               </Typography>
               {/* <Button
                 variant="contained"
@@ -92,21 +115,6 @@ const WebinarsPage = ({ currentPath }) => {
               >
                 Temukan Produk Digital
               </Button> */}
-            </Grid>
-
-            {/* ✅ Right Image */}
-            <Grid item xs={12} md={6}>
-              <img
-                src={heroImage}
-                alt="Digital Products Hero"
-                className="rounded-lg"
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: "12px",
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-                }}
-              />
             </Grid>
           </Grid>
         </Container>

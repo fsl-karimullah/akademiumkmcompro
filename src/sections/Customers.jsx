@@ -19,7 +19,7 @@ const webinarValues = [
   },
   {
     id: "04",
-    title: "Harga Terjangkau untuk Member",
+    title: "Live Instagram Bulanan untuk Menambah Wawasan dan Q&A",
     img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Screenshot%202024-12-17%20at%2020.47.44.png?raw=true",
   },
 ];

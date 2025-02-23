@@ -4,27 +4,15 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  CardActions,
   Typography,
   Box,
   Button,
   Divider,
+  Chip,
 } from "@mui/material";
-import { CalendarToday, Visibility } from "@mui/icons-material";
+import { Visibility } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-
-const formatDate = (date) => {
-  try {
-    const validDate = new Date(date);
-    if (isNaN(validDate)) throw new Error("Invalid Date");
-    return validDate.toLocaleDateString("id-ID", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch {
-    return "Date Not Available";
-  }
-};
 
 const WebinarCard = ({ webinar }) => {
   const navigate = useNavigate();
@@ -33,103 +21,88 @@ const WebinarCard = ({ webinar }) => {
     <Card
       sx={{
         borderRadius: "12px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        overflow: "hidden",
         "&:hover": {
           transform: "translateY(-5px)",
-          boxShadow: "0 6px 12px rgba(0,0,0,0.15)",
+          boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
         },
       }}
     >
-      {/* ✅ Card Media */}
       <CardActionArea onClick={() => navigate(`/webinars/${webinar.id}`)}>
-        <CardMedia
-          component="img"
-          height="180"
-          image={webinar.thumbnail || "default-thumbnail.webp"}
-          alt={webinar.title || "No Title Available"}
-          sx={{
-            objectFit: "cover",
-            borderTopLeftRadius: "12px",
-            borderTopRightRadius: "12px",
-          }}
-        />
-        {/* ✅ Card Content */}
-        <CardContent sx={{ padding: "16px" }}>
-          {/* Title */}
+        <Box sx={{ position: "relative" }}>
+          <CardMedia
+            component="img"
+            height="200"
+            image={webinar.thumbnail || "default-thumbnail.webp"}
+            alt={webinar.title || "No Title Available"}
+            sx={{
+              objectFit: "cover",
+              width: "100%",
+            }}
+          />
+          {/* Optional Badge */}
+          {webinar.badge && (
+            <Chip
+              label={webinar.badge}
+              size="small"
+              sx={{
+                position: "absolute",
+                top: 16,
+                left: 16,
+                backgroundColor: "var(--themeRed)",
+                color: "#fff",
+              }}
+            />
+          )}
+        </Box>
+        <CardContent sx={{ padding: 2 }}>
           <Typography
             variant="h6"
             sx={{
               fontWeight: "bold",
               mb: 1,
-              fontSize: "1.1rem",
-              lineHeight: "1.3",
+              fontSize: "1.2rem",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
             }}
           >
             {webinar.title || "No Title Available"}
           </Typography>
-          {/* Description */}
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{
               mb: 2,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
               display: "-webkit-box",
               WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
+              overflow: "hidden",
             }}
           >
             {webinar.description || "No Description Available"}
           </Typography>
-          {/* Metadata */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              mb: 1,
-              color: "text.secondary",
-            }}
-          >
-            {/* <CalendarToday sx={{ fontSize: 16 }} />
-            <Typography variant="caption">
-              {formatDate(webinar.date)}
-            </Typography> */}
-          </Box>
         </CardContent>
       </CardActionArea>
-
-      {/* ✅ Divider */}
       <Divider />
-
-      {/* ✅ CTA Section */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "8px 16px",
-        }}
-      >
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{ fontSize: "0.85rem" }}
-        >
+      <CardActions sx={{ justifyContent: "space-between", padding: "8px 16px" }}>
+        <Typography variant="caption" color="text.secondary">
           Hosted by: <strong>{webinar.host || "Admin"}</strong>
         </Typography>
         <Button
           variant="contained"
+          size="small"
+          endIcon={<Visibility />}
           sx={{
             backgroundColor: "var(--themeRed)",
+            textTransform: "none",
+            fontWeight: "bold",
             "&:hover": {
               backgroundColor: "#b50d44",
             },
           }}
-          size="small"
-          endIcon={<Visibility />}
           onClick={(e) => {
             e.stopPropagation();
             navigate(`/webinars/${webinar.id}`);
@@ -137,7 +110,7 @@ const WebinarCard = ({ webinar }) => {
         >
           Lihat Detail
         </Button>
-      </Box>
+      </CardActions>
     </Card>
   );
 };

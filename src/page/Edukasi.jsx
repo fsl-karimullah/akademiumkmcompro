@@ -29,7 +29,7 @@ const Edukasi = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setCourses(response.data.data); // Extract the course data
+      setCourses(response.data.data); 
     } catch (err) {
       setError("Gagal memuat data kursus. Silakan coba lagi.");
       console.error(err);
@@ -43,7 +43,7 @@ const Edukasi = () => {
   }, []);
 
   const handleBack = () => {
-    navigate(-1); // Navigate to the previous page
+    navigate('/landing');
   };
 
   return (
@@ -145,7 +145,8 @@ const Edukasi = () => {
                       color="#d61355"
                       sx={{ mt: 1 }}
                     >
-                      Rp {course.price.toLocaleString("id-ID")}
+                      {course.price === 0 ? "Gratis" : `Rp ${course.price.toLocaleString("id-ID")}`}
+
                     </Typography>
                   </CardContent>
                 </Card>
