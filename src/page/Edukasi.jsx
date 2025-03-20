@@ -13,7 +13,8 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { endpoint } from "../endpoint/api";
+ 
 const Edukasi = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
@@ -23,13 +24,13 @@ const Edukasi = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("userToken"); // Assuming the token is stored in localStorage
-      const response = await axios.get("https://api.akademiumkm.id/api/courses", {
+      const token = localStorage.getItem("userToken");
+      const response = await axios.get(endpoint.getCourses, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setCourses(response.data.data); 
+      setCourses(response.data.data);
     } catch (err) {
       setError("Gagal memuat data kursus. Silakan coba lagi.");
       console.error(err);
@@ -43,7 +44,7 @@ const Edukasi = () => {
   }, []);
 
   const handleBack = () => {
-    navigate('/landing');
+    navigate("/landing");
   };
 
   return (
@@ -92,7 +93,14 @@ const Edukasi = () => {
       {/* Courses Grid */}
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "50vh" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "50vh",
+            }}
+          >
             <CircularProgress />
           </Box>
         ) : error ? (
@@ -108,7 +116,7 @@ const Edukasi = () => {
                 xs={12}
                 sm={6}
                 md={4}
-                onClick={() => navigate(`/course/${course.id}`)} 
+                onClick={() => navigate(`/course-pay/${course.id}`)}
                 sx={{
                   cursor: "pointer",
                   "&:hover .course-card": {
@@ -120,6 +128,9 @@ const Edukasi = () => {
                 <Card
                   className="course-card"
                   sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
                     boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
                     borderRadius: "10px",
                     transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
@@ -129,24 +140,42 @@ const Edukasi = () => {
                   <CardMedia
                     component="img"
                     height="180"
-                    image={course.thumbnail || "https://via.placeholder.com/300x180.png?text=No+Image"}
+                    image={
+                      course.thumbnail ||
+                      "https://via.placeholder.com/300x180.png?text=No+Image"
+                    }
                     alt={course.title}
+                    sx={{ objectFit: "cover" }}
                   />
-                  <CardContent sx={{ p: 2 }}>
-                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  <CardContent
+                    sx={{
+                      flexGrow: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      p: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      gutterBottom
+                      sx={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
                       {course.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" gutterBottom>
                       Mentor: {course.mentor}
                     </Typography>
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      color="#d61355"
-                      sx={{ mt: 1 }}
-                    >
-                      {course.price === 0 ? "Gratis" : `Rp ${course.price.toLocaleString("id-ID")}`}
-
+                    <Typography variant="h6" fontWeight="bold" color="#d61355" sx={{ mt: 1 }}>
+                      {course.price === 0
+                        ? "Gratis"
+                        : `Rp ${course.price.toLocaleString("id-ID")}`}
                     </Typography>
                   </CardContent>
                 </Card>

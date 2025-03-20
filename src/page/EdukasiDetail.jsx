@@ -40,7 +40,7 @@ const EdukasiDetail = () => {
 
         const courseData = response.data.data;
         setCourse(courseData);
-        setSelectedVideo(courseData.videos?.[0] || null); // Handle no videos gracefully
+        setSelectedVideo(courseData.videos?.[0] || null); 
       } catch (err) {
         setError("Gagal memuat detail kursus. Silakan coba lagi.");
         console.error(err);

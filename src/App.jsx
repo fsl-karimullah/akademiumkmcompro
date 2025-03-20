@@ -23,6 +23,7 @@ import AllNews from './page/AllNews';
 import Edukasi from './page/Edukasi';
 import EdukasiDetail from './page/EdukasiDetail';
 import MentorPage from './page/Mentor/MentorPage';
+import EdukasiDetailPay from './page/EdukasiDetailPay';
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function AppContent() {
       <Route path="/loginbisnis" element={<LoginBisnis currentPath={currentPath} />} />
       <Route path="/videoedukasi" element={isAuthenticated ? <VideoEdukasi currentPath={currentPath} /> : <Navigate to="/login" />} />
       <Route path="/course" element={isAuthenticated ? <Edukasi currentPath={currentPath} /> : <Navigate to="/login" />} />
+      <Route path="/course-pay/:id" element={isAuthenticated ? <EdukasiDetailPay currentPath={currentPath} /> : <Navigate to="/login" />} />
       <Route path="/course/:id" element={isAuthenticated ? <EdukasiDetail currentPath={currentPath} /> : <Navigate to="/login" />} />
       <Route path="/videoedukasidetail/:id" element={isAuthenticated ? <VideoEdukasiDetail currentPath={currentPath} /> : <Navigate to="/login" />} />
       <Route path="/register" element={<Register currentPath={currentPath} />} />
