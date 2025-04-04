@@ -13,6 +13,7 @@ export const endpoint = {
   getWebinars: `${prod_url}/api/webinars`,
   getPackage: `${prod_url}/api/packages`,
   getMentor: `${prod_url}/api/mentors`,
+  getTransaction: `${prod_url}/api/transactions`,
   getWebinarsById:(id) => `${prod_url}/api/webinars/${id}`,
   getEducationById:(id) => `${prod_url}/api/education/${id}`,
   searchShop: (lat, lng, value) => `${prod_url}/api/shops?q=${value}&lat=${lat}&lng=${lng}`,
@@ -29,6 +30,6 @@ export const endpoint = {
   getNewsDetails: (id) => `${prod_url}/api/news/${id}`, 
   getCourses: `${prod_url}/api/courses`, 
   getCourseDetails: (id) => `${prod_url}/api/courses/${id}`,
-  buyCourse: (id) => `${prod_url}/api/courses/${id}/pay/`,
+  buyCourse: (id) => `${prod_url}/api/courses/${id}/pay`,
 };
   

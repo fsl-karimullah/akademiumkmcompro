@@ -14,6 +14,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const EdukasiDetailPay = () => {
   const { id } = useParams();
@@ -22,6 +25,7 @@ const EdukasiDetailPay = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [getTransaction, setgetTransaction] = useState(null)
 
   const fetchCourseDetail = async () => {
     try {
@@ -32,7 +36,24 @@ const EdukasiDetailPay = () => {
       });
       setCourse(response.data.data);
     } catch (err) {
-      setError("Gagal memuat data kursus. Silakan coba lagi.");
+      toast.error("Gagal memuat data kursus. Silakan coba lagi.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchTransaction = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("userToken");
+      const response = await axios.get(endpoint.getTransaction, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setgetTransaction(response.data.data);
+      console.log(response.data.data);
+      
+    } catch (err) {
+      toast.error("Gagal memuat data kursus. Silakan coba lagi.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -41,9 +62,9 @@ const EdukasiDetailPay = () => {
 
   useEffect(() => {
     fetchCourseDetail();
+    fetchTransaction();
   }, [id]);
 
-  // Once the course loads, set the selected video to the first preview video (limit to max 3)
   useEffect(() => {
     if (course && course.videos && course.videos.length > 0) {
       const previewVideos = course.videos.slice(0, 3);
@@ -61,21 +82,24 @@ const EdukasiDetailPay = () => {
     navigate(`/course/${course.id}/`);
   };
 
-  const handleEnroll = async () => { 
+  const handleEnroll = async () => {
     try {
       const token = localStorage.getItem("userToken");
       const response = await axios.get(endpoint.buyCourse(id), {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // Redirect to the payment gateway URL
       window.location.href = response.data.data.redirect_url;
     } catch (err) {
+      toast.error("Gagal melakukan pembelian. Silakan coba lagi.");
       console.error("Enroll failed: ", err);
     }
   };
 
+  
+
+
   if (loading) {
-    return (
+    return ( 
       <Box
         sx={{
           display: "flex",
@@ -101,10 +125,11 @@ const EdukasiDetailPay = () => {
 
   if (!course) return null;
 
-  const previewVideos = course.videos.slice(0, 3);
+  const previewVideos = course.videos.slice(0, 1);
 
   return (
     <Box sx={{ backgroundColor: "#f9f9f9", minHeight: "100vh" }}>
+      <ToastContainer position="top-right" autoClose={3000} />
       {/* Sticky Back Header */}
       <Box
         sx={{
@@ -126,6 +151,7 @@ const EdukasiDetailPay = () => {
           Kembali
         </Typography>
       </Box>
+
 
       {/* Course Details & Persuasive Story */}
       <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -204,72 +230,109 @@ const EdukasiDetailPay = () => {
 
         {/* Video Preview Section */}
         <Box sx={{ mt: 6 }}>
-          <Typography variant="h5" fontWeight="bold" gutterBottom>
-            Preview Video
-          </Typography>
-          <Grid container spacing={2}>
-            {/* Video Selection Buttons */}
-            <Grid item xs={12} md={3}>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                {previewVideos.map((video) => (
-                  <Button
-                    key={video.id}
-                    variant={
-                      selectedVideo && selectedVideo.id === video.id
-                        ? "contained"
-                        : "outlined"
-                    }
-                    onClick={() => setSelectedVideo(video)}
-                    sx={{ textAlign: "left" }}
-                  >
-                    {video.id}. {video.title}
-                  </Button>
-                ))}
-              </Box>
-            </Grid>
-            {/* Selected Video Display */}
-            <Grid item xs={12} md={9}>
-              {selectedVideo && (
-                <Box sx={{ position: "relative", paddingTop: "56.25%" }}>
-                  <iframe
-                    src={selectedVideo.url}
-                    title={selectedVideo.title}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      border: 0,
-                    }}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </Box>
-              )}
-            </Grid>
-          </Grid>
+          <Card
+            sx={{
+              p: 4,
+              boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+              borderRadius: 3,
+              backgroundColor: "#fff",
+            }}
+          >
+            <Typography variant="h5" fontWeight="bold" gutterBottom>
+              🎥 Preview Video
+            </Typography>
 
-          {/* Enroll / Full Course Button */}
-          <Box sx={{ textAlign: "center", mt: 4 }}>
-            {!course.enrolled && course.price != 0 ? (
-              <Button
-                variant="contained"
-                onClick={handleEnroll}
-                sx={{ backgroundColor: "#d61355", px: 4, py: 1.5 }}
-              >
-                Beli Sekarang
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={handleViewFullCourse}
-                sx={{ backgroundColor: "#d61355", px: 4, py: 1.5 }}
-              >
-                Lihat Video Lengkap
-              </Button>
-            )}
-          </Box>
+            <Grid container spacing={3}>
+              {/* Video Selection Buttons */}
+              <Grid item xs={12} md={3}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  {previewVideos.map((video) => (
+                    <Button
+                      key={video.id}
+                      variant={
+                        selectedVideo && selectedVideo.id === video.id
+                          ? "contained"
+                          : "outlined"
+                      }
+                      onClick={() => setSelectedVideo(video)}
+                      sx={{
+                        textAlign: "left",
+                        fontWeight: "bold",
+                        backgroundColor: "#d61355",
+                        color: "#fff",
+                      }}
+                    >
+                      {video.title}
+                    </Button>
+                  ))}
+                </Box>
+              </Grid>
+
+              {/* Selected Video Display */}
+              <Grid item xs={12} md={9}>
+                {selectedVideo && (
+                  <Box
+                    sx={{
+                      position: "relative",
+                      paddingTop: "56.25%",
+                      borderRadius: 2,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <iframe
+                      src={selectedVideo.url}
+                      title={selectedVideo.title}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "8px",
+                        border: "0",
+                      }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </Box>
+                )}
+              </Grid>
+            </Grid>
+
+            {/* Enroll / Full Course Button */}
+            <Box sx={{ textAlign: "center", mt: 4 }}>
+              {!course.enrolled && course.price !== 0 ? (
+                <Button
+                  variant="contained"
+                  onClick={handleEnroll}
+                  sx={{
+                    backgroundColor: "#d61355",
+                    px: 4,
+                    py: 1.5,
+                    fontSize: "1.1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  🔥 Beli Sekarang & Mulai Belajar!
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  onClick={handleViewFullCourse}
+                  sx={{
+                    backgroundColor: "#d61355",
+                    px: 4,
+                    py: 1.5,
+                    fontSize: "1.1rem",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  🎓 Lihat Video Lengkap
+                </Button>
+              )}
+            </Box>
+          </Card>
         </Box>
       </Container>
     </Box>

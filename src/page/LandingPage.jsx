@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import SchoolIcon from "@mui/icons-material/School";
 import BusinessIcon from "@mui/icons-material/Business";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent"; // 📞 Support Icon
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { styled } from "@mui/system";
@@ -34,18 +35,15 @@ const StyledCard = styled(Card)({
   justifyContent: "center",
   alignItems: "center",
   textAlign: "center",
-  height: "300px",
-  backgroundColor: "#f8f9fa",
-  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-  transition: "transform 0.3s ease-in-out",
+  height: "280px",
+  backgroundColor: "#fff",
+  borderRadius: "12px",
+  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+  transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
   "&:hover": {
     transform: "scale(1.05)",
+    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.15)",
   },
-});
-
-const CardContentWrapper = styled(CardContent)({
-  position: "relative",
-  zIndex: 2,
 });
 
 const HeroSection = styled(Box)({
@@ -53,7 +51,7 @@ const HeroSection = styled(Box)({
   color: "#fff",
   textAlign: "center",
   padding: "80px 20px",
-  borderRadius: "8px",
+  borderRadius: "10px",
   marginBottom: "40px",
 });
 
@@ -78,13 +76,21 @@ const LandingPage = () => {
   const openLogoutDialog = () => setLogoutOpen(true);
   const closeLogoutDialog = () => setLogoutOpen(false);
 
+  // 📞 Handle WhatsApp Support Button
+  const handleSupportClick = () => {
+    const phoneNumber = "6287826563459";
+    const message = encodeURIComponent("Halo kak, saya mau melaporkan masalah ketika order ...");
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappURL, "_blank");
+  };
+
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
+    <Box sx={{ minHeight: "100vh", backgroundColor: "#f9f9fa" }}>
       {/* Navbar */}
-      <AppBar position="static" color="transparent" elevation={0}>
+      <AppBar position="static" sx={{ backgroundColor: "#fff", boxShadow: "none" }}>
         <Toolbar>
           <Typography
-            variant="h6"
+            variant="h5"
             sx={{
               fontWeight: "bold",
               color: "#d61355",
@@ -96,48 +102,54 @@ const LandingPage = () => {
             Akademi UMKM
           </Typography>
 
-          {!isMobile && (
+          {!isMobile ? (
             <>
               <Button
-                color="inherit"
                 startIcon={<HomeIcon />}
                 onClick={() => handleNavigate("/")}
-                sx={{
-                  fontWeight: "bold",
-                  color: "#d61355",
-                }}
+                sx={{ fontWeight: "bold", color: "#333", mx: 1 }}
               >
                 Homepage
               </Button>
               <Button
-                color="inherit"
+                startIcon={<SupportAgentIcon />}
+                onClick={handleSupportClick}
+                sx={{
+                  fontWeight: "bold",
+                  color: "#fff",
+                  backgroundColor: "#25D366",
+                  "&:hover": { backgroundColor: "#1ebe5d" },
+                  mx: 1,
+                }}
+              >
+                Layanan Pengaduan
+              </Button>
+              <Button
                 startIcon={<LogoutIcon />}
                 onClick={openLogoutDialog}
                 sx={{
                   fontWeight: "bold",
                   color: "#d61355",
+                  mx: 1,
                 }}
               >
                 Logout
               </Button>
             </>
-          )}
-
-          {isMobile && (
+          ) : (
             <>
-              <IconButton color="inherit" onClick={handleMenuClick}>
+              <IconButton onClick={handleMenuClick}>
                 <MenuIcon />
               </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-              >
+              <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
                 <MenuItem onClick={() => handleNavigate("/")}>
-                  <HomeIcon /> Homepage
+                  <HomeIcon sx={{ mr: 1 }} /> Homepage
+                </MenuItem>
+                <MenuItem onClick={handleSupportClick}>
+                  <SupportAgentIcon sx={{ mr: 1 }} /> Layanan Pengaduan
                 </MenuItem>
                 <MenuItem onClick={openLogoutDialog}>
-                  <LogoutIcon /> Logout
+                  <LogoutIcon sx={{ mr: 1 }} /> Logout
                 </MenuItem>
               </Menu>
             </>
@@ -153,19 +165,6 @@ const LandingPage = () => {
         <Typography variant="subtitle1" sx={{ fontSize: "1.2rem" }}>
           Platform untuk memajukan bisnis UMKM Anda dengan edukasi digital.
         </Typography>
-        {/* <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#fff",
-            color: "#d61355",
-            fontWeight: "bold",
-            mt: 4,
-            "&:hover": { backgroundColor: "#ffebef" },
-          }}
-          onClick={() => handleNavigate("/signup")}
-        >
-          Mulai Sekarang
-        </Button> */}
       </HeroSection>
 
       {/* Feature Cards */}
@@ -174,28 +173,28 @@ const LandingPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <StyledCard onClick={() => handleNavigate("/videoedukasi")}>
               <SchoolIcon sx={{ fontSize: "3rem", color: "#d61355" }} />
-              <CardContentWrapper>
+              <CardContent>
                 <Typography variant="h5" sx={{ mt: 2 }}>
                   Video Edukasi
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1 }}>
                   Pelajari strategi bisnis yang efektif.
                 </Typography>
-              </CardContentWrapper>
+              </CardContent>
             </StyledCard>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
             <StyledCard onClick={() => handleNavigate("/course")}>
               <BusinessIcon sx={{ fontSize: "3rem", color: "#d61355" }} />
-              <CardContentWrapper>
+              <CardContent>
                 <Typography variant="h5" sx={{ mt: 2 }}>
-                 Course
+                  Course
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1 }}>
-                  Gabung Kelas Online dan dapatkan sertifikat.
+                  Gabung kelas online dan dapatkan sertifikat.
                 </Typography>
-              </CardContentWrapper>
+              </CardContent>
             </StyledCard>
           </Grid>
         </Grid>

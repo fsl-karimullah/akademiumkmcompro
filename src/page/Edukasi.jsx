@@ -9,17 +9,22 @@ import {
   CardMedia,
   CardContent,
   CircularProgress,
+  TextField,
+  Fab,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ReportIcon from "@mui/icons-material/Report"; // ❗ Error Icon
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
- 
+
 const Edukasi = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchCourses = async () => {
     try {
@@ -31,6 +36,7 @@ const Edukasi = () => {
         },
       });
       setCourses(response.data.data);
+      setFilteredCourses(response.data.data);
     } catch (err) {
       setError("Gagal memuat data kursus. Silakan coba lagi.");
       console.error(err);
@@ -47,8 +53,39 @@ const Edukasi = () => {
     navigate("/landing");
   };
 
+  // 🔍 Handle Search Input
+  const handleSearch = (event) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    const filtered = courses.filter(
+      (course) =>
+        course.title.toLowerCase().includes(query) ||
+        course.mentor.toLowerCase().includes(query)
+    );
+
+    setFilteredCourses(filtered);
+  };
+
+  // 🚨 Handle Report Issue (Opens WhatsApp)
+  const handleReportIssue = () => {
+    const phoneNumber = "6287826563459"; // WhatsApp number (Indonesia format)
+    const message = encodeURIComponent(
+      "Halo kak, saya mau melaporkan masalah ketika order ..."
+    );
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+
+    window.open(whatsappURL, "_blank"); // Opens in a new tab
+  };
+
   return (
-    <Box sx={{ backgroundColor: "#f9f9f9", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        backgroundColor: "#f9f9f9",
+        minHeight: "100vh",
+        position: "relative",
+      }}
+    >
       {/* Back Button */}
       <Box
         sx={{
@@ -86,9 +123,27 @@ const Edukasi = () => {
           Jelajahi Kursus Kami
         </Typography>
         <Typography variant="subtitle1" sx={{ mt: 2 }}>
-          Tingkatkan kemampuan Anda dengan kursus yang dirancang untuk semua level.
+          Tingkatkan kemampuan Anda dengan kursus yang dirancang untuk semua
+          level.
         </Typography>
       </Box>
+
+      {/* 🔍 Search Bar */}
+      <Container maxWidth="lg">
+        <TextField
+          fullWidth
+          label="Cari kursus berdasarkan judul"
+          variant="outlined"
+          value={searchQuery}
+          onChange={handleSearch}
+          sx={{
+            mb: 3,
+            backgroundColor: "#fff",
+            borderRadius: "8px",
+            boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          }}
+        />
+      </Container>
 
       {/* Courses Grid */}
       <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -107,9 +162,13 @@ const Edukasi = () => {
           <Typography variant="h6" color="error" textAlign="center">
             {error}
           </Typography>
+        ) : filteredCourses.length === 0 ? (
+          <Typography variant="h6" textAlign="center" color="textSecondary">
+            Tidak ada kursus yang sesuai dengan pencarian Anda.
+          </Typography>
         ) : (
           <Grid container spacing={4} justifyContent="center">
-            {courses.map((course) => (
+            {filteredCourses.map((course) => (
               <Grid
                 item
                 key={course.id}
@@ -169,10 +228,19 @@ const Edukasi = () => {
                     >
                       {course.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      gutterBottom
+                    >
                       Mentor: {course.mentor}
                     </Typography>
-                    <Typography variant="h6" fontWeight="bold" color="#d61355" sx={{ mt: 1 }}>
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      color="#d61355"
+                      sx={{ mt: 1 }}
+                    >
                       {course.price === 0
                         ? "Gratis"
                         : `Rp ${course.price.toLocaleString("id-ID")}`}
@@ -184,6 +252,23 @@ const Edukasi = () => {
           </Grid>
         )}
       </Container>
+
+      {/* 🚨 Floating Action Button (FAB) for WhatsApp Report */}
+      <Fab
+        color="error"
+        aria-label="report"
+        onClick={handleReportIssue}
+        sx={{
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+          backgroundColor: "#25D366", // WhatsApp Green
+          color: "#fff",
+          "&:hover": { backgroundColor: "#1ebe5d" },
+        }}
+      >
+        <ReportIcon />
+      </Fab>
     </Box>
   );
 };

@@ -7,7 +7,7 @@ import {
   ListItemButton,
   ListItemText,
   CircularProgress,
-  IconButton,
+  IconButton, 
   useMediaQuery,
   Drawer,
   Button,
@@ -40,7 +40,7 @@ const EdukasiDetail = () => {
 
         const courseData = response.data.data;
         setCourse(courseData);
-        setSelectedVideo(courseData.videos?.[0] || null); 
+        setSelectedVideo(courseData.videos?.[0] || null);
       } catch (err) {
         setError("Gagal memuat detail kursus. Silakan coba lagi.");
         console.error(err);
@@ -54,7 +54,14 @@ const EdukasiDetail = () => {
 
   if (loading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -85,10 +92,18 @@ const EdukasiDetail = () => {
           zIndex: 1000,
         }}
       >
-        <IconButton onClick={() => navigate("/course")} sx={{ color: "#d61355" }}>
+        <IconButton
+          onClick={() => navigate("/course")}
+          sx={{ color: "#d61355" }}
+        >
           <ArrowBackIcon fontSize="large" />
         </IconButton>
-        <Typography variant="h6" fontWeight="bold" color="#d61355" sx={{ ml: 2 }}>
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          color="#d61355"
+          sx={{ ml: 2 }}
+        >
           Kembali
         </Typography>
         {isMobile && (
@@ -102,7 +117,13 @@ const EdukasiDetail = () => {
         )}
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "calc(100vh - 64px)" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          minHeight: "calc(100vh - 64px)",
+        }}
+      >
         {/* Left: Video Materials List */}
         {!isMobile ? (
           <Box
@@ -113,7 +134,11 @@ const EdukasiDetail = () => {
               padding: 3,
             }}
           >
-            <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, color: "#d61355" }}>
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              sx={{ mb: 2, color: "#d61355" }}
+            >
               Materi Kursus
             </Typography>
             {course.videos?.length > 0 ? (
@@ -127,11 +152,12 @@ const EdukasiDetail = () => {
                         "&.Mui-selected": {
                           backgroundColor: "#d61355",
                           color: "#fff",
+                          
                           "&:hover": {
                             backgroundColor: "#bf1048",
                           },
                         },
-                      }}
+                      }} 
                     >
                       <ListItemText primary={video.title} />
                     </ListItemButton>
@@ -145,7 +171,11 @@ const EdukasiDetail = () => {
             )}
           </Box>
         ) : (
-          <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+          <Drawer
+            anchor="left"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+          >
             <Box
               sx={{
                 width: "250px",
@@ -154,7 +184,11 @@ const EdukasiDetail = () => {
                 height: "100%",
               }}
             >
-              <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, color: "#d61355" }}>
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                sx={{ mb: 2, color: "#d61355" }}
+              >
                 Materi Kursus
               </Typography>
               {course.videos?.length > 0 ? (
@@ -183,7 +217,11 @@ const EdukasiDetail = () => {
                   ))}
                 </List>
               ) : (
-                <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  sx={{ mt: 2 }}
+                >
                   Tidak ada materi tersedia.
                 </Typography>
               )}
@@ -207,7 +245,7 @@ const EdukasiDetail = () => {
             fontWeight="bold"
             sx={{ mb: 2, textAlign: "center" }}
           >
-            {course.title} 
+            {course.title}
           </Typography>
           <Typography
             variant="body2"
@@ -229,7 +267,9 @@ const EdukasiDetail = () => {
               fontWeight: "bold",
             }}
           >
-            {course.price === 0 ? "Gratis" : `Rp ${course.price.toLocaleString("id-ID")}`}
+            {course.price === 0
+              ? "Gratis"
+              : `Rp ${course.price.toLocaleString("id-ID")}`}
           </Typography>
           <Box
             sx={{

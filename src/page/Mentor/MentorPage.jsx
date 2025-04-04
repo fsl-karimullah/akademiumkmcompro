@@ -257,7 +257,7 @@ const MentorPage = () => {
                       "https://via.placeholder.com/400x300?text=No+Image"
                     }
                     alt={mentor.name}
-                    className="absolute top-0 left-0 w-full h-full object-cover"
+                    className="absolute top-0 left-0 w-full h-full object-contain"
                   />
                 </div>
                 <div className="p-6">
