@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.15.3",
     "@mui/material": "^5.15.3",
     "axios": "^1.7.2",
+    "html-react-parser": "^5.2.3",
     "localforage": "^1.10.0",
     "logger": "^0.0.1",
     "match-sorter": "^6.3.3",

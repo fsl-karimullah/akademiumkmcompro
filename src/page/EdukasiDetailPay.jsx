@@ -15,8 +15,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from 'react-toastify';
-
+import { ToastContainer, toast } from "react-toastify";
+import parse from "html-react-parser";
 
 const EdukasiDetailPay = () => {
   const { id } = useParams();
@@ -25,7 +25,7 @@ const EdukasiDetailPay = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [getTransaction, setgetTransaction] = useState(null)
+  const [getTransaction, setgetTransaction] = useState(null);
 
   const fetchCourseDetail = async () => {
     try {
@@ -51,7 +51,6 @@ const EdukasiDetailPay = () => {
       });
       setgetTransaction(response.data.data);
       console.log(response.data.data);
-      
     } catch (err) {
       toast.error("Gagal memuat data kursus. Silakan coba lagi.");
       console.error(err);
@@ -95,11 +94,8 @@ const EdukasiDetailPay = () => {
     }
   };
 
-  
-
-
   if (loading) {
-    return ( 
+    return (
       <Box
         sx={{
           display: "flex",
@@ -152,7 +148,6 @@ const EdukasiDetailPay = () => {
         </Typography>
       </Box>
 
-
       {/* Course Details & Persuasive Story */}
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Grid container spacing={4}>
@@ -194,9 +189,25 @@ const EdukasiDetailPay = () => {
             <Typography variant="subtitle1" gutterBottom>
               Mentor: {course.mentor}
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              {course.description}
-            </Typography>
+            <Box
+              sx={{
+                typography: "body1",
+                "& ul": {
+                  pl: 3,
+                  listStyle: "disc",
+                },
+                "& ol": {
+                  pl: 3,
+                  listStyle: "decimal",
+                },
+                "& li": {
+                  mb: 0.5,
+                },
+              }}
+            >
+              {parse(course.description)}
+            </Box>
+
             <Typography variant="h6" color="#d61355" gutterBottom>
               {course.price === 0
                 ? "Gratis"
