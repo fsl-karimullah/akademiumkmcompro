@@ -31,7 +31,7 @@ const Navbar = () => {
           <Logo />
           <span className="hidden md:block text-xl font-bold text-[var(--primary)] tracking-wide">
             Akademi UMKM
-          </span>
+          </span> 
         </div>
 
         {/* ✅ Desktop Menu */}

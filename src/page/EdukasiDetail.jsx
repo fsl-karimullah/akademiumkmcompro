@@ -121,7 +121,7 @@ const EdukasiDetail = () => {
         sx={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
-          minHeight: "calc(100vh - 64px)",
+          height: "calc(100vh - 64px)",
         }}
       >
         {/* Left: Video Materials List */}
@@ -132,6 +132,8 @@ const EdukasiDetail = () => {
               backgroundColor: "#fff",
               boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
               padding: 3,
+              maxHeight: "calc(100vh - 64px)",
+              overflowY: "auto",
             }}
           >
             <Typography
