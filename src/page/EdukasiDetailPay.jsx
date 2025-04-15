@@ -26,7 +26,22 @@ const EdukasiDetailPay = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [getTransaction, setgetTransaction] = useState(null);
-
+  const getEmbedUrl = (url) => {
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      return url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/");
+    }
+  
+    if (url.includes("drive.google.com")) {
+      const match = url.match(/\/file\/d\/([^/]+)\//);
+      const fileId = match?.[1];
+      if (fileId) {
+        return `https://drive.google.com/file/d/${fileId}/preview`;
+      }
+    }
+  
+    return url; // fallback
+  };
+  
   const fetchCourseDetail = async () => {
     try {
       setLoading(true);
@@ -291,7 +306,7 @@ const EdukasiDetailPay = () => {
                     }}
                   >
                     <iframe
-                      src={selectedVideo.url}
+                      src={getEmbedUrl(selectedVideo.url)}
                       title={selectedVideo.title}
                       style={{
                         position: "absolute",

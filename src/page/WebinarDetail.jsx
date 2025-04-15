@@ -7,16 +7,20 @@ import {
   Card,
   CardContent,
   CardMedia,
+  useMediaQuery,
+  IconButton,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
 import parse from "html-react-parser";
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const WebinarDetail = ({ currentPath }) => {
   const { id } = useParams();
+    const isMobile = useMediaQuery("(max-width:600px)");
   const [webinar, setWebinar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -52,7 +56,42 @@ const WebinarDetail = ({ currentPath }) => {
 
   return (
     <Box sx={{ backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      <Navbar currentPath={currentPath} />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          padding: 2,
+          backgroundColor: "#fff",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          position: "sticky",
+          top: 0,
+          zIndex: 1000,
+        }}
+      >
+        <IconButton
+          onClick={() => navigate("/course")}
+          sx={{ color: "#d61355" }}
+        >
+          <ArrowBackIcon fontSize="large" />
+        </IconButton>
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          color="#d61355"
+          sx={{ ml: 2 }}
+        >
+          Kembali
+        </Typography>
+        {isMobile && (
+          <Button
+            startIcon={<MenuIcon />}
+            sx={{ marginLeft: "auto", color: "#d61355", fontWeight: "bold" }}
+            onClick={() => setDrawerOpen(true)}
+          >
+            Materi
+          </Button>
+        )}
+      </Box>
       <Container maxWidth="lg" sx={{ py: 8 }}>
         {webinar ? (
           <Card

@@ -17,6 +17,13 @@ import { useNavigate } from "react-router-dom";
 const WebinarCard = ({ webinar }) => {
   const navigate = useNavigate();
 
+  const stripHtml = (html) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || "";
+  };
+  
+
   return (
     <Card
       sx={{
@@ -82,7 +89,8 @@ const WebinarCard = ({ webinar }) => {
               overflow: "hidden",
             }}
           >
-            {webinar.description || "No Description Available"}
+            {stripHtml(webinar.description) || "No Description Available"}
+
           </Typography>
         </CardContent>
       </CardActionArea>
