@@ -13,7 +13,7 @@ import {
   Fab,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ReportIcon from "@mui/icons-material/Report"; // ❗ Error Icon
+import ReportIcon from "@mui/icons-material/Report";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
@@ -53,7 +53,6 @@ const Edukasi = () => {
     navigate("/landing");
   };
 
-  // 🔍 Handle Search Input
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
@@ -67,16 +66,99 @@ const Edukasi = () => {
     setFilteredCourses(filtered);
   };
 
-  // 🚨 Handle Report Issue (Opens WhatsApp)
   const handleReportIssue = () => {
-    const phoneNumber = "6287826563459"; // WhatsApp number (Indonesia format)
+    const phoneNumber = "6287826563459";
     const message = encodeURIComponent(
       "Halo kak, saya mau melaporkan masalah ketika order ..."
     );
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
-
-    window.open(whatsappURL, "_blank"); // Opens in a new tab
+    window.open(whatsappURL, "_blank");
   };
+
+  const renderCourseCard = (course) => (
+    <Grid
+      item
+      key={course.id}
+      xs={12}
+      sm={6}
+      md={4}
+      onClick={() => navigate(`/course-pay/${course.id}`)}
+      sx={{
+        cursor: "pointer",
+        "&:hover .course-card": {
+          boxShadow: "0px 6px 20px rgba(0,0,0,0.2)",
+          transform: "scale(1.05)",
+        },
+      }}
+    >
+      <Card
+        className="course-card"
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          borderRadius: "10px",
+          transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
+          overflow: "hidden",
+        }}
+      >
+        <CardMedia
+          component="img"
+          height="180"
+          image={
+            course.thumbnail ||
+            "https://via.placeholder.com/300x180.png?text=No+Image"
+          }
+          alt={course.title}
+          sx={{ objectFit: "cover" }}
+        />
+        <CardContent
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            p: 2,
+          }}
+        >
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            gutterBottom
+            sx={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {course.title}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            gutterBottom
+          >
+            Mentor: {course.mentor}
+          </Typography>
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            color="#d61355"
+            sx={{ mt: 1 }}
+          >
+            {course.price === 0
+              ? "Gratis"
+              : `Rp ${course.price.toLocaleString("id-ID")}`}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grid>
+  );
+
+  const freeCourses = filteredCourses.filter((course) => course.price === 0);
+  const paidCourses = filteredCourses.filter((course) => course.price > 0);
 
   return (
     <Box
@@ -123,12 +205,11 @@ const Edukasi = () => {
           Jelajahi Kursus Kami
         </Typography>
         <Typography variant="subtitle1" sx={{ mt: 2 }}>
-          Tingkatkan kemampuan Anda dengan kursus yang dirancang untuk semua
-          level.
+          Tingkatkan kemampuan Anda dengan kursus yang dirancang untuk semua level.
         </Typography>
       </Box>
 
-      {/* 🔍 Search Bar */}
+      {/* Search Bar */}
       <Container maxWidth="lg">
         <TextField
           fullWidth
@@ -145,8 +226,8 @@ const Edukasi = () => {
         />
       </Container>
 
-      {/* Courses Grid */}
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      {/* Courses Section */}
+      <Container maxWidth="lg" sx={{ py: 2 }}>
         {loading ? (
           <Box
             sx={{
@@ -162,98 +243,73 @@ const Edukasi = () => {
           <Typography variant="h6" color="error" textAlign="center">
             {error}
           </Typography>
-        ) : filteredCourses.length === 0 ? (
-          <Typography variant="h6" textAlign="center" color="textSecondary">
-            Tidak ada kursus yang sesuai dengan pencarian Anda.
-          </Typography>
         ) : (
-          <Grid container spacing={4} justifyContent="center">
-            {filteredCourses.map((course) => (
-              <Grid
-                item
-                key={course.id}
-                xs={12}
-                sm={6}
-                md={4}
-                onClick={() => navigate(`/course-pay/${course.id}`)}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover .course-card": {
-                    boxShadow: "0px 6px 20px rgba(0,0,0,0.2)",
-                    transform: "scale(1.05)",
-                  },
-                }}
-              >
-                <Card
-                  className="course-card"
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-                    borderRadius: "10px",
-                    transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
-                    overflow: "hidden",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="180"
-                    image={
-                      course.thumbnail ||
-                      "https://via.placeholder.com/300x180.png?text=No+Image"
-                    }
-                    alt={course.title}
-                    sx={{ objectFit: "cover" }}
-                  />
-                  <CardContent
-                    sx={{
-                      flexGrow: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      p: 2,
-                    }}
+          <>
+            {/* Free Courses */}
+            {freeCourses.length > 0 && (
+              <>
+                <Box sx={{ textAlign: "center", mb: 4 }}>
+                  <Typography
+                    variant="h4"
+                    fontWeight="bold"
+                    color="#d61355"
+                    sx={{ mb: 1 }}
                   >
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      gutterBottom
-                      sx={{
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                    >
-                      {course.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      Mentor: {course.mentor}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      color="#d61355"
-                      sx={{ mt: 1 }}
-                    >
-                      {course.price === 0
-                        ? "Gratis"
-                        : `Rp ${course.price.toLocaleString("id-ID")}`}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+                    Hadiah buat kamu!
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="textSecondary"
+                    sx={{ maxWidth: "600px", margin: "0 auto" }}
+                  >
+                    Dapatkan kursus-kursus gratis yang akan membantu kamu mengembangkan
+                    skill tanpa biaya apapun!
+                  </Typography>
+                </Box>
+                <Grid container spacing={4}>
+                  {freeCourses.map(renderCourseCard)}
+                </Grid>
+              </>
+            )}
+
+            {/* Paid Courses */}
+            {paidCourses.length > 0 && (
+              <>
+                <Box sx={{ textAlign: "center", mb: 4, mt: 4 }}>
+                  <Typography
+                    variant="h4"
+                    fontWeight="bold"
+                    color="#d61355"
+                    sx={{ mb: 1 }}
+                  >
+                    Pembelajaran pilihan untuk upgrade diri
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="textSecondary"
+                    sx={{ maxWidth: "600px", margin: "0 auto" }}
+                  >
+                    Temukan kursus terbaik yang akan membantu kamu untuk naik ke level
+                    berikutnya dalam pengembangan diri.
+                  </Typography>
+                </Box>
+                <Grid container spacing={4}>
+                  {paidCourses.map(renderCourseCard)}
+                </Grid>
+              </>
+            )}
+
+            {/* No Course Match */}
+            {filteredCourses.length === 0 && (
+              <Typography variant="h6" textAlign="center" color="textSecondary" sx={{ mt: 4 }}>
+                Tidak ada kursus yang sesuai dengan pencarian Anda.
+              </Typography>
+            )}
+          </>
         )}
       </Container>
 
-      {/* 🚨 Floating Action Button (FAB) for WhatsApp Report */}
+      {/* Floating WhatsApp Report Button */}
       <Fab
         color="error"
         aria-label="report"
@@ -262,7 +318,7 @@ const Edukasi = () => {
           position: "fixed",
           bottom: 20,
           right: 20,
-          backgroundColor: "#25D366", // WhatsApp Green
+          backgroundColor: "#25D366",
           color: "#fff",
           "&:hover": { backgroundColor: "#1ebe5d" },
         }}

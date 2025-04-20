@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Container, Typography, Grid, Button, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import heroImage from "../../public/webinars-img.png";
@@ -89,8 +96,8 @@ const WebinarsPage = ({ currentPath }) => {
                   fontSize: { xs: "2rem", md: "2.8rem" },
                 }}
               >
-                🚀 Tingkatkan Bisnis Anda dengan{" "}
-                <span style={{ color: "#d32f2f" }}>Produk Digital</span>!
+                🚀 Tingkatkan Skill Anda secara{" "}
+                <span style={{ color: "#d32f2f" }}>Mandiri</span>!
               </Typography>
               <Typography
                 variant="body1"
@@ -101,9 +108,11 @@ const WebinarsPage = ({ currentPath }) => {
                 }}
               >
                 Jelajahi berbagai produk digital seperti template bisnis, e-book
-                strategi, dan panduan praktis yang dirancang khusus untuk membantu
-                UMKM, mahasiswa, dan profesional menjadi lebih kompetitif di era digital.
+                strategi, dan panduan praktis yang dirancang khusus untuk
+                membantu UMKM, mahasiswa, dan profesional menjadi lebih
+                kompetitif di era digital.
               </Typography>
+
               {/* <Button
                 variant="contained"
                 sx={{
@@ -130,7 +139,7 @@ const WebinarsPage = ({ currentPath }) => {
             mb: 4,
           }}
         >
-          🛒 Produk Digital Kami
+          Pembelajaran Mandiri
         </Typography>
 
         {/* ✅ Loading State */}

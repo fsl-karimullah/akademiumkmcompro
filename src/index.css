@@ -236,3 +236,21 @@ a {
     display: none; /* Hide desktop view on mobile */
   }
 }
+
+
+
+.slick-prev, .slick-next {
+  color: #d61355 !important; /* Change arrow color */
+}
+
+.slick-prev:before, .slick-next:before {
+  color: #d61355 !important; /* Change arrow icon color */
+}
+
+.slick-prev {
+  left: -30px !important; /* Adjust positioning */
+}
+
+.slick-next {
+  right: -30px !important; /* Adjust positioning */
+}

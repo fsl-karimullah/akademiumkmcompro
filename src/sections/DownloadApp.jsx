@@ -58,7 +58,7 @@ const DownloadApp = ({ currentPath }) => {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="/landing"
+                href="/courses"
                 className="bg-[var(--themeRed)] text-white px-6 py-2 rounded-md font-bold hover:bg-red-700 transition-transform transform hover:scale-105"
               >
                 🚀 Klik di sini untuk Bergabung
@@ -100,7 +100,7 @@ const DownloadApp = ({ currentPath }) => {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="/landing"
+              href="/courses"
               className="bg-[var(--themeRed)] text-white px-6 py-2 rounded-md font-bold hover:bg-red-700 transition-transform transform hover:scale-105"
             >
               🚀 Daftar Sekarang!

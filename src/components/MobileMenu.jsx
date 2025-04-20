@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 const links = [
   { name: "Home", path: "/" },
   // { name: "Branding UMKM", path: "/bantu-branding" },
-  { name: "Produk", path: "/webinars" },
+  { name: "Belajar Mandiri", path: "/webinars" },
   // { name: "Promosi Bisnis", path: "/loginbisnis" },
   // { name: "Konsultasi Bisnis", path: "/konsultasi" },
-  { name: "Login", path: "/landing" },
+  { name: "Tingkatkan Skill", path: "/courses" },
   { name: "Contact", path: "https://wa.me/6285281252199", external: true }
 ];
 

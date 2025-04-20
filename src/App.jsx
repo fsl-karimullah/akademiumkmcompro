@@ -24,6 +24,7 @@ import Edukasi from './page/Edukasi';
 import EdukasiDetail from './page/EdukasiDetail';
 import MentorPage from './page/Mentor/MentorPage';
 import EdukasiDetailPay from './page/EdukasiDetailPay';
+import LandingPageCourse from './page/LandingPageCourse/LandingPageCourse';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function AppContent() {
       <Route path="/webinars/:id" element={<WebinarDetail currentPath={currentPath} />} />
       <Route path="/bantu-branding" element={<BantuBranding currentPath={currentPath} />} />
       <Route path="/konsultasi" element={<Consulting currentPath={currentPath} />} />
+      <Route path="/courses" element={<LandingPageCourse currentPath={currentPath} />} />
       <Route path="/coming-soon" element={<UnderConstructionScreen currentPath={currentPath} />} />
       <Route path="/loginbisnis" element={<LoginBisnis currentPath={currentPath} />} />
       <Route path="/videoedukasi" element={isAuthenticated ? <VideoEdukasi currentPath={currentPath} /> : <Navigate to="/login" />} />

@@ -47,7 +47,7 @@ const WebinarValueSection = ({ currentPath }) => {
             ))}
           </div>
           <div className="flex justify-center mt-8">
-            <a href="/landing" target="_blank" rel="noopener noreferrer"
+            <a href="/courses" target="_blank" rel="noopener noreferrer"
               className="bg-[var(--themeRed)] text-white px-6 py-3 rounded-lg font-bold  transition-transform transform "
             >
               🚀 Take Action Sekarang
