@@ -32,7 +32,6 @@ const EdukasiDetail = () => {
     const match = url.match(/\/d\/([^/]+)\//);
     return match ? match[1] : null;
   };
-  
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -266,7 +265,7 @@ const EdukasiDetail = () => {
           >
             Mentor: {course.mentor}
           </Typography>
-          <Typography
+          {/* <Typography
             variant="h6"
             sx={{
               mb: 2,
@@ -278,79 +277,81 @@ const EdukasiDetail = () => {
             {course.price === 0
               ? "Gratis"
               : `Rp ${course.price.toLocaleString("id-ID")}`}
-          </Typography>
+          </Typography> */}
           {selectedVideo ? (
-  // Handle YouTube
-  selectedVideo.url.includes("youtube.com") || selectedVideo.url.includes("youtu.be") ? (
-    <iframe
-      width="100%"
-      height="100%"
-      src={selectedVideo.url.replace("watch?v=", "embed/")}
-      title={selectedVideo.title}
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    ></iframe>
-  ) : selectedVideo.url.includes("drive.google.com") ? (
-    // Handle Google Drive
-    <iframe
-      src={`https://drive.google.com/file/d/${extractDriveId(selectedVideo.url)}/preview`}
-      width="100%"
-      height="100%"
-      allow="autoplay"
-      frameBorder="0"
-      allowFullScreen
-      title={selectedVideo.title}
-    ></iframe>
-  ) : (
-    // Fallback for other file types
-    <Box
-      sx={{
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#fff",
-        border: "2px dashed #d61355",
-        padding: 2,
-        borderRadius: "8px",
-        flexDirection: "column",
-      }}
-    >
-      <Typography variant="h6" color="textPrimary" sx={{ mb: 1 }}>
-        File Pendukung
-      </Typography>
-      <a
-        href={selectedVideo.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "#d61355",
-          fontWeight: "bold",
-          textDecoration: "underline",
-          fontSize: "16px",
-        }}
-      >
-        Klik di sini untuk membuka file
-      </a>
-    </Box>
-  )
-) : (
-  <Typography
-    variant="body1"
-    color="textSecondary"
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100%",
-      color: "#fff",
-    }}
-  >
-    Tidak ada video untuk ditampilkan.
-  </Typography>
-)}
-
+            // Handle YouTube
+            selectedVideo.url.includes("youtube.com") ||
+            selectedVideo.url.includes("youtu.be") ? (
+              <iframe
+                width="100%"
+                height="100%"
+                src={selectedVideo.url.replace("watch?v=", "embed/")}
+                title={selectedVideo.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            ) : selectedVideo.url.includes("drive.google.com") ? (
+              // Handle Google Drive
+              <iframe
+                src={`https://drive.google.com/file/d/${extractDriveId(
+                  selectedVideo.url
+                )}/preview`}
+                width="100%"
+                height="100%"
+                allow="autoplay"
+                frameBorder="0"
+                allowFullScreen
+                title={selectedVideo.title}
+              ></iframe>
+            ) : (
+              // Fallback for other file types
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#fff",
+                  border: "2px dashed #d61355",
+                  padding: 2,
+                  borderRadius: "8px",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography variant="h6" color="textPrimary" sx={{ mb: 1 }}>
+                  File Pendukung
+                </Typography>
+                <a
+                  href={selectedVideo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: "#d61355",
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    fontSize: "16px",
+                  }}
+                >
+                  Klik di sini untuk membuka file
+                </a>
+              </Box>
+            )
+          ) : (
+            <Typography
+              variant="body1"
+              color="textSecondary"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                color: "#fff",
+              }}
+            >
+              Tidak ada video untuk ditampilkan.
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>

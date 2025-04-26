@@ -21,7 +21,7 @@ import parse from "html-react-parser";
 const EdukasiDetailPay = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [course, setCourse] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -53,6 +53,7 @@ const EdukasiDetailPay = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCourse(response.data.data);
+      // console.log(response.data.data);
     } catch (err) {
       toast.error("Gagal memuat data kursus. Silakan coba lagi.");
       // console.error(err);
@@ -78,6 +79,8 @@ const EdukasiDetailPay = () => {
   };
 
   useEffect(() => {
+    // console.log("Course ID:", course);
+
     fetchCourseDetail();
     fetchTransaction();
   }, [id]);
@@ -250,9 +253,50 @@ const EdukasiDetailPay = () => {
             </Box>
 
             <Typography variant="h6" color="#d61355" gutterBottom>
-              {course.price === 0
-                ? "Gratis"
-                : `Rp ${course.price.toLocaleString("id-ID")}`}
+              {course.price === 0 ? (
+                "Gratis"
+              ) : course.discount ? (
+                <>
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      color: "#888",
+                      marginRight: 8,
+                    }}
+                  >
+                    Rp {course.price.toLocaleString("id-ID")}
+                  </span>
+                  <Box
+                    sx={{
+                      display: "inline-block",
+                      padding: "5px 10px",
+                      backgroundColor: "#d61355",
+                      color: "#fff",
+                      borderRadius: "12px",
+                      fontWeight: "bold",
+                      fontSize: "1.2rem",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    Rp{" "}
+                    {Math.round(
+                      course.price * (1 - course.discount / 100)
+                    ).toLocaleString("id-ID")}
+                  </Box>
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      color: "#d61355",
+                      marginLeft: 8,
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    ({course.discount}% Off)
+                  </span>
+                </>
+              ) : (
+                `Rp ${course.price.toLocaleString("id-ID")}`
+              )}
             </Typography>
 
             {/* Persuasive Story Section */}
