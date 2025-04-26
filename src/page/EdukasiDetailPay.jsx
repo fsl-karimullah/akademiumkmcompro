@@ -21,6 +21,7 @@ import parse from "html-react-parser";
 const EdukasiDetailPay = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  
   const [course, setCourse] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,9 +29,11 @@ const EdukasiDetailPay = () => {
   const [getTransaction, setgetTransaction] = useState(null);
   const getEmbedUrl = (url) => {
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
-      return url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/");
+      return url
+        .replace("watch?v=", "embed/")
+        .replace("youtu.be/", "youtube.com/embed/");
     }
-  
+
     if (url.includes("drive.google.com")) {
       const match = url.match(/\/file\/d\/([^/]+)\//);
       const fileId = match?.[1];
@@ -38,10 +41,10 @@ const EdukasiDetailPay = () => {
         return `https://drive.google.com/file/d/${fileId}/preview`;
       }
     }
-  
+
     return url; // fallback
   };
-  
+
   const fetchCourseDetail = async () => {
     try {
       setLoading(true);
@@ -52,7 +55,7 @@ const EdukasiDetailPay = () => {
       setCourse(response.data.data);
     } catch (err) {
       toast.error("Gagal memuat data kursus. Silakan coba lagi.");
-      console.error(err);
+      // console.error(err);
     } finally {
       setLoading(false);
     }
@@ -65,7 +68,7 @@ const EdukasiDetailPay = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setgetTransaction(response.data.data);
-      console.log(response.data.data);
+      // console.log(response.data.data);
     } catch (err) {
       toast.error("Gagal memuat data kursus. Silakan coba lagi.");
       console.error(err);
@@ -92,19 +95,42 @@ const EdukasiDetailPay = () => {
     navigate("/course");
   };
 
-  const handleViewFullCourse = () => {
-    navigate(`/course/${course.id}/`);
-  };
+  // const handleViewFullCourse = () => {
+  //   navigate(`/course/${course.id}/`);
+  // };
+
+  // const handleEnroll = async () => {
+  //   try {
+  //     const token = localStorage.getItem("userToken");
+  //     const response = await axios.get(endpoint.buyCourse(id), {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     window.location.href = response.data.data.redirect_url;
+  //   } catch (err) {
+  //     toast.error("Gagal melakukan pembelian. Silakan coba lagi.");
+  //     console.error("Enroll failed: ", err);
+  //   }
+  // };
 
   const handleEnroll = async () => {
     try {
       const token = localStorage.getItem("userToken");
+
       const response = await axios.get(endpoint.buyCourse(id), {
         headers: { Authorization: `Bearer ${token}` },
       });
-      window.location.href = response.data.data.redirect_url;
+
+      const redirectUrl = response.data?.data?.redirect_url;
+
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        toast.success("Berhasil klaim kursus gratis!");
+
+        navigate(`/course/${course.id}/`);
+      }
     } catch (err) {
-      toast.error("Gagal melakukan pembelian. Silakan coba lagi.");
+      toast.error("Gagal melakukan pembelian atau klaim. Silakan coba lagi.");
       console.error("Enroll failed: ", err);
     }
   };
@@ -344,7 +370,7 @@ const EdukasiDetailPay = () => {
               ) : (
                 <Button
                   variant="contained"
-                  onClick={handleViewFullCourse}
+                  onClick={handleEnroll}
                   sx={{
                     backgroundColor: "#d61355",
                     px: 4,
@@ -354,7 +380,9 @@ const EdukasiDetailPay = () => {
                     textAlign: "center",
                   }}
                 >
-                  🎓 Lihat Video Lengkap
+                  {course.enrolled
+                    ? "Lihat Kursus Lengkap"
+                    : "Claim Gratis Sekarang!"}
                 </Button>
               )}
             </Box>

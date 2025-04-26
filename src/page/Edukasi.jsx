@@ -92,68 +92,113 @@ const Edukasi = () => {
       }}
     >
       <Card
-        className="course-card"
-        sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-          borderRadius: "10px",
-          transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
-          overflow: "hidden",
-        }}
-      >
-        <CardMedia
-          component="img"
-          height="180"
-          image={
-            course.thumbnail ||
-            "https://via.placeholder.com/300x180.png?text=No+Image"
-          }
-          alt={course.title}
-          sx={{ objectFit: "cover" }}
-        />
-        <CardContent
-          sx={{
-            flexGrow: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            p: 2,
-          }}
-        >
-          <Typography
-            variant="h6"
-            fontWeight="bold"
-            gutterBottom
-            sx={{
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            }}
-          >
-            {course.title}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            gutterBottom
-          >
-            Mentor: {course.mentor}
-          </Typography>
+  className="course-card"
+  sx={{
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+    borderRadius: "10px",
+    transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
+    overflow: "hidden",
+    "&:hover": {
+      transform: "scale(1.02)",
+      boxShadow: "0px 6px 15px rgba(0,0,0,0.2)",
+    },
+  }}
+>
+  <CardMedia
+    component="img"
+    height="180"
+    image={
+      course.thumbnail ||
+      "https://via.placeholder.com/300x180.png?text=No+Image"
+    }
+    alt={course.title}
+    sx={{ objectFit: "cover" }}
+  />
+
+  <CardContent
+    sx={{
+      flexGrow: 1,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      p: 2,
+    }}
+  >
+    <Typography
+      variant="h6"
+      fontWeight="bold"
+      gutterBottom
+      sx={{
+        display: "-webkit-box",
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: "vertical",
+        overflow: "hidden",
+      }}
+    >
+      {course.title}
+    </Typography>
+
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      gutterBottom
+    >
+      Mentor: {course.mentor}
+    </Typography>
+
+    <Box sx={{ mt: 1 }}>
+      {course.price === 0 ? (
+        <Typography variant="h6" fontWeight="bold" color="#2e7d32">
+          Gratis
+        </Typography>
+      ) : course.discount > 0 ? (
+        <>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ textDecoration: "line-through" }}
+            >
+              Rp {((course.price * 100) / (100 - course.discount)).toLocaleString("id-ID")}
+            </Typography>
+            <Box
+              sx={{
+                backgroundColor: "#d61355",
+                color: "white",
+                px: 1,
+                py: 0.25,
+                borderRadius: "5px",
+                fontSize: "0.75rem",
+                fontWeight: "bold",
+              }}
+            >
+              -{course.discount}%
+            </Box>
+          </Box>
           <Typography
             variant="h6"
             fontWeight="bold"
             color="#d61355"
-            sx={{ mt: 1 }}
           >
-            {course.price === 0
-              ? "Gratis"
-              : `Rp ${course.price.toLocaleString("id-ID")}`}
+            Rp {course.price.toLocaleString("id-ID")}
           </Typography>
-        </CardContent>
-      </Card>
+        </>
+      ) : (
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          color="#d61355"
+        >
+          Rp {course.price.toLocaleString("id-ID")}
+        </Typography>
+      )}
+    </Box>
+  </CardContent>
+</Card>
+
     </Grid>
   );
 
