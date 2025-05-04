@@ -1,73 +1,55 @@
 import React from "react";
-import CustomComponent from "../components/title/Title";
+import StarIcon from '@mui/icons-material/Star'; // Importing the icon
 
-const values = [
-  {
-    id: "#01",
-    title: "Akses Seumur Hidup",
-    description: "Dapatkan akses seumur hidup ke seluruh kelas dan webinar kami yang dirancang untuk meningkatkan keterampilan dan pengetahuan Anda.",
-    img: "p1.webp",
-  },
-  {
-    id: "#02",
-    title: "Grup Networking Eksklusif",
-    description: "Bergabunglah dengan grup kami untuk berbicara tentang karir, bisnis, dan peluang networking bersama komunitas yang mendukung.",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/2.PNG?raw=true",
-  },
-  {
-    id: "#03",
-    title: "Akses ke Produk Digital",
-    description: "Nikmati produk digital eksklusif yang dirancang untuk membantu meningkatkan produktivitas dan efisiensi bisnis Anda.",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Sage%20Minimal%20Mood%20Board%20Collage%20Instagram%20Post.png?raw=true",
-  },
-];
-
-const WhyChooseUs = ({ currentPath }) => {
-  console.log(currentPath);
-
+const WhyChooseUs = () => {
   return (
-    <div className="bg-white text-[var(--themeRed)] py-12">
-      {currentPath === "/" ? (
-        <div className="flex flex-col gap-16 mt-10 w-full">
-          <div>
-            <CustomComponent
-              title1="Kenapa Memilih Kami"
-              title2="Nilai yang Kami Berikan"
-              title3="Untuk Anda"
-              textColor1="var(--themeRed)"
-              textColor2="#000000"
-              alignItems="center"
-            />
-          </div>
-          <div className="flex flex-col gap-8 px-6 md:px-16">
-            {values.map((value, index) => (
-              <div
-                key={index}
-                className="flex flex-col md:flex-row items-center gap-8 bg-gray-50 p-6 rounded-xl shadow-md  transition-transform transform "
-              >
-                <div className="flex flex-col gap-4 text-left md:w-1/2">
-                  <div className="flex items-center gap-4">
-                    <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 bg-[var(--themeRed)] text-white rounded-full text-lg font-bold">
-                      {value.id}
-                    </div>
-                    <h1 className="text-2xl font-bold text-[var(--themeRed)]">{value.title}</h1>
-                  </div>
-                  <p className="text-gray-700 text-sm md:text-base">
-                    {value.description}
-                  </p>
-                </div>
-                <div className="md:w-1/3"> {/* Adjusted the width to make the image smaller */}
-                  <img
-                    src={value.img}
-                    alt={value.title}
-                    className="w-full rounded-lg shadow-md"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+    <div className="w-full py-20 px-6 md:px-20 bg-white relative overflow-hidden border-t border-gray-200">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-40 h-40 bg-[var(--themeRed)] opacity-10 rounded-full -z-10 blur-2xl" />
+      <div className="absolute bottom-0 right-0 w-60 h-60 bg-[var(--themeRed)] opacity-10 rounded-full -z-10 blur-2xl" />
+
+      {/* Card Container */}
+      <div className="bg-white shadow-lg rounded-2xl border border-gray-100 px-6 md:px-12 py-12 flex flex-col md:flex-row items-center justify-between gap-10 max-w-6xl mx-auto relative">
+        {/* Animated Icon in the Top-Right Corner */}
+        <StarIcon 
+          className="absolute top-4 right-4 text-[var(--themeRed)] text-4xl opacity-80 animate-pulse"
+        />
+
+        {/* Text Content */}
+        <div className="text-center md:text-left space-y-6 max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 leading-snug">
+            Dapatkan Penghasilan Tambahan <br />
+            Lewat Program{" "}
+            <span className="text-[var(--themeRed)]">Affiliate Cave Men's Grooming®</span>
+          </h2>
+          <ul className="text-gray-700 text-base md:text-lg space-y-2">
+            <li>✅ Komisi menarik untuk setiap referral</li>
+            <li>🎁 Akses eksklusif ke e-course & e-book premium</li>
+            <li>
+              🚀 Cocok untuk pelajar, kreator, atau siapa pun yang ingin
+              berkembang
+            </li>
+            <li>🔗 Pendaftaran mudah dan 100% gratis</li>
+          </ul>
+          <a
+            href="https://www.cavemens.id"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-[var(--themeRed)] text-white px-8 py-3 rounded-full font-bold mt-4 hover:bg-red-700 transition"
+          >
+            🚀 Mulai Jadi Affiliate Sekarang
+          </a>
         </div>
-      ) : null}
+
+        {/* Cavemans Logo with Animation */}
+        <div className="flex-shrink-0 animate-bounce">
+          <img
+            src="https://cdn.orderonline.id/uploads/4333221638374289757.png"
+            alt="Cavemans Affiliate"
+            className="w-[180px] md:w-[240px] object-contain drop-shadow-md"
+          />
+        </div>
+      </div>
     </div>
   );
 };
