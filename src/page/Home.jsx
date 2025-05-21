@@ -9,14 +9,16 @@ import Navbar from "../components/Navbar";
 import OurClient from "../sections/OurClient";
 import { useLocation } from "react-router-dom";
 import News from "../sections/News";
+import HeroImage from "../sections/HeroImage";
 
 const Home = ({ currentPath }) => {
   console.log('asdasd',currentPath); 
   return (
     <main className="flex flex-col justify-around ">
       <Navbar currentPath={currentPath} />
-      <section className="p-4">
+      <section className="">
         <Hero currentPath={currentPath} />
+        {/* <HeroImage currentPath={currentPath} /> */}
       </section> 
       <section className="p-4">
         <Serve currentPath={currentPath} />

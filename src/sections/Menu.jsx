@@ -1,89 +1,92 @@
 import React from "react";
 import CustomComponent from "../components/title/Title";
+import "../assets/style/home.css";
 
 const educationPrograms = [
   {
     id: "01",
-    title: "Digital Marketing",
-    description: "Pelajari strategi pemasaran digital untuk meningkatkan kehadiran bisnis Anda secara online, mulai dari SEO, iklan berbayar, hingga pemasaran konten.",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/d253b38a-52e3-4d45-a8e2-c3a87c8841ce.JPG?raw=true",
+    title: "Belajar Bareng & Bertumbuh Bersama",
+    description:
+      "Nikmati pengalaman belajar yang tidak sendirian dapatkan dukungan komunitas dan interaksi langsung dengan alumni sukses untuk memastikan Anda tidak bingung setelah belajar.",
+    img: "images/edukasi.png",
   },
   {
     id: "02",
-    title: "Marketing Communication",
-    description: "Kuasi seni komunikasi pemasaran yang efektif untuk menyampaikan pesan brand Anda dengan tepat kepada target audiens.",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Live%20collaboration-bro.png?raw=true",
-
+    title: "WhatsApp Closing Mastery",
+    description:
+      "Raih penjualan lebih cepat lewat teknik komunikasi personal yang efektif dan tidak mengganggu.",
+    img: "images/whatsapp.png",
   },
   {
     id: "03",
-    title: "Creative Marketing",
-    description: "Jelajahi cara-cara kreatif dalam memasarkan produk dan layanan Anda untuk menonjol di pasar yang kompetitif.",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Creative%20team-cuate.png?raw=true",
+    title: "Affiliate Marketing Basic",
+    description:
+      "Kuasai strategi affiliate marketing untuk meningkatkan penjualan dan memperluas jangkauan bisnis Anda.",
+    img: "images/affiliate.png",
   },
   {
     id: "04",
-    title: "Social Media Management",
-    description: "Kelola platform media sosial Anda dengan strategi yang terukur untuk meningkatkan interaksi dan keterlibatan pelanggan.",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Social%20tree-rafiki.png?raw=true",
+    title: "Essential Marketing Skills",
+    description:
+      "Bangun fondasi pemasaran digital yang kuat untuk pertumbuhan bisnis jangka panjang.",
+    img: "images/marketing.png",
   },
   {
     id: "05",
-    title: "Brand Development",
-    description: "Bangun dan kembangkan brand Anda dengan pendekatan strategis yang menciptakan identitas kuat dan kredibilitas di pasar.",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/brand%20loyalty-bro.png?raw=true",
+    title: "Foundations of Personal Branding",
+    description:
+      "Bangun citra pribadi yang otentik dan profesional untuk membuka lebih banyak peluang.",
+    img: "images/personalbrandinga.png",
   },
 ];
 
 const EducationSection = ({ currentPath }) => {
-  console.log(currentPath);
+  if (currentPath !== "/") return null;
 
   return (
-    <div className="bg-white text-[var(--themeRed)] py-12">
-      {currentPath === "/" ? (
-        <div className="flex flex-col gap-16 mt-10 w-full">
-          <div>
-            <CustomComponent
-              title1="Kurikulum Program"
-              title2="Edukasi untuk Masa Depan"
-              title3="Pilih Program Terbaik Anda"
-              textColor1="var(--themeRed)"
-              textColor2="#000000"
-              alignItems="center"
-            />
-          </div>
-          <div className="flex flex-col gap-12 px-6 md:px-16">
-            {educationPrograms.map((program, index) => (
+    <section className="bg-white py-16 relative overflow-hidden">
+      <div className="text-center mb-16 px-6">
+        <CustomComponent
+          title1="Pilihan Kelas Online"
+          title2="Tumbuh Bersama"
+          title3="Pilih Pembelajaran Anda"
+          textColor1="var(--themeRed)"
+          textColor2="#000000"
+          alignItems="center"
+        />
+      </div>
+
+      <div className="relative max-w-4xl mx-auto px-4 before:absolute before:left-1/2 before:top-0 before:w-1 before:h-full before:bg-[var(--themeRed)] before:-translate-x-1/2">
+        {educationPrograms.map((program, index) => (
+          <div
+            key={program.id}
+            className={`relative mb-14 flex flex-col md:flex-row ${
+              index % 2 !== 0 ? "md:flex-row-reverse" : ""
+            } items-center justify-between gap-6`}
+          >
+            <div className="md:w-5/12">
               <div
-                key={index}
-                className="flex flex-col md:flex-row items-center gap-8"
+                className={`bg-white rounded-xl shadow-md p-5 md:ml-6 md:mr-6 ${
+                  index === 0 ? "glow-border" : ""
+                }`}
               >
-                <div className="md:w-1/3">
-                  <img
-                    src={program.img}
-                    alt={program.title}
-                    className="w-full rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex flex-col gap-4 text-left md:w-2/3">
-                  <div className="flex items-center gap-4">
-                    <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 bg-[var(--themeRed)] text-white rounded-full text-lg font-bold">
-                      {program.id}
-                    </div>
-                    <h1 className="text-2xl font-bold text-[var(--themeRed)]">
-                      {program.title}
-                    </h1>
-                  </div>
-                  <p className="text-gray-700 text-sm md:text-base">
-                    {program.description}
-                  </p>
-                </div>
+                <img
+                  src={program.img}
+                  alt={program.title}
+                  className="w-full h-40 object-contain mb-4"
+                />
+                <h3 className="text-xl font-bold text-[var(--themeRed)] mb-2">
+                  {program.title}
+                </h3>
+                <p className="text-gray-600 text-sm">{program.description}</p>
               </div>
-            ))}
+            </div>
+            <div className="w-6 h-6 rounded-full bg-white border-4 border-[var(--themeRed)] z-10" />
+            <div className="hidden md:block md:w-5/12"></div>
           </div>
-        </div>
-      ) : null}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 };
 

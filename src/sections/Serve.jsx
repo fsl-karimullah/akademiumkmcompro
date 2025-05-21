@@ -1,54 +1,77 @@
-import React from "react";
-import StarIcon from '@mui/icons-material/Star'; // Importing the icon
+import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCards } from "swiper/modules";
+import StarIcon from "@mui/icons-material/Star";
+import "swiper/css";
+import "swiper/css/effect-cards";
+import axios from "axios";
+import { endpoint } from "../endpoint/api"; 
 
 const WhyChooseUs = () => {
+  const [webinars, setWebinars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchWebinars = async () => {
+      try {
+        const response = await axios.get(endpoint.getWebinars);
+        if (response.data && Array.isArray(response.data.data)) {
+          setWebinars(response.data.data);
+        } else {
+          setError("Unexpected response format");
+        }
+      } catch (err) {
+        setError("Failed to fetch digital products. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWebinars();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-center py-10 text-gray-500">Loading best sellers...</div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-500">{error}</div>
+    );
+  }
+
   return (
-    <div className="w-full py-20 px-6 md:px-20 bg-white relative overflow-hidden border-t border-gray-200">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-40 h-40 bg-[var(--themeRed)] opacity-10 rounded-full -z-10 blur-2xl" />
-      <div className="absolute bottom-0 right-0 w-60 h-60 bg-[var(--themeRed)] opacity-10 rounded-full -z-10 blur-2xl" />
-
-      {/* Card Container */}
-      <div className="bg-white shadow-lg rounded-2xl border border-gray-100 px-6 md:px-12 py-12 flex flex-col md:flex-row items-center justify-between gap-10 max-w-6xl mx-auto relative">
-        {/* Animated Icon in the Top-Right Corner */}
-        <StarIcon 
-          className="absolute top-4 right-4 text-[var(--themeRed)] text-4xl opacity-80 animate-pulse"
-        />
-
-        {/* Text Content */}
-        <div className="text-center md:text-left space-y-6 max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 leading-snug">
-            Dapatkan Penghasilan Tambahan <br />
-            Lewat Program{" "}
-            <span className="text-[var(--themeRed)]">Affiliate Cave Men's Grooming®</span>
-          </h2>
-          <ul className="text-gray-700 text-base md:text-lg space-y-2">
-            <li>✅ Komisi menarik untuk setiap referral</li>
-            <li>🎁 Akses eksklusif ke e-course & e-book premium</li>
-            <li>
-              🚀 Cocok untuk pelajar, kreator, atau siapa pun yang ingin
-              berkembang
-            </li>
-            <li>🔗 Pendaftaran mudah dan 100% gratis</li>
-          </ul>
-          <a
-            href="https://www.cavemens.id"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-[var(--themeRed)] text-white px-8 py-3 rounded-full font-bold mt-4 hover:bg-red-700 transition"
-          >
-            🚀 Mulai Jadi Affiliate Sekarang
-          </a>
-        </div>
-
-        {/* Cavemans Logo with Animation */}
-        <div className="flex-shrink-0 animate-bounce">
-          <img
-            src="https://cdn.orderonline.id/uploads/4333221638374289757.png"
-            alt="Cavemans Affiliate"
-            className="w-[180px] md:w-[240px] object-contain drop-shadow-md"
-          />
-        </div>
+    <div className="w-full flex justify-center py-10 bg-gray-50">
+      <div className="w-[320px]">
+        <h2 className="text-2xl font-bold text-center mb-6">Produk Pilihan</h2>
+        <Swiper
+          effect="cards"
+          grabCursor={true}
+          modules={[EffectCards]}
+          className="mySwiper"
+        >
+          {webinars.map((item) => (
+            <SwiperSlide
+              key={item.id}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center justify-center"
+            >
+              <a href={item.registration_url} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="w-full h-72 object-cover"
+                />
+                <div className="p-4 text-center">
+                  <h3 className="text-lg font-semibold">{item.title}</h3>
+                  <StarIcon className="text-yellow-500 mt-1" />
+                </div>
+              </a>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );

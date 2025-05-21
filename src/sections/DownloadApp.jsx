@@ -69,7 +69,7 @@ const DownloadApp = ({ currentPath }) => {
           {/* ✅ **Right Section (Image)** */}
           <div className="md:w-1/2 flex justify-center">
             <img
-              src="https://github.com/fsl-karimullah/my-img-source/blob/main/Growth%20curve-cuate.png?raw=true"
+              src="images/learnto.png"
               alt="Learn and Grow"
               className="w-[250px] md:w-[400px] object-contain"
             />

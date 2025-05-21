@@ -3,58 +3,62 @@ import CustomComponent from "../components/title/Title";
 
 const cards = [
   {
-    title: "orang yang mau melompat untuk merubah hidupnya",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Business%20vision-rafiki.png?raw=true",
+    title: "Orang yang Siap Melompat dan Mengubah Hidupnya",
+    img: "/images/go.png",
   },
   {
-    title: "dan yang mau berdiam diri",
-    img: "https://github.com/fsl-karimullah/my-img-source/blob/main/Anxiety-amico.png?raw=true",
+    title: "Orang yang Memilih Diam dan Tidak Bergerak",
+    img: "/images/alone.png",
   },
 ];
 
 const WebinarValueSection = ({ currentPath }) => {
-  console.log(currentPath);
+  if (currentPath !== "/") return null;
 
   return (
-    <div className="bg-white text-[var(--themeRed)] py-12">
-      {currentPath === "/" ? (
-        <div className="flex flex-col gap-16 mt-10 w-full">
-          <div>
-            <CustomComponent
-              title1="Kamu ada di tipe mana ?"
-              title2="Di Dunia ini Ada 2 Tipe Orang"
-              title3=""
-              textColor1="var(--themeRed)"
-              textColor2="#000000"
-              alignItems="center"
-            />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-6 md:px-16">
-            {cards.map((card, index) => (
-              <div
-                key={index}
-                className="relative flex items-center justify-center bg-gray-300 p-4 rounded-xl shadow-md  transition-transform transform  overflow-hidden"
-              >
-                <img
-                  src={card.img}
-                  alt={card.title}
-                  className="w-full h-full object-cover rounded-xl opacity-80"
-                />
-                <h1 className="absolute bottom-8 text-2xl md:text-4xl font-bold text-black text-center px-4">
-                  {card.title}
-                </h1>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center mt-8">
-            <a href="/courses" target="_blank" rel="noopener noreferrer"
-              className="bg-[var(--themeRed)] text-white px-6 py-3 rounded-lg font-bold  transition-transform transform "
+    <div className="bg-white text-[var(--themeRed)] py-20">
+      <div className="flex flex-col gap-16 w-full">
+        <CustomComponent
+          title1="Kamu Ada di Tipe Mana?"
+          title2="Di Dunia Ini Ada 2 Tipe Orang"
+          title3=""
+          textColor1="var(--themeRed)"
+          textColor2="#000000"
+          alignItems="center"
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 px-6 md:px-20">
+          {cards.map((card, index) => (
+            <div
+              key={index}
+              className="relative group overflow-hidden rounded-2xl shadow-lg transition-transform transform hover:scale-105"
             >
-              🚀 Take Action Sekarang
-            </a>
-          </div>
+              <img
+                src={card.img}
+                alt={card.title}
+                className="w-full h-80 object-contain rounded-2xl bg-white p-4 brightness-75 group-hover:brightness-100 transition-all duration-300"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 rounded-2xl">
+                <h2 className="text-white text-2xl md:text-3xl font-bold leading-snug text-center w-full drop-shadow-lg">
+                  {card.title}
+                </h2>
+              </div>
+            </div>
+          ))}
         </div>
-      ) : null}
+
+        <div className="flex justify-center mt-10">
+          <a
+            href="/courses"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[var(--themeRed)] hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:scale-105"
+          >
+            🚀 Take Action Sekarang
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

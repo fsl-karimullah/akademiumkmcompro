@@ -16,7 +16,9 @@ import {
   Group,
   Code,
   Chat,
+  MenuBook,
 } from "@mui/icons-material";
+
 import Slider from "react-slick";
 import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
@@ -155,22 +157,57 @@ const LandingPageCourse = ({ currentPath }) => {
               bangun portofolio, dapetin sertifikat, dan pelan-pelan raih
               tujuanmu.
             </Typography>
-            <Link
-              to="/landing"
-              style={{
-                display: "inline-block",
-                marginTop: 24,
-                padding: "14px 40px",
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                mt: 4,
+                px: 5,
+                py: 1.6,
+                borderRadius: "999px",
+                background: "linear-gradient(135deg, #d61355, #ff357a)",
+                color: "#fff",
                 fontWeight: "bold",
                 fontSize: "1.1rem",
-                borderRadius: 16,
-                backgroundColor: "#d61355",
-                color: "#fff",
-                textDecoration: "none",
+                textTransform: "none",
+                boxShadow: "0px 10px 25px rgba(214, 19, 85, 0.4)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                  boxShadow: "0px 12px 30px rgba(214, 19, 85, 0.5)",
+                  background: "linear-gradient(135deg, #c11250, #ff2e6f)",
+                },
+                "&:focus": {
+                  outline: "2px solid #fff",
+                  outlineOffset: "3px",
+                },
               }}
+              onClick={() => navigate("/landing")}
             >
-              Ambil langkah sekarang, atau terus tertinggal
-            </Link>
+              Klik dan Buat langkah pertamamu
+            </Button>
+          </motion.div>
+          <motion.div
+            initial={{ y: 0, opacity: 0 }}
+            animate={{
+              y: [0, -10, 0],
+              opacity: 1,
+            }}
+            transition={{
+              delay: 1,
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "easeInOut",
+            }}
+            style={{ marginTop: "40px" }}
+          >
+            <Typography
+              variant="body2"
+              sx={{ color: "#bbb", textAlign: "center" }}
+            >
+              Scroll untuk lihat kenapa kamu harus mulai dari sini ↓
+            </Typography>
           </motion.div>
         </Container>
       </Section>
@@ -244,6 +281,40 @@ const LandingPageCourse = ({ currentPath }) => {
               </Grid>
             ))}
           </Grid>
+
+          {/* CTA Button at Bottom */}
+          <Box textAlign="center" mt={6}>
+            <Link
+              to="/landing"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "14px 28px",
+                fontWeight: "bold",
+                fontSize: "1.05rem",
+                borderRadius: 999,
+                background: "#d61355",
+                color: "#fff",
+                textDecoration: "none",
+                boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.boxShadow =
+                  "0px 10px 25px rgba(0,0,0,0.25)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow =
+                  "0px 8px 20px rgba(0,0,0,0.15)";
+              }}
+            >
+              <School sx={{ color: "#fff" }} />
+              Mulai Belajar Sekarang
+            </Link>
+          </Box>
         </Container>
       </Section>
 
@@ -291,6 +362,40 @@ const LandingPageCourse = ({ currentPath }) => {
               </Grid>
             ))}
           </Grid>
+
+          {/* CTA Button at Bottom */}
+          <Box textAlign="center" mt={6}>
+            <Link
+              to="/landing"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "14px 28px",
+                fontWeight: "bold",
+                fontSize: "1.05rem",
+                borderRadius: 999,
+                background: "#d61355",
+                color: "#fff",
+                textDecoration: "none",
+                boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.boxShadow =
+                  "0px 10px 25px rgba(0,0,0,0.25)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow =
+                  "0px 8px 20px rgba(0,0,0,0.15)";
+              }}
+            >
+              <MenuBook sx={{ color: "#fff" }} />
+              Jelajahi Materi Lainnya
+            </Link>
+          </Box>
         </Container>
       </Section>
 
@@ -398,24 +503,36 @@ const LandingPageCourse = ({ currentPath }) => {
               style={{
                 display: "inline-block",
                 marginTop: 16,
-                padding: "14px 32px",
+                padding: "14px 40px",
                 fontWeight: "bold",
-                fontSize: "1rem",
-                borderRadius: 12,
-                backgroundColor: "#fff",
-                color: "#000",
+                fontSize: "1.1rem",
+                borderRadius: 999,
+                background: "linear-gradient(135deg, #ffffff, #f1f1f1)",
+                color: "#d61355",
                 textDecoration: "none",
                 textAlign: "center",
+                boxShadow: "0px 10px 20px rgba(0,0,0,0.15)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.boxShadow =
+                  "0px 12px 25px rgba(0,0,0,0.25)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow =
+                  "0px 10px 20px rgba(0,0,0,0.15)";
               }}
             >
-             Masih nunggu keajaiban? Yuk gerak!
+              Masih nunggu keajaiban? Klik disini dan mulai Take Action!
             </Link>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, rotate: -45 }}
             animate={{ opacity: 1, rotate: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3 }} 
           >
             <School
               sx={{
@@ -429,6 +546,40 @@ const LandingPageCourse = ({ currentPath }) => {
           </motion.div>
         </Container>
       </Section>
+      <motion.a
+        href="https://wa.me/6285281252199"
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ y: 0 }}
+        animate={{ y: [0, -10, 0] }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{
+          position: "fixed",
+          bottom: 24,
+          right: 24,
+          zIndex: 1000,
+          backgroundColor: "#25D366",
+          color: "#fff",
+          borderRadius: "50%",
+          width: 64,
+          height: 64,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+          textDecoration: "none",
+        }}
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+          alt="Chat on WhatsApp"
+          style={{ width: 32, height: 32 }}
+        />
+      </motion.a>
     </Box>
   );
 };

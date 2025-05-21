@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Container, Typography, Button, Grid } from "@mui/material";
-import ConstructionImage from "/coming-soon.png";
+// import ConstructionImage from "/coming-soon.png";
 import { useNavigate } from "react-router-dom";
 
 const UnderConstructionScreen = () => {
