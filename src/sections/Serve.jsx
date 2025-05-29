@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCards } from "swiper/modules";
+import { EffectCards, Autoplay } from "swiper/modules";
 import StarIcon from "@mui/icons-material/Star";
 import "swiper/css";
 import "swiper/css/effect-cards";
 import axios from "axios";
-import { endpoint } from "../endpoint/api"; 
+import { endpoint } from "../endpoint/api";
 
 const WhyChooseUs = () => {
   const [webinars, setWebinars] = useState([]);
@@ -38,42 +38,52 @@ const WhyChooseUs = () => {
   }
 
   if (error) {
-    return (
-      <div className="text-center py-10 text-red-500">{error}</div>
-    );
+    return <div className="text-center py-10 text-red-500">{error}</div>;
   }
 
   return (
-    <div className="w-full flex justify-center py-10 bg-gray-50">
-      <div className="w-[320px]">
-        <h2 className="text-2xl font-bold text-center mb-6">Produk Pilihan</h2>
+    <section className="w-full py-14 bg-gradient-to-b from-white to-gray-100">
+      <div className="max-w-xl mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+          Produk Pilihan <span className="text-primary">Terbaik</span>
+        </h2>
         <Swiper
           effect="cards"
           grabCursor={true}
-          modules={[EffectCards]}
+          modules={[EffectCards, Autoplay]}
+          autoplay={{ delay: 3000 }}
           className="mySwiper"
         >
           {webinars.map((item) => (
             <SwiperSlide
               key={item.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center justify-center"
+              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:scale-[1.02] transition-transform duration-300"
             >
-              <a href={item.registration_url} target="_blank" rel="noopener noreferrer">
+              <a
+                href={item.registration_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img
                   src={item.thumbnail}
                   alt={item.title}
                   className="w-full h-72 object-cover"
                 />
                 <div className="p-4 text-center">
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <StarIcon className="text-yellow-500 mt-1" />
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    {item.title}
+                  </h3>
+                  <div className="flex justify-center items-center gap-1 text-yellow-500 mt-2">
+                    <StarIcon fontSize="small" />
+                    <span className="text-sm font-medium">Rekomendasi</span>
+                  </div>
                 </div>
               </a>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-    </div>
+    </section>
   );
 };
 

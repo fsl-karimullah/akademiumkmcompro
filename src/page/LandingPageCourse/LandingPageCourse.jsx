@@ -213,110 +213,117 @@ const LandingPageCourse = ({ currentPath }) => {
       </Section>
 
       {/* WHY CHOOSE US */}
-      <Section>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h4"
-            align="center"
-            fontWeight="bold"
-            gutterBottom
-          >
-            Kenapa Belajar di Sini?
-          </Typography>
-          <Typography
-            variant="body1"
-            align="center"
-            color="text.primary"
-            mb={6}
-          >
-            Karena kita tahu usia 20-an bukan cuma tentang pilihan karier, tapi
-            juga tentang pencarian jati diri. Kami bantu kamu jadi versi
-            terbaikmu.
-          </Typography>
-          <Grid container spacing={4}>
-            {benefitItems.map((item, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card
-                    sx={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      p: 4,
-                      borderRadius: 4,
-                      boxShadow: 3,
-                      textAlign: "center",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        transform: "translateY(-6px)",
-                        boxShadow: 6,
-                      },
-                    }}
-                  >
-                    <Box sx={{ mb: 2 }}>{item.icon}</Box>
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      gutterBottom
-                      sx={{ minHeight: "48px" }}
-                    >
-                      {item.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ flexGrow: 1 }}
-                    >
-                      {item.desc}
-                    </Typography>
-                  </Card>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
+     <Section>
+  <Container maxWidth="lg">
+    <Typography
+      variant="h3"
+      align="center"
+      fontWeight="bold"
+      gutterBottom
+      color="black"
+    >
+      Kenapa Harus Belajar di Sini?
+    </Typography>
+    <Typography
+      variant="h6"
+      align="center"
+      color="text.secondary"
+      mb={6}
+      sx={{ maxWidth: 720, mx: "auto" }}
+    >
+      Usia 20-an adalah masa penuh tantangan dan eksplorasi. Kami hadir bukan hanya untuk bantu kamu memilih <span className="text-red-700 font-bold">"Karier"</span>, tapi juga menemukan <span className="text-red-700 font-bold">"Jati Diri"</span>. Bersama kami, kamu bisa jadi versi terbaik dirimu.
+    </Typography>
 
-          {/* CTA Button at Bottom */}
-          <Box textAlign="center" mt={6}>
-            <Link
-              to="/landing"
-              style={{
-                display: "inline-flex",
+    <Grid container spacing={4}>
+      {benefitItems.map((item, index) => (
+        <Grid item xs={12} sm={6} md={4} key={index}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+          >
+            <Card
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 alignItems: "center",
-                gap: 10,
-                padding: "14px 28px",
-                fontWeight: "bold",
-                fontSize: "1.05rem",
-                borderRadius: 999,
-                background: "#d61355",
-                color: "#fff",
-                textDecoration: "none",
-                boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.boxShadow =
-                  "0px 10px 25px rgba(0,0,0,0.25)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow =
-                  "0px 8px 20px rgba(0,0,0,0.15)";
+                p: 4,
+                borderRadius: 4,
+                boxShadow: 3,
+                textAlign: "center",
+                backgroundColor: "#fff9f9",
+                border: "1px solid #f0f0f0",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                  boxShadow: 6,
+                  backgroundColor: "#fff0f5",
+                },
               }}
             >
-              <School sx={{ color: "#fff" }} />
-              Mulai Belajar Sekarang
-            </Link>
-          </Box>
-        </Container>
-      </Section>
+              <Box sx={{ mb: 2, fontSize: 48, color: "#d61355" }}>
+                {item.icon}
+              </Box>
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                gutterBottom
+                sx={{ minHeight: "48px" }}
+              >
+                {item.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ flexGrow: 1 }}
+              >
+                {item.desc}
+              </Typography>
+            </Card>
+          </motion.div>
+        </Grid>
+      ))}
+    </Grid>
+
+    {/* CTA Button at Bottom */}
+    <Box textAlign="center" mt={6}>
+      <Link
+        to="/landing"
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 10,
+          padding: "14px 32px",
+          fontWeight: "bold",
+          fontSize: "1.1rem",
+          borderRadius: 999,
+          background: "#d61355",
+          color: "#fff",
+          textDecoration: "none",
+          boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.05)";
+          e.currentTarget.style.boxShadow =
+            "0px 10px 25px rgba(0,0,0,0.25)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.boxShadow =
+            "0px 8px 20px rgba(0,0,0,0.15)";
+        }}
+      >
+        <School sx={{ color: "#fff" }} />
+        Mulai Perjalanan Belajarmu Sekarang
+      </Link>
+    </Box>
+  </Container>
+</Section>
+
 
       {/* MATERI */}
       <Section sx={{ backgroundColor: "#f9fafc" }}>

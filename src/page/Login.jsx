@@ -5,20 +5,17 @@ import { loginSuccess, loginFailure } from '../redux/actions/authActions';
 import axios from 'axios';
 import { endpoint } from '../endpoint/api';
 import {
-  Container,
   Typography,
   TextField,
   Button,
-  Avatar,
-  CssBaseline,
   Grid,
   Link,
   Box,
   Paper,
   Alert,
   InputAdornment,
+  CssBaseline,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ loginSuccess, loginFailure }) => {
@@ -36,14 +33,9 @@ const Login = ({ loginSuccess, loginFailure }) => {
 
       if (response.status === 200) {
         const { token } = response.data.data;
-
-        console.log('Token received:', token);
-
         loginSuccess(token);
-
         localStorage.setItem('userToken', token);
         localStorage.setItem('userLoggedIn', 'true');
-
         navigate('/landing');
         navigate(0);
       } else {
@@ -56,47 +48,72 @@ const Login = ({ loginSuccess, loginFailure }) => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'linear-gradient(to right, #FF6B6B, #D61355)',
-      }}
-    >
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+    <Box sx={{ display: 'flex', minHeight: '100vh', flexDirection: { xs: 'column', md: 'row' } }}>
+      <CssBaseline />
+
+      {/* ✅ Left Section (Hidden on Mobile) */}
+      <Box
+        sx={{
+          flex: 1,
+          display: { xs: 'none', md: 'flex' },
+          background: 'linear-gradient(to bottom right, #FF6B6B, #D61355)',
+          color: '#fff',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: 5,
+        }}
+      >
+        <img
+          src={'/assets/logo-transparent.webp'}
+          alt="Akademi UMKM"
+          style={{ width: 120, marginBottom: 20 }}
+        />
+        <Typography variant="h4" fontWeight="bold" gutterBottom>
+          Selamat Datang di Akademi UMKM
+        </Typography>
+        <Typography variant="body1" sx={{ maxWidth: 400, textAlign: 'center' }}>
+          Bergabunglah dan mulai perjalanan pembelajaran Anda bersama kami untuk mengembangkan UMKM Indonesia.
+        </Typography>
+      </Box>
+
+      {/* ✅ Right Section - Login Form (Full width on mobile) */}
+      <Box
+        sx={{
+          flex: 1,
+          backgroundColor: '#f9f9f9',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          p: 3,
+        }}
+      >
         <Paper
           elevation={6}
           sx={{
-            p: 4,
+            p: 5,
+            width: '100%',
+            maxWidth: 420,
             borderRadius: 4,
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-            background: '#fff',
+            backgroundColor: '#fff',
           }}
         >
-          <Box sx={{ textAlign: 'center', mb: 3 }}>
-            <Avatar
-              sx={{
-                bgcolor: 'var(--themeRed)',
-                margin: 'auto',
-                mb: 1,
-              }}
-            >
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
+          <Box sx={{ mb: 3, textAlign: 'center' }}>
+            <Typography variant="h5" fontWeight="bold" color="primary" gutterBottom>
               Masuk ke Akun Anda
             </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Silakan login menggunakan email dan kata sandi Anda.
+            </Typography>
           </Box>
+
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>
               {error}
             </Alert>
           )}
+
           <Box component="form" onSubmit={handleLogin} noValidate>
-            {/* ✅ Email Field */}
             <TextField
               margin="normal"
               required
@@ -111,12 +128,12 @@ const Login = ({ loginSuccess, loginFailure }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Mail sx={{ color: 'var(--themeRed)' }} />
+                    <Mail color="primary" />
                   </InputAdornment>
                 ),
               }}
             />
-            {/* ✅ Password Field */}
+
             <TextField
               margin="normal"
               required
@@ -131,13 +148,12 @@ const Login = ({ loginSuccess, loginFailure }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Lock sx={{ color: 'var(--themeRed)' }} />
+                    <Lock color="primary" />
                   </InputAdornment>
                 ),
               }}
             />
 
-            {/* ✅ Login Button */}
             <Button
               type="submit"
               fullWidth
@@ -145,24 +161,25 @@ const Login = ({ loginSuccess, loginFailure }) => {
               sx={{
                 mt: 3,
                 mb: 2,
+                py: 1.4,
+                fontWeight: 600,
                 backgroundColor: 'var(--themeRed)',
                 '&:hover': {
                   backgroundColor: '#b50d44',
                 },
-                py: 1.5,
               }}
             >
               Masuk
             </Button>
 
-            {/* ✅ Back Button */}
             <Button
               fullWidth
               variant="outlined"
               onClick={() => navigate('/')}
               sx={{
                 mb: 2,
-                py: 1.5,
+                py: 1.4,
+                fontWeight: 500,
                 borderColor: 'var(--themeRed)',
                 color: 'var(--themeRed)',
                 '&:hover': {
@@ -174,7 +191,6 @@ const Login = ({ loginSuccess, loginFailure }) => {
               Kembali
             </Button>
 
-            {/* ✅ Links */}
             <Grid container spacing={1}>
               <Grid item xs>
                 <Link href="/forgot-password" variant="body2" sx={{ color: 'var(--themeRed)' }}>
@@ -183,22 +199,13 @@ const Login = ({ loginSuccess, loginFailure }) => {
               </Grid>
               <Grid item>
                 <Link href="/register" variant="body2" sx={{ color: 'var(--themeRed)' }}>
-                  Belum punya akun? Daftar di sini
+                  Belum punya akun? Daftar
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Paper>
-        {/* ✅ Footer */}
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          sx={{ mt: 4 }}
-        >
-          © {new Date().getFullYear()} Akademi UMKM. Semua Hak Dilindungi.
-        </Typography>
-      </Container>
+      </Box>
     </Box>
   );
 };
