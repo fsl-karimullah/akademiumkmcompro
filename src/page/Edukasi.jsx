@@ -11,15 +11,20 @@ import {
   CircularProgress,
   TextField,
   Fab,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ReportIcon from "@mui/icons-material/Report";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
 
 const Edukasi = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -79,7 +84,7 @@ const Edukasi = () => {
     <Grid
       item
       key={course.id}
-      xs={12}
+      xs={6}
       sm={6}
       md={4}
       onClick={() => navigate(`/course-pay/${course.id}`)}
@@ -92,113 +97,128 @@ const Edukasi = () => {
       }}
     >
       <Card
-  className="course-card"
-  sx={{
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-    borderRadius: "10px",
-    transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
-    overflow: "hidden",
-    "&:hover": {
-      transform: "scale(1.02)",
-      boxShadow: "0px 6px 15px rgba(0,0,0,0.2)",
-    },
-  }}
->
-  <CardMedia
-    component="img"
-    height="180"
-    image={
-      course.thumbnail ||
-      "https://via.placeholder.com/300x180.png?text=No+Image"
-    }
-    alt={course.title}
-    sx={{ objectFit: "cover" }}
-  />
+        className="course-card"
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          borderRadius: "10px",
+          transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
+          overflow: "hidden",
+          "&:hover": {
+            transform: "scale(1.02)",
+            boxShadow: "0px 6px 15px rgba(0,0,0,0.2)",
+          },
+        }}
+      >
+        <CardMedia
+          component="img"
+          height={isMobile ? "110" : "180"}
+          image={
+            course.thumbnail ||
+            "https://via.placeholder.com/300x180.png?text=No+Image"
+          }
+          alt={course.title}
+          sx={{ objectFit: "cover" }}
+        />
 
-  <CardContent
-    sx={{
-      flexGrow: 1,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      p: 2,
-    }}
-  >
-    <Typography
-      variant="h6"
-      fontWeight="bold"
-      gutterBottom
-      sx={{
-        display: "-webkit-box",
-        WebkitLineClamp: 2,
-        WebkitBoxOrient: "vertical",
-        overflow: "hidden",
-      }}
-    >
-      {course.title}
-    </Typography>
-
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      gutterBottom
-    >
-      Mentor: {course.mentor}
-    </Typography>
-
-    <Box sx={{ mt: 1 }}>
-      {course.price === 0 ? (
-        <Typography variant="h6" fontWeight="bold" color="#2e7d32">
-          Gratis
-        </Typography>
-      ) : course.discount > 0 ? (
-        <>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ textDecoration: "line-through" }}
-            >
-              Rp {((course.price * 100) / (100 - course.discount)).toLocaleString("id-ID")}
-            </Typography>
-            <Box
-              sx={{
-                backgroundColor: "#d61355",
-                color: "white",
-                px: 1,
-                py: 0.25,
-                borderRadius: "5px",
-                fontSize: "0.75rem",
-                fontWeight: "bold",
-              }}
-            >
-              -{course.discount}%
-            </Box>
-          </Box>
+        <CardContent
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            p: isMobile ? 1 : 2,
+          }}
+        >
           <Typography
             variant="h6"
             fontWeight="bold"
-            color="#d61355"
+            gutterBottom
+            sx={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              fontSize: isMobile ? "0.85rem" : "1.25rem",
+            }}
           >
-            Rp {course.price.toLocaleString("id-ID")}
+            {course.title}
           </Typography>
-        </>
-      ) : (
-        <Typography
-          variant="h6"
-          fontWeight="bold"
-          color="#d61355"
-        >
-          Rp {course.price.toLocaleString("id-ID")}
-        </Typography>
-      )}
-    </Box>
-  </CardContent>
-</Card>
 
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            gutterBottom
+            sx={{ fontSize: isMobile ? "0.7rem" : "0.875rem" }}
+          >
+            Mentor: {course.mentor}
+          </Typography>
+
+          <Box sx={{ mt: 1 }}>
+            {course.price === 0 ? (
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                color="#2e7d32"
+                sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
+              >
+                Gratis
+              </Typography>
+            ) : course.discount > 0 ? (
+              <>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      textDecoration: "line-through",
+                      fontSize: isMobile ? "0.65rem" : "0.875rem",
+                    }}
+                  >
+                    Rp{" "}
+                    {(
+                      (course.price * 100) /
+                      (100 - course.discount)
+                    ).toLocaleString("id-ID")}
+                  </Typography>
+                  <Box
+                    sx={{
+                      backgroundColor: "#d61355",
+                      color: "white",
+                      px: 1,
+                      py: 0.25,
+                      borderRadius: "5px",
+                      fontSize: "0.65rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    -{course.discount}%
+                  </Box>
+                </Box>
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  color="#d61355"
+                  sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
+                >
+                  Rp {course.price.toLocaleString("id-ID")}
+                </Typography>
+              </>
+            ) : (
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                color="#d61355"
+                sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
+              >
+                Rp {course.price.toLocaleString("id-ID")}
+              </Typography>
+            )}
+          </Box>
+        </CardContent>
+      </Card>
     </Grid>
   );
 
@@ -239,23 +259,24 @@ const Edukasi = () => {
       <Box
         sx={{
           textAlign: "center",
-          py: 4,
+          py: isMobile ? 3 : 4,
           px: 2,
           backgroundColor: "#d61355",
           color: "#fff",
-          mb: 4,
+          mb: 3,
         }}
       >
-        <Typography variant="h3" fontWeight="bold">
+        <Typography variant={isMobile ? "h4" : "h3"} fontWeight="bold">
           Jelajahi Kursus Kami
         </Typography>
-        <Typography variant="subtitle1" sx={{ mt: 2 }}>
-          Tingkatkan kemampuan Anda dengan kursus yang dirancang untuk semua level.
+        <Typography variant="subtitle1" sx={{ mt: 1 }}>
+          Tingkatkan kemampuan Anda dengan kursus yang dirancang untuk semua
+          level.
         </Typography>
       </Box>
 
       {/* Search Bar */}
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ mb: 2 }}>
         <TextField
           fullWidth
           label="Cari kursus berdasarkan judul"
@@ -263,23 +284,28 @@ const Edukasi = () => {
           value={searchQuery}
           onChange={handleSearch}
           sx={{
-            mb: 3,
             backgroundColor: "#fff",
             borderRadius: "8px",
             boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+            "& .MuiInputBase-input": { fontSize: isMobile ? "0.9rem" : "1rem" },
           }}
         />
       </Container>
 
       {/* Courses Section */}
-      <Container maxWidth="lg" sx={{ py: 2 }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          py: 2,
+        }}
+      >
         {loading ? (
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              minHeight: "50vh",
+              minHeight: "40vh",
             }}
           >
             <CircularProgress />
@@ -293,9 +319,9 @@ const Edukasi = () => {
             {/* Free Courses */}
             {freeCourses.length > 0 && (
               <>
-                <Box sx={{ textAlign: "center", mb: 4 }}>
+                <Box sx={{ textAlign: "center", mb: 3 }}>
                   <Typography
-                    variant="h4"
+                    variant="h5"
                     fontWeight="bold"
                     color="#d61355"
                     sx={{ mb: 1 }}
@@ -303,15 +329,15 @@ const Edukasi = () => {
                     Hadiah buat kamu!
                   </Typography>
                   <Typography
-                    variant="subtitle1"
+                    variant="subtitle2"
                     color="textSecondary"
                     sx={{ maxWidth: "600px", margin: "0 auto" }}
                   >
-                    Dapatkan kursus-kursus gratis yang akan membantu kamu mengembangkan
-                    skill tanpa biaya apapun!
+                    Dapatkan kursus-kursus gratis yang akan membantu kamu
+                    mengembangkan skill tanpa biaya apapun!
                   </Typography>
                 </Box>
-                <Grid container spacing={4}>
+                <Grid container spacing={2}>
                   {freeCourses.map(renderCourseCard)}
                 </Grid>
               </>
@@ -320,9 +346,9 @@ const Edukasi = () => {
             {/* Paid Courses */}
             {paidCourses.length > 0 && (
               <>
-                <Box sx={{ textAlign: "center", mb: 4, mt: 4 }}>
+                <Box sx={{ textAlign: "center", mb: 3, mt: 3 }}>
                   <Typography
-                    variant="h4"
+                    variant="h5"
                     fontWeight="bold"
                     color="#d61355"
                     sx={{ mb: 1 }}
@@ -330,15 +356,15 @@ const Edukasi = () => {
                     Pembelajaran pilihan untuk upgrade diri
                   </Typography>
                   <Typography
-                    variant="subtitle1"
+                    variant="subtitle2"
                     color="textSecondary"
                     sx={{ maxWidth: "600px", margin: "0 auto" }}
                   >
-                    Temukan kursus terbaik yang akan membantu kamu untuk naik ke level
-                    berikutnya dalam pengembangan diri.
+                    Temukan kursus terbaik yang akan membantu kamu untuk naik ke
+                    level berikutnya dalam pengembangan diri.
                   </Typography>
                 </Box>
-                <Grid container spacing={4}>
+                <Grid container spacing={2}>
                   {paidCourses.map(renderCourseCard)}
                 </Grid>
               </>
@@ -346,7 +372,12 @@ const Edukasi = () => {
 
             {/* No Course Match */}
             {filteredCourses.length === 0 && (
-              <Typography variant="h6" textAlign="center" color="textSecondary" sx={{ mt: 4 }}>
+              <Typography
+                variant="h6"
+                textAlign="center"
+                color="textSecondary"
+                sx={{ mt: 4 }}
+              >
                 Tidak ada kursus yang sesuai dengan pencarian Anda.
               </Typography>
             )}
@@ -354,10 +385,8 @@ const Edukasi = () => {
         )}
       </Container>
 
-      {/* Floating WhatsApp Report Button */}
       <Fab
-        color="error"
-        aria-label="report"
+        aria-label="whatsapp"
         onClick={handleReportIssue}
         sx={{
           position: "fixed",
@@ -368,7 +397,7 @@ const Edukasi = () => {
           "&:hover": { backgroundColor: "#1ebe5d" },
         }}
       >
-        <ReportIcon />
+        <WhatsAppIcon />
       </Fab>
     </Box>
   );

@@ -16,3 +16,22 @@
     border-radius: 0.75rem; /* same as rounded-xl */
   }
   
+  .education-swiper {
+  padding-bottom: 3rem; /* give space for pagination */
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--themeRed);
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--themeRed);
+}
+
+
+.custom-swiper-pagination {
+  position: relative !important;
+  bottom: auto !important;
+  margin-top: 1rem;
+}

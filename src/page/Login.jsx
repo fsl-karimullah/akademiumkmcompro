@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Mail, Lock } from '@mui/icons-material';
-import { connect } from 'react-redux';
-import { loginSuccess, loginFailure } from '../redux/actions/authActions';
-import axios from 'axios';
-import { endpoint } from '../endpoint/api';
+import React, { useState } from "react";
+import { Mail, Lock } from "@mui/icons-material";
+import { connect } from "react-redux";
+import { loginSuccess, loginFailure } from "../redux/actions/authActions";
+import axios from "axios";
+import { endpoint } from "../endpoint/api";
 import {
   Typography,
   TextField,
@@ -15,100 +15,131 @@ import {
   Alert,
   InputAdornment,
   CssBaseline,
-} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Logo from "../components/Logo";
 
 const Login = ({ loginSuccess, loginFailure }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
-      const response = await axios.post(`${endpoint.loginUser}`, { email, password });
+      const response = await axios.post(`${endpoint.loginUser}`, {
+        email,
+        password,
+      });
 
       if (response.status === 200) {
         const { token } = response.data.data;
         loginSuccess(token);
-        localStorage.setItem('userToken', token);
-        localStorage.setItem('userLoggedIn', 'true');
-        navigate('/landing');
+        localStorage.setItem("userToken", token);
+        localStorage.setItem("userLoggedIn", "true");
+        navigate("/landing");
         navigate(0);
       } else {
-        throw new Error('Login failed');
+        throw new Error("Login failed");
       }
     } catch (error) {
-      setError('⚠️ Error! Pastikan Anda mengisi semua data dengan benar.');
+      setError("⚠️ Error! Pastikan Anda mengisi semua data dengan benar.");
       loginFailure(error.message);
     }
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', flexDirection: { xs: 'column', md: 'row' } }}>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        flexDirection: { xs: "column", md: "row" },
+      }}
+    >
       <CssBaseline />
 
       {/* ✅ Left Section (Hidden on Mobile) */}
       <Box
         sx={{
           flex: 1,
-          display: { xs: 'none', md: 'flex' },
-          background: 'linear-gradient(to bottom right, #FF6B6B, #D61355)',
-          color: '#fff',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: { xs: "none", md: "flex" },
+          background: "linear-gradient(to bottom right, #FF6B6B, #D61355)",
+          color: "#fff",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
           p: 5,
         }}
       >
-        <img
-          src={'/assets/logo-transparent.webp'}
-          alt="Akademi UMKM"
-          style={{ width: 120, marginBottom: 20 }}
-        />
+        <Box
+          sx={{
+            backgroundColor: "#fff",
+            p: 2,
+            borderRadius: 2,
+            mb: 4,
+            display: "inline-block",
+          }}
+        >
+          <Logo />
+        </Box>
+
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Selamat Datang di Akademi UMKM
         </Typography>
-        <Typography variant="body1" sx={{ maxWidth: 400, textAlign: 'center' }}>
-          Bergabunglah dan mulai perjalanan pembelajaran Anda bersama kami untuk mengembangkan UMKM Indonesia.
+        <Typography variant="body1" sx={{ maxWidth: 400, textAlign: "center" }}>
+          Bergabunglah dan mulai perjalanan pembelajaran Anda bersama kami untuk
+          mengembangkan UMKM Indonesia.
         </Typography>
       </Box>
 
-      {/* ✅ Right Section - Login Form (Full width on mobile) */}
       <Box
         sx={{
           flex: 1,
-          backgroundColor: '#f9f9f9',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          p: 3,
+          backgroundColor: "#f9f9f9",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          p: { xs: 4, md: 3 },
         }}
       >
         <Paper
           elevation={6}
           sx={{
-            p: 5,
-            width: '100%',
-            maxWidth: 420,
+            p: { xs: 4, md: 5 }, // slightly less padding on mobile
+            width: "100%",
+            maxWidth: { xs: "100%", md: 420 }, // full width on mobile, 420px on desktop
             borderRadius: 4,
-            backgroundColor: '#fff',
+            backgroundColor: "#fff",
+            boxSizing: "border-box",
           }}
         >
-          <Box sx={{ mb: 3, textAlign: 'center' }}>
-            <Typography variant="h5" fontWeight="bold" color="primary" gutterBottom>
+          <Box sx={{ mb: 3, textAlign: "center" }}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              color="#D11655"
+              gutterBottom
+              sx={{ fontSize: { xs: "1.5rem", md: "1.75rem" } }} // smaller font size on mobile
+            >
               Masuk ke Akun Anda
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
+            >
               Silakan login menggunakan email dan kata sandi Anda.
             </Typography>
           </Box>
 
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert
+              severity="error"
+              sx={{ mb: 2, fontSize: { xs: "0.85rem", md: "1rem" } }}
+            >
               {error}
             </Alert>
           )}
@@ -128,10 +159,11 @@ const Login = ({ loginSuccess, loginFailure }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Mail color="primary" />
+                    <Mail sx={{ color: "#D11655" }} />
                   </InputAdornment>
                 ),
               }}
+              sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
             />
 
             <TextField
@@ -148,10 +180,11 @@ const Login = ({ loginSuccess, loginFailure }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Lock color="primary" />
+                    <Lock sx={{ color: "#D11655" }} />
                   </InputAdornment>
                 ),
               }}
+              sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
             />
 
             <Button
@@ -161,11 +194,12 @@ const Login = ({ loginSuccess, loginFailure }) => {
               sx={{
                 mt: 3,
                 mb: 2,
-                py: 1.4,
+                py: 1.6,
                 fontWeight: 600,
-                backgroundColor: 'var(--themeRed)',
-                '&:hover': {
-                  backgroundColor: '#b50d44',
+                fontSize: { xs: "1rem", md: "1.1rem" },
+                backgroundColor: "var(--themeRed)",
+                "&:hover": {
+                  backgroundColor: "#b50d44",
                 },
               }}
             >
@@ -175,31 +209,46 @@ const Login = ({ loginSuccess, loginFailure }) => {
             <Button
               fullWidth
               variant="outlined"
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               sx={{
                 mb: 2,
-                py: 1.4,
+                py: 1.6,
                 fontWeight: 500,
-                borderColor: 'var(--themeRed)',
-                color: 'var(--themeRed)',
-                '&:hover': {
-                  borderColor: '#b50d44',
-                  backgroundColor: '#ffe6e6',
+                fontSize: { xs: "0.95rem", md: "1rem" },
+                borderColor: "var(--themeRed)",
+                color: "var(--themeRed)",
+                "&:hover": {
+                  borderColor: "#b50d44",
+                  backgroundColor: "#ffe6e6",
                 },
               }}
             >
               Kembali
             </Button>
 
-            <Grid container spacing={1}>
-              <Grid item xs>
-                <Link href="/forgot-password" variant="body2" sx={{ color: 'var(--themeRed)' }}>
+            <Grid container spacing={1} justifyContent="center">
+              <Grid item xs={12} sm="auto" sx={{ textAlign: "center" }}>
+                <Link
+                  href="/forgot-password"
+                  variant="body2"
+                  sx={{
+                    color: "var(--themeRed)",
+                    fontSize: { xs: "0.9rem", md: "1rem" },
+                  }}
+                >
                   Lupa Kata Sandi?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2" sx={{ color: 'var(--themeRed)' }}>
-                  Belum punya akun? Daftar
+              <Grid item xs={12} sm="auto" sx={{ textAlign: "center" }}>
+                <Link
+                  href="/register"
+                  variant="body2"
+                  sx={{
+                    color: "var(--themeRed)",
+                    fontSize: { xs: "0.9rem", md: "1rem" },
+                  }}
+                >
+                  Belum punya akun? Daftar Disini
                 </Link>
               </Grid>
             </Grid>

@@ -20,23 +20,25 @@ const Home = ({ currentPath }) => {
         <Hero currentPath={currentPath} />
         {/* <HeroImage currentPath={currentPath} /> */}
       </section> 
+     
       <section className="p-4">
-        <Serve currentPath={currentPath} />
+         <Menu currentPath={currentPath} /> {/* masalah */}
+      </section>
+  
+      <section className="p-4">
+        <Customers currentPath={currentPath} /> {/* solusi */}
+      </section>
+           <section className="p-4">
+        <Serve currentPath={currentPath} /> {/* produk */}
       </section>
       <section className="p-4">
-        <Menu currentPath={currentPath} />
-      </section>
-      <section className="p-4">
-        <Customers currentPath={currentPath} />
-      </section>
-      <section className="p-4">
-        <OurClient currentPath={currentPath} />
+        <OurClient currentPath={currentPath} /> {/* testimoni */}
       </section>
       <section className="p-4">
         <News currentPath={currentPath} />
       </section>
       <section className="p-4">
-        <DownloadApp currentPath={currentPath} />
+        <DownloadApp currentPath={currentPath} /> {/* urgency */}
       </section>
       <section className="p-4">
         <Footer />
