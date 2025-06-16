@@ -101,7 +101,7 @@ const ForgotPassword = () => {
           <Button
             fullWidth
             variant="outlined"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate(-1)}
             sx={{ mt: 1, mb: 2 }}
           >
             Kembali
