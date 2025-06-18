@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, Navigate,useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/configureStore';
 import Home from './page/Home';
@@ -40,7 +40,7 @@ function App() {
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
-  const location = useLocation(); 
+  const location = useLocation();
   const currentPath = location.pathname;
 
   useEffect(() => {
@@ -50,7 +50,7 @@ function AppContent() {
   }, []);
 
   if (!authChecked) {
-    return null; 
+    return null;
   }
 
   return (
@@ -68,16 +68,17 @@ function AppContent() {
       <Route path="/coming-soon" element={<UnderConstructionScreen currentPath={currentPath} />} />
       <Route path="/loginbisnis" element={<LoginBisnis currentPath={currentPath} />} />
       <Route path="/videoedukasi" element={isAuthenticated ? <VideoEdukasi currentPath={currentPath} /> : <Navigate to="/login" />} />
-      <Route path="/course" element={isAuthenticated ? <Edukasi currentPath={currentPath} /> : <Navigate to="/login" />} />
+      {/* <Route path="/course" element={isAuthenticated ? <Edukasi currentPath={currentPath} /> : <Navigate to="/login" />} /> */}
       <Route path="/profile" element={isAuthenticated ? <Profile currentPath={currentPath} /> : <Navigate to="/login" />} />
-      <Route path="/course-pay/:id" element={isAuthenticated ? <EdukasiDetailPay currentPath={currentPath} /> : <Navigate to="/login" />} />
-      <Route path="/course/:id" element={isAuthenticated ? <EdukasiDetail currentPath={currentPath} /> : <Navigate to="/login" />} />
-      <Route path="/videoedukasidetail/:id" element={isAuthenticated ? <VideoEdukasiDetail currentPath={currentPath} /> : <Navigate to="/login" />} />
+      <Route path="/course-pay/:id" element={<EdukasiDetailPay currentPath={currentPath} /> } />
+      <Route path="/course/:id" element={<EdukasiDetail currentPath={currentPath} />} />
+      <Route path="/videoedukasidetail/:id" element={<VideoEdukasiDetail currentPath={currentPath} />} />
       <Route path="/register" element={<Register currentPath={currentPath} />} />
       <Route path="/login" element={<Login currentPath={currentPath} />} />
+      <Route path="/course" element={<Edukasi currentPath={currentPath} />} />
       <Route path="/forgot-password" element={<ForgotPassword currentPath={currentPath} />} />
       <Route path="/forgot-password-success" element={<ForgotPasswordSuccess currentPath={currentPath} />} />
-      <Route path="/landing" element={isAuthenticated ? <LandingPage  currentPath={currentPath}/> : <Navigate to="/login" />} />
+      <Route path="/landing" element={<LandingPage currentPath={currentPath} />} />
       <Route path="/pendanaan" element={isAuthenticated ? <Funding currentPath={currentPath} /> : <Navigate to="/login" />} />
     </Routes>
   );

@@ -98,7 +98,6 @@ const Register = () => {
           }}
         >
           <CardContent>
-            {/* ✅ Header Section */}
             <Box sx={{ textAlign: "center", mb: 3 }}>
               <Avatar
                 sx={{
@@ -113,21 +112,22 @@ const Register = () => {
                 Daftar Akun Baru
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
-                Buat akun Anda untuk memulai perjalanan dengan kami!
+                Buat akun Anda untuk akses penuh ke semua materi & komunitas alumni. Atau
+                <Link href="/preview" underline="none" sx={{ color: "#D11655", ml: 0.5, fontWeight: 600 }}>
+                  coba materi gratis tanpa daftar
+                </Link>
+                .
               </Typography>
             </Box>
 
-            {/* ✅ Error Message */}
             {error && (
               <Alert severity="error" sx={{ mb: 2 }}>
                 {error}
               </Alert>
             )}
 
-            {/* ✅ Registration Form */}
             <Box component="form" noValidate sx={{ mt: 1 }}>
               <Grid container spacing={2}>
-                {/* Name Field */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -146,8 +146,6 @@ const Register = () => {
                     }}
                   />
                 </Grid>
-
-                {/* Email Field */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -166,8 +164,6 @@ const Register = () => {
                     }}
                   />
                 </Grid>
-
-                {/* Password Field */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -187,8 +183,6 @@ const Register = () => {
                     }}
                   />
                 </Grid>
-
-                {/* Password Confirmation Field */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -210,7 +204,6 @@ const Register = () => {
                 </Grid>
               </Grid>
 
-              {/* ✅ Register Button */}
               <Button
                 type="button"
                 fullWidth
@@ -229,7 +222,6 @@ const Register = () => {
                 Daftar
               </Button>
 
-              {/* ✅ Back Button */}
               <Button
                 fullWidth
                 variant="outlined"
@@ -249,7 +241,6 @@ const Register = () => {
                 Kembali
               </Button>
 
-              {/* ✅ Footer Links */}
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="/login" variant="body2" sx={{ color: "var(--themeRed)" }}>
@@ -266,3 +257,4 @@ const Register = () => {
 };
 
 export default Register;
+ 

@@ -17,15 +17,17 @@ import { endpoint } from "../endpoint/api";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import parse from "html-react-parser";
+import { AuthModal } from "../components/Modal/AuthModal";
 
 const EdukasiDetailPay = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("userToken");
   const [course, setCourse] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [ShowAuthModal, setShowAuthModal] = useState(false)
   const [getTransaction, setgetTransaction] = useState(null);
   const getEmbedUrl = (url) => {
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
@@ -45,6 +47,13 @@ const EdukasiDetailPay = () => {
     return url; // fallback
   };
 
+ useEffect(() => {
+    // console.log("Course ID:", course);
+
+    fetchCourseDetail();
+    fetchTransaction();
+  }, [id]);
+
   const fetchCourseDetail = async () => {
     try {
       setLoading(true);
@@ -53,7 +62,7 @@ const EdukasiDetailPay = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCourse(response.data.data);
-      // console.log(response.data.data);
+      console.log(response.data.data);
     } catch (err) {
       toast.error("Gagal memuat data kursus. Silakan coba lagi.");
       // console.error(err);
@@ -61,8 +70,12 @@ const EdukasiDetailPay = () => {
       setLoading(false);
     }
   };
+
+  
   const fetchTransaction = async () => {
     try {
+      // console.log(course.enrolled);
+      
       setLoading(true);
       const token = localStorage.getItem("userToken");
       const response = await axios.get(endpoint.getTransaction, {
@@ -71,19 +84,14 @@ const EdukasiDetailPay = () => {
       setgetTransaction(response.data.data);
       // console.log(response.data.data);
     } catch (err) {
-      toast.error("Gagal memuat data kursus. Silakan coba lagi.");
+      toast.error("Anda Membuka halaman ini sebelum Login.");
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    // console.log("Course ID:", course);
-
-    fetchCourseDetail();
-    fetchTransaction();
-  }, [id]);
+ 
 
   useEffect(() => {
     if (course && course.videos && course.videos.length > 0) {
@@ -116,9 +124,14 @@ const EdukasiDetailPay = () => {
   // };
 
   const handleEnroll = async () => {
-    try {
-      const token = localStorage.getItem("userToken");
+    const token = localStorage.getItem("userToken");
 
+    if (!token) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    try {
       const response = await axios.get(endpoint.buyCourse(id), {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -129,14 +142,14 @@ const EdukasiDetailPay = () => {
         window.location.href = redirectUrl;
       } else {
         toast.success("Berhasil klaim kursus gratis!");
-
-        navigate(`/course/${course.id}/`);
+        navigate(`/course/${id}/`);
       }
     } catch (err) {
-      toast.error("Gagal melakukan pembelian atau klaim. Silakan coba lagi.");
+      toast.error("Gagal melakukan pembelian atau klaim.");
       console.error("Enroll failed: ", err);
     }
   };
+
 
   if (loading) {
     return (
@@ -364,6 +377,8 @@ const EdukasiDetailPay = () => {
                 </Box>
               </Grid>
 
+              <AuthModal open={ShowAuthModal} onClose={() => setShowAuthModal(false)} />
+
               {/* Selected Video Display */}
               <Grid item xs={12} md={9}>
                 {selectedVideo && (
@@ -402,11 +417,11 @@ const EdukasiDetailPay = () => {
                   variant="contained"
                   onClick={handleEnroll}
                   sx={{
-                    backgroundColor: "#d61355",
+                    backgroundColor: "#d61355", 
                     px: 4,
                     py: 1.5,
                     fontSize: "1.1rem",
-                    fontWeight: "bold",
+                    fontWeight: "bold", 
                   }}
                 >
                   🔥 Beli Sekarang & Mulai Belajar!

@@ -37,6 +37,8 @@ const EdukasiDetail = () => {
     const fetchCourseDetails = async () => {
       try {
         const token = localStorage.getItem("userToken");
+        console.log('TOKENN', token);
+
         const response = await axios.get(endpoint.getCourseDetails(id), {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -281,7 +283,7 @@ const EdukasiDetail = () => {
           {selectedVideo ? (
             // Handle YouTube
             selectedVideo.url.includes("youtube.com") ||
-            selectedVideo.url.includes("youtu.be") ? (
+              selectedVideo.url.includes("youtu.be") ? (
               <iframe
                 width="100%"
                 height="100%"

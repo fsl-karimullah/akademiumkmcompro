@@ -61,7 +61,6 @@ const Login = ({ loginSuccess, loginFailure }) => {
     >
       <CssBaseline />
 
-      {/* ✅ Left Section (Hidden on Mobile) */}
       <Box
         sx={{
           flex: 1,
@@ -90,8 +89,7 @@ const Login = ({ loginSuccess, loginFailure }) => {
           Selamat Datang di Akademi UMKM
         </Typography>
         <Typography variant="body1" sx={{ maxWidth: 400, textAlign: "center" }}>
-          Bergabunglah dan mulai perjalanan pembelajaran Anda bersama kami untuk
-          mengembangkan UMKM Indonesia.
+          Akses langsung materi pembelajaran GRATIS tanpa login untuk bab pertama. Login hanya diperlukan untuk akses penuh & komunitas alumni.
         </Typography>
       </Box>
 
@@ -108,9 +106,9 @@ const Login = ({ loginSuccess, loginFailure }) => {
         <Paper
           elevation={6}
           sx={{
-            p: { xs: 4, md: 5 }, // slightly less padding on mobile
+            p: { xs: 4, md: 5 },
             width: "100%",
-            maxWidth: { xs: "100%", md: 420 }, // full width on mobile, 420px on desktop
+            maxWidth: { xs: "100%", md: 420 },
             borderRadius: 4,
             backgroundColor: "#fff",
             boxSizing: "border-box",
@@ -122,7 +120,7 @@ const Login = ({ loginSuccess, loginFailure }) => {
               fontWeight="bold"
               color="#D11655"
               gutterBottom
-              sx={{ fontSize: { xs: "1.5rem", md: "1.75rem" } }} // smaller font size on mobile
+              sx={{ fontSize: { xs: "1.5rem", md: "1.75rem" } }}
             >
               Masuk ke Akun Anda
             </Typography>
@@ -131,7 +129,13 @@ const Login = ({ loginSuccess, loginFailure }) => {
               color="text.secondary"
               sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
             >
-              Silakan login menggunakan email dan kata sandi Anda.
+              Silakan login untuk akses penuh ke semua materi & komunitas.
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ mt: 1.5, color: "#D11655", fontWeight: 500 }}
+            >
+              Tidak mau login dulu? <Link href="/preview" underline="none" sx={{ fontWeight: 600 }}>Coba materi gratis di sini</Link>
             </Typography>
           </Box>
 
