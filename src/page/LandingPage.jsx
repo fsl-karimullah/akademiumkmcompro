@@ -42,6 +42,8 @@ import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import { keyframes } from "@emotion/react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import StorefrontIcon from "@mui/icons-material/Storefront";
+import LoginIcon from "@mui/icons-material/Login";
+
 
 const theme = createTheme();
 
@@ -341,6 +343,7 @@ const LandingPage = () => {
       </Card>
     </Grid>
   );
+  const token = localStorage.getItem("userToken");
 
   return (
     <ThemeProvider theme={theme}>
@@ -394,13 +397,31 @@ const LandingPage = () => {
                 >
                   Layanan Pengaduan
                 </Button>
-                <Button
-                  startIcon={<LogoutIcon />}
-                  onClick={openLogoutDialog}
-                  sx={{ color: "#d61355", mx: 1 }}
-                >
-                  Logout
-                </Button>
+
+                {token ? (
+                  <Button
+                    startIcon={<LogoutIcon />}
+                    onClick={openLogoutDialog}
+                    sx={{ color: "#d61355", mx: 1 }}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleNavigate("/login")}
+                    sx={{
+                      color: "#d61355",
+                      fontWeight: "bold",
+                      mx: 1,
+                      border: "1px solid #d61355",
+                      "&:hover": {
+                        backgroundColor: "#fff0f5",
+                      },
+                    }}
+                  >
+                    Login
+                  </Button>
+                )}
               </>
             ) : (
               <>
@@ -421,9 +442,15 @@ const LandingPage = () => {
                   <MenuItem onClick={handleSupportClick}>
                     <SupportAgentIcon sx={{ mr: 1 }} /> Layanan Pengaduan
                   </MenuItem>
-                  <MenuItem onClick={openLogoutDialog}>
-                    <LogoutIcon sx={{ mr: 1 }} /> Logout
-                  </MenuItem>
+                  {token ? (
+                    <MenuItem onClick={openLogoutDialog}>
+                      <LogoutIcon sx={{ mr: 1 }} /> Logout
+                    </MenuItem>
+                  ) : (
+                    <MenuItem onClick={() => handleNavigate("/login")}>
+                      <LoginIcon sx={{ mr: 1 }} /> Login
+                    </MenuItem>
+                  )}
                 </Menu>
               </>
             )}

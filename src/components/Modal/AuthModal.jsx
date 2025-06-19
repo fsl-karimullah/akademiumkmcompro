@@ -42,43 +42,52 @@ export const AuthModal = ({ open, onClose }) => {
   const [error, setError] = useState("");
 
   const handleRegister = async () => {
-    if (password !== passwordConfirmation) {
-      setError("⚠️ Konfirmasi kata sandi tidak cocok.");
-      return;
-    }
+     if (password !== passwordConfirmation) {
+       setError("⚠️ Konfirmasi kata sandi tidak cocok.");
+       return;
+     }
+ 
+     try {
+       const response = await fetch(endpoint.registerUser, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify({
+           name,
+           email,
+           password,
+           password_confirmation: passwordConfirmation,
+         }),
+       });
+ 
+       if (!response.ok) {
+         const data = await response.json();
+         if (data.errors) {
+           if (data.errors.email) {
+             setError("⚠️ Email sudah digunakan sebelumnya.");
+           } else if (data.errors.password) {
+             setError("⚠️ Konfirmasi kata sandi tidak cocok.");
+           } else {
+             setError("⚠️ Registrasi gagal.");
+           }
+         } else {
+           throw new Error("⚠️ Registrasi gagal.");
+         }
+         return;
+       }
+ 
+       const data = await response.json();
+       console.log(data);
+       window.location.reload();
+     } catch (error) {
+       setError(
+         "⚠️ Registrasi gagal. Silakan coba lagi. Pastikan konfirmasi password sama dan menggunakan email yang belum terdaftar."
+       );
+     }
+   };
 
-    try {
-      const response = await fetch(endpoint.registerUser, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          password_confirmation: passwordConfirmation,
-        }),
-      });
 
-      if (!response.ok) {
-        const data = await response.json();
-        if (data.errors?.email) {
-          setError("⚠️ Email sudah digunakan sebelumnya.");
-        } else {
-          setError("⚠️ Registrasi gagal.");
-        }
-        return;
-      }
-
-      const data = await response.json();
-      localStorage.setItem("userToken", data.data.token); // auto-login
-      onClose(); // close modal
-      window.location.reload(); // refresh to reflect login state
-    } catch {
-      setError("⚠️ Registrasi gagal. Silakan coba lagi.");
-    }
-  };
 
   return (
     <Modal open={open} onClose={onClose} disableEnforceFocus>

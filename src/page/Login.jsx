@@ -135,7 +135,7 @@ const Login = ({ loginSuccess, loginFailure }) => {
               variant="body2"
               sx={{ mt: 1.5, color: "#D11655", fontWeight: 500 }}
             >
-              Tidak mau login dulu? <Link href="/preview" underline="none" sx={{ fontWeight: 600 }}>Coba materi gratis di sini</Link>
+              Tidak mau login dulu? <Link href="/landing" underline="none" sx={{ fontWeight: 600 }}>Coba materi gratis di sini</Link>
             </Typography>
           </Box>
 

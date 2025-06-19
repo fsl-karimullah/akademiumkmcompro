@@ -113,7 +113,7 @@ const Register = () => {
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
                 Buat akun Anda untuk akses penuh ke semua materi & komunitas alumni. Atau
-                <Link href="/preview" underline="none" sx={{ color: "#D11655", ml: 0.5, fontWeight: 600 }}>
+                <Link href="/token" underline="none" sx={{ color: "#D11655", ml: 0.5, fontWeight: 600 }}>
                   coba materi gratis tanpa daftar
                 </Link>
                 .
