@@ -7,8 +7,8 @@ import MobileMenu from "./MobileMenu";
 // ✅ Menu Items
 const menu = [
   { name: "Home", path: "/" },
-  // { name: "Branding UMKM", path: "/bantu-branding" },
-  { name: "Belajar Mandiri", path: "/webinars" },
+  { name: "Go Digital", path: "/bantu-branding" },
+  { name: "E - Book & Webinar", path: "/webinars" },
   // { name: "Promosi Bisnis", path: "/loginbisnis" },
   // { name: "Konsultasi Bisnis", path: "/konsultasi" },
   { name: "Tingkatkan Skill", path: "/courses" },

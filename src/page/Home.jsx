@@ -17,8 +17,8 @@ const Home = ({ currentPath }) => {
     <main className="flex flex-col justify-around ">
       <Navbar currentPath={currentPath} />
       <section className="">
-        <Hero currentPath={currentPath} />
-        {/* <HeroImage currentPath={currentPath} /> */}
+        {/* <Hero currentPath={currentPath} /> */}
+        <HeroImage currentPath={currentPath} />
       </section> 
      
       <section className="p-4">

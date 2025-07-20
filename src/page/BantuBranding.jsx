@@ -8,37 +8,33 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider
+  Divider,
+  Dialog,
 } from "@mui/material";
 import {
   CheckCircle,
   WhatsApp,
   Visibility,
-  ShoppingCart,
+  Web,
+  Build,
+  Info,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
 
-// ✅ Sample Images
-import brandingImg1 from "../../public/branding.png";
-import brandingImg2 from "../../public/rebranding-bro.png";
-import sosmedImage from "../../public/mahal.png";
-
 const BantuBranding = ({ currentPath }) => {
   const navigate = useNavigate();
   const [templates, setTemplates] = useState([]);
+  const [openTerms, setOpenTerms] = useState(false);
 
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
         const response = await axios.get(endpoint.getPackage);
         setTemplates(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching templates:", error);
       }
@@ -51,7 +47,7 @@ const BantuBranding = ({ currentPath }) => {
     const message = encodeURIComponent(
       `Halo kak, saya ingin mengetahui tentang paket ${packetNumber}`
     );
-    window.open(`https://wa.me/6285281252199?text=${message}`, "_blank");
+    window.open(`https://wa.me/6287826563459?text=${message}`, "_blank");
   };
 
   const handleWhatsAppClickWebsite = (title) => {
@@ -65,88 +61,6 @@ const BantuBranding = ({ currentPath }) => {
     window.open(url, "_blank");
   };
 
-  const packetCards = [
-    {
-      title: "Paket 1: Basic Branding",
-      price: "IDR 299.000",
-      oldPrice: "IDR 499.000",
-      discount: "40%",
-      packetNumber: "1",
-      features: {
-        available: [
-          "Free 5 Konten (Desain) Instagram",
-          "Instagram Feed",
-          "Poster Desain",
-        ],
-        unavailable: [
-          "Instagram Story Management",
-          "TikTok Video",
-          "Website Integration",
-          "SEO Optimization",
-        ],
-      },
-    },
-    {
-      title: "Paket 2: Branding Silver",
-      price: "IDR 699.000",
-      oldPrice: "IDR 899.000",
-      discount: "22%",
-      packetNumber: "2",
-      features: {
-        available: [
-          "Free 15 Konten (Desain) Instagram",
-          "Instagram Feed & Story",
-          "TikTok Video Desain",
-          "Basic SEO Setup",
-          "Logo Desain",
-        ],
-        unavailable: [
-          "Website Integration",
-          "Advanced SEO",
-          "Dedicated Account Manager",
-        ],
-      },
-    },
-    {
-      title: "Paket 3: Branding Gold",
-      price: "IDR 1.299.000",
-      oldPrice: "IDR 1.799.000",
-      discount: "28%",
-      packetNumber: "3",
-      features: {
-        available: [
-          "Free 25 Konten (Desain) Instagram & TikTok",
-          "Instagram & TikTok Story Management",
-          "Website dengan Hosting & Domain Premium",
-          "Advanced SEO Optimization",
-          "Logo & Brand Guidelines",
-          "Dedicated Account Manager",
-        ],
-        unavailable: [],
-      },
-    },
-    // {
-    //   title: "Paket 4: Branding Platinum",
-    //   price: "IDR 2.499.000",
-    //   oldPrice: "IDR 3.499.000",
-    //   discount: "29%",
-    //   packetNumber: "4",
-    //   features: {
-    //     available: [
-    //       "Unlimited Konten (Desain) Instagram & TikTok",
-    //       "Instagram & TikTok Story Management",
-    //       "Custom Website Design with Hosting & Domain",
-    //       "Full Advanced SEO Optimization",
-    //       "Logo, Brand Guidelines & Visual Identity",
-    //       "Dedicated Account Manager & Analytics Report",
-    //       "Social Media Ads Management (Instagram & TikTok)",
-    //     ],
-    //     unavailable: [],
-    //   },
-    // },
-  ];
-  
-
   return (
     <Box>
       {/* ✅ Navbar */}
@@ -155,99 +69,241 @@ const BantuBranding = ({ currentPath }) => {
       {/* ✅ Hero Section */}
       <Box
         sx={{
-          minHeight: "60vh",
-          background: "linear-gradient(to right, #d61355, #ff6b6b)",
+          position: "relative",
+          minHeight: "75vh",
+          background: "linear-gradient(135deg, #d61355, #ff6b6b)",
           color: "white",
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           textAlign: "center",
-          padding: "4rem 1rem",
+          px: 2,
+          py: 10,
+          overflow: "hidden",
         }}
       >
-        <Container>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundImage: "url('/hero-wave.svg')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            opacity: 0.1,
+          }}
+        />
+        <Container sx={{ position: "relative", zIndex: 2 }}>
           <Typography
-            variant="h3"
+            variant="h2"
             fontWeight="bold"
-            sx={{ mb: 2, animation: "fadeIn 1s ease-in-out" }}
+            sx={{ mb: 2, lineHeight: 1.3 }}
           >
-            Ingin Branding?
+            BISNIS yang Tidak Go Digital Akan{" "}
+            <span style={{ textDecoration: "underline", color: "#FFD700" }}>
+              Tersingkir!
+            </span>
           </Typography>
           <Typography
             variant="h6"
-            sx={{ mb: 3, animation: "fadeIn 1.5s ease-in-out" }}
+            sx={{ mb: 4, maxWidth: "700px", mx: "auto" }}
           >
-            Serahkan masalah <strong>BRANDING</strong> Anda kepada kami.
+            Saatnya bisnismu memiliki website profesional. Mulai dari hanya{" "}
+            <strong>Rp 500.000</strong>, kamu bisa punya website sendiri hari
+            ini!
           </Typography>
-          <Button
+          
+          <div className="flex flex-col sm:flex-row gap-2 justify-center">
+            <Button
             variant="contained"
             size="large"
             startIcon={<WhatsApp />}
             sx={{
               backgroundColor: "#25D366",
+              fontSize: "1rem",
+              px: 4,
+              py: 1.5,
               "&:hover": { backgroundColor: "#1EBE52" },
             }}
-            onClick={() => handleWhatsAppClick("konsultasi")}
+            onClick={() =>
+              handleWhatsAppClick(
+                "Halo kak, saya ingin konsultasi digitalisasi BISNIS saya."
+              )
+            }
           >
-            Konsultasi Sekarang
+            Konsultasi Gratis via WhatsApp
           </Button>
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<Info />}
+           onClick={() => setOpenTerms(true)}
+          >
+            Syarat & Ketentuan
+          </Button>
+          </div>
+         
         </Container>
       </Box>
 
-      {/* ✅ Pricing List */}
-      <Box sx={{ padding: "4rem 0", backgroundColor: "#fff" }}>
+      {/* ✅ Section: Website Template Display */}
+      <Box sx={{ py: 8, backgroundColor: "#fafafa" }}>
         <Container>
           <Typography variant="h4" fontWeight="bold" textAlign="center" mb={4}>
-            Paket Layanan Branding
+            Pilih Template Website Siap Pakai
+          </Typography>
+          <Typography textAlign="center" color="text.secondary" mb={5}>
+            Cocok untuk berbagai jenis BISNIS – langsung online tanpa ribet!
           </Typography>
           <Grid container spacing={4}>
-            {packetCards.map((packet, index) => (
-              <Grid item xs={12} md={4} key={index}>
+            {templates.map((template, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
                 <Card
                   sx={{
-                    borderRadius: 2,
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-                    textAlign: "center",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    borderRadius: 3,
+                    boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-5px)",
+                    },
                   }}
                 >
-                  <CardContent>
-                    <Typography variant="h6" fontWeight="bold" mb={1}>
-                      {packet.title}
-                    </Typography>
-                    <Typography
-                      variant="body1"
+                  {/* Image */}
+                  <CardActionArea
+                    onClick={() => handlePreviewWebsite(template.url_preview)}
+                  >
+                    <Box
                       sx={{
-                        textDecoration: "line-through",
-                        color: "gray",
+                        height: 200,
+                        overflow: "hidden",
+                        borderTopLeftRadius: "12px",
+                        borderTopRightRadius: "12px",
                       }}
                     >
-                      {packet.oldPrice}
-                    </Typography>
+                      <img
+                        src={template.thumbnail}
+                        alt={template.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Box>
+                  </CardActionArea>
+
+                  {/* Content */}
+                  <CardContent
+                    sx={{
+                      flexGrow: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      p: 2,
+                    }}
+                  >
+                    {/* Title */}
                     <Typography
-                      variant="h5"
-                      sx={{ color: "#d61355", fontWeight: "bold" }}
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      sx={{
+                        lineHeight: "1.4em",
+                        maxHeight: "2.8em",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        mb: 1,
+                      }}
                     >
-                      {packet.price}
+                      {template.name}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Diskon {packet.discount}
-                    </Typography>
-                    <List>
-                      {packet.features.available.map((feature, idx) => (
-                        <ListItem key={idx}>
-                          <ListItemIcon>
-                            <CheckCircle color="success" />
-                          </ListItemIcon>
-                          <ListItemText primary={feature} />
-                        </ListItem>
-                      ))}
-                    </List>
-                    <Button
-                      variant="contained"
-                      sx={{ mt: 2, backgroundColor: "#d61355" }}
-                      onClick={() => handleWhatsAppClick(packet.packetNumber)}
+
+                    {/* Price */}
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      sx={{ color: "#2E7D32", mb: 1 }}
                     >
-                      Hubungi WhatsApp
-                    </Button>
+                      Rp {Number(template.price).toLocaleString("id-ID")}
+                    </Typography>
+
+                    {/* Description (Fixed) */}
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        flexGrow: 1,
+                        lineHeight: "1.5em",
+                        maxHeight: "4.5em",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                        mb: 2,
+                      }}
+                    >
+                      {template.description ||
+                        "Template website profesional untuk BISNIS modern."}
+                    </Typography>
+
+                    <Divider sx={{ mb: 2 }} />
+
+                    {/* CTA Buttons */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        gap: 1,
+                      }}
+                    >
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        startIcon={<WhatsApp />}
+                        sx={{
+                          backgroundColor: "#25D366",
+                          fontSize: "0.75rem",
+                          "&:hover": { backgroundColor: "#1EBE52" },
+                        }}
+                        onClick={() =>
+                          handleWhatsAppClick(
+                            `Halo kak, saya tertarik dengan template website ${
+                              template.name
+                            } seharga Rp ${Number(
+                              template.price
+                            ).toLocaleString(
+                              "id-ID"
+                            )}. Bisa dijelaskan lebih lanjut?`
+                          )
+                        }
+                      >
+                        HUBUNGI
+                      </Button>
+                      <Button
+                        fullWidth
+                        variant="outlined"
+                        startIcon={<Visibility />}
+                        sx={{
+                          fontSize: "0.75rem",
+                          color: "#333",
+                          borderColor: "#ddd",
+                          "&:hover": { backgroundColor: "#f9f9f9" },
+                        }}
+                        onClick={() =>
+                          handlePreviewWebsite(template.url_preview)
+                        }
+                      >
+                        PREVIEW
+                      </Button>
+                    </Box>
                   </CardContent>
                 </Card>
               </Grid>
@@ -255,94 +311,104 @@ const BantuBranding = ({ currentPath }) => {
           </Grid>
         </Container>
       </Box>
-
-      {/* ✅ Template Display */}
-      <Box sx={{ padding: "4rem 0", backgroundColor: "#fafafa" }}>
-        <Container>
-          <Typography variant="h4" fontWeight="bold" textAlign="center" mb={4}>
-            Template Website
+      <Dialog
+        open={openTerms}
+        onClose={() => setOpenTerms(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <Box sx={{ p: 3 }}>
+          <Typography variant="h6" fontWeight="bold" gutterBottom>
+            Syarat & Ketentuan
           </Typography>
-          <Grid container spacing={4}>
-            {templates.map((template, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    transition: "transform 0.3s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.03)",
-                    },
-                  }}
-                >
-                  <CardActionArea>
-                    <img
-                      src={template.thumbnail}
-                      alt={template.name}
-                      style={{
-                        width: "100%",
-                        height: "200px",
-                        objectFit: "cover",
-                        borderTopLeftRadius: "12px",
-                        borderTopRightRadius: "12px",
-                      }}
-                    />
-                    <CardContent>
-                      <Typography
-                        variant="h6"
-                        fontWeight="bold"
-                        textAlign="center"
-                        mb={2}
-                      >
-                        {template.name}
-                      </Typography>
-                      <Divider sx={{ mb: 2 }} />
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          gap: 1,
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          startIcon={<WhatsApp />}
-                          sx={{
-                            backgroundColor: "#25D366",
-                            fontSize: "0.8rem",
-                            "&:hover": {
-                              backgroundColor: "#1EBE52",
-                            },
-                          }}
-                          onClick={() =>
-                            handleWhatsAppClickWebsite(template.name)
-                          }
-                        >
-                          Hubungi
-                        </Button>
-                        <Button
-                          variant="outlined"
-                          startIcon={<Visibility />}
-                          sx={{
-                            fontSize: "0.8rem",
-                            color: "#333",
-                            "&:hover": {
-                              backgroundColor: "#f0f0f0",
-                            },
-                          }}
-                          onClick={() =>
-                            handlePreviewWebsite(template.url_preview)
-                          }
-                        >
-                          Preview
-                        </Button>
-                      </Box>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Kami tidak menyediakan hosting & domain atau harga belum termasuk
+            hosting & domain.
+          </Typography>
+          <Box textAlign="right">
+            <Button onClick={() => setOpenTerms(false)}>Tutup</Button>
+          </Box>
+        </Box>
+      </Dialog>
+
+      {/* ✅ Section: Custom Website Offering */}
+      <Box sx={{ py: 8, background: "#fff5f5" }}>
+        <Container>
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4" fontWeight="bold" mb={2}>
+                Tidak Menemukan Template yang Sesuai?
+              </Typography>
+              <Typography color="text.secondary" mb={3}>
+                Kami juga menerima jasa pembuatan website{" "}
+                <strong>custom sesuai kebutuhan bisnis Anda</strong>. Dari
+                website profil, toko online, hingga sistem pemesanan digital.
+              </Typography>
+              <Typography color="error" mb={3}>
+                ⚠️ Catatan: Banyak BISNIS gagal berkembang karena tidak memiliki
+                sistem online yang sesuai.
+              </Typography>
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<Build />}
+                sx={{
+                  backgroundColor: "#d61355",
+                  "&:hover": { backgroundColor: "#c10f48" },
+                }}
+                onClick={() =>
+                  handleWhatsAppClick(
+                    "Halo kak, saya ingin buat website custom sesuai kebutuhan bisnis saya."
+                  )
+                }
+              >
+                Buat Website Custom Sekarang
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <img
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+                alt="Custom website service"
+                style={{ width: "100%", borderRadius: "12px" }}
+              />
+            </Grid>
           </Grid>
+        </Container>
+      </Box>
+
+      {/* ✅ CTA Bottom Section */}
+      <Box
+        sx={{
+          py: 6,
+          backgroundColor: "#121212",
+          color: "white",
+          textAlign: "center",
+        }}
+      >
+        <Container>
+          <Typography variant="h4" fontWeight="bold" mb={2}>
+            Jangan Tunggu Sampai Kompetitor Anda Lebih Dulu Go Digital!
+          </Typography>
+          <Typography mb={4}>
+            Waktu terbaik untuk memulai digitalisasi bisnis Anda adalah
+            sekarang.
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<Web />}
+            sx={{
+              backgroundColor: "#ff6b6b",
+              "&:hover": { backgroundColor: "#e55d5d" },
+            }}
+            onClick={() =>
+              handleWhatsAppClick(
+                "Halo kak, saya tertarik untuk mulai digitalisasi bisnis saya. Bisa bantu?"
+              )
+            }
+          >
+            Mulai Digitalisasi Bisnis
+          </Button>
         </Container>
       </Box>
     </Box>

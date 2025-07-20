@@ -80,133 +80,147 @@ const Edukasi = () => {
     window.open(whatsappURL, "_blank");
   };
 
-  const renderCourseCard = (course) => (
-    <Grid
-      item
-      key={course.id}
-      xs={6}
-      sm={6}
-      md={4}
-      onClick={() => navigate(`/course-pay/${course.id}`)}
+const renderCourseCard = (course) => (
+  <Grid
+    item
+    key={course.id}
+    xs={6}
+    sm={6}
+    md={4}
+    onClick={() => navigate(`/course-pay/${course.id}`)}
+    sx={{
+      cursor: "pointer",
+      "&:hover .course-card": {
+        boxShadow: "0px 6px 20px rgba(0,0,0,0.2)",
+        transform: "scale(1.05)",
+      },
+    }}
+  >
+    <Card
+      className="course-card"
       sx={{
-        cursor: "pointer",
-        "&:hover .course-card": {
-          boxShadow: "0px 6px 20px rgba(0,0,0,0.2)",
-          transform: "scale(1.05)",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+        borderRadius: "10px",
+        transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
+        overflow: "hidden",
+        position: "relative", // needed for badge
+        border: course.is_flashsale === 1 ? "2px solid #f50057" : "none",
+        "&:hover": {
+          transform: "scale(1.02)",
+          boxShadow: "0px 6px 15px rgba(0,0,0,0.2)",
         },
       }}
     >
-      <Card
-        className="course-card"
-        sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-          borderRadius: "10px",
-          transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
-          overflow: "hidden",
-          "&:hover": {
-            transform: "scale(1.02)",
-            boxShadow: "0px 6px 15px rgba(0,0,0,0.2)",
-          },
-        }}
-      >
-        <CardMedia
-          component="img"
-          height={isMobile ? "110" : "180"}
-          image={
-            course.thumbnail ||
-            "https://via.placeholder.com/300x180.png?text=No+Image"
-          }
-          alt={course.title}
-          sx={{ objectFit: "cover" }}
-        />
-
-        <CardContent
+      {/* 🔥 Flash Sale Badge */}
+      {course.is_flashsale === 1 && (
+        <Box
           sx={{
-            flexGrow: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            p: isMobile ? 1 : 2,
+            position: "absolute",
+            top: 8,
+            left: 8,
+            backgroundColor: "#f50057",
+            color: "white",
+            px: 1,
+            py: 0.5,
+            fontSize: "0.7rem",
+            fontWeight: "bold",
+            borderRadius: "5px",
+            zIndex: 2,
           }}
         >
-          <Typography
-            variant="h6"
-            fontWeight="bold"
-            gutterBottom
-            sx={{
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              fontSize: isMobile ? "0.85rem" : "1.25rem",
-            }}
-          >
-            {course.title}
-          </Typography>
+          FLASH SALE 🔥
+        </Box>
+      )}
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            gutterBottom
-            sx={{ fontSize: isMobile ? "0.7rem" : "0.875rem" }}
-          >
-            Mentor: {course.mentor}
-          </Typography>
+      <CardMedia
+        component="img"
+        height={isMobile ? "110" : "180"}
+        image={
+          course.thumbnail ||
+          "https://via.placeholder.com/300x180.png?text=No+Image"
+        }
+        alt={course.title}
+        sx={{ objectFit: "cover" }}
+      />
 
-          <Box sx={{ mt: 1 }}>
-            {course.price === 0 ? (
-              <Typography
-                variant="h6"
-                fontWeight="bold"
-                color="#2e7d32"
-                sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
-              >
-                Gratis
-              </Typography>
-            ) : course.discount > 0 ? (
-              <>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      textDecoration: "line-through",
-                      fontSize: isMobile ? "0.65rem" : "0.875rem",
-                    }}
-                  >
-                    Rp{" "}
-                    {(
-                      (course.price * 100) /
-                      (100 - course.discount)
-                    ).toLocaleString("id-ID")}
-                  </Typography>
-                  <Box
-                    sx={{
-                      backgroundColor: "#d61355",
-                      color: "white",
-                      px: 1,
-                      py: 0.25,
-                      borderRadius: "5px",
-                      fontSize: "0.65rem",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    -{course.discount}%
-                  </Box>
-                </Box>
+      <CardContent
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          p: isMobile ? 1 : 2,
+        }}
+      >
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          gutterBottom
+          sx={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            fontSize: isMobile ? "0.85rem" : "1.25rem",
+          }}
+        >
+          {course.title}
+        </Typography>
+
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          gutterBottom
+          sx={{ fontSize: isMobile ? "0.7rem" : "0.875rem" }}
+        >
+          Mentor: {course.mentor}
+        </Typography>
+
+        <Box sx={{ mt: 1 }}>
+          {course.price === 0 ? (
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              color="#2e7d32"
+              sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
+            >
+              Gratis
+            </Typography>
+          ) : course.discount > 0 ? (
+            <>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Typography
-                  variant="h6"
-                  fontWeight="bold"
-                  color="#d61355"
-                  sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    textDecoration: "line-through",
+                    fontSize: isMobile ? "0.65rem" : "0.875rem",
+                  }}
                 >
-                  Rp {course.price.toLocaleString("id-ID")}
+                  Rp{" "}
+                  {(
+                    (course.price * 100) /
+                    (100 - course.discount)
+                  ).toLocaleString("id-ID")}
                 </Typography>
-              </>
-            ) : (
+                <Box
+                  sx={{
+                    backgroundColor: "#d61355",
+                    color: "white",
+                    px: 1,
+                    py: 0.25,
+                    borderRadius: "5px",
+                    fontSize: "0.65rem",
+                    fontWeight: "bold",
+                  }}
+                  className={course.is_flashsale === 1 ? "animate-pulse" : ""}
+                >
+                  -{course.discount}%
+                </Box>
+              </Box>
               <Typography
                 variant="h6"
                 fontWeight="bold"
@@ -215,12 +229,23 @@ const Edukasi = () => {
               >
                 Rp {course.price.toLocaleString("id-ID")}
               </Typography>
-            )}
-          </Box>
-        </CardContent>
-      </Card>
-    </Grid>
-  );
+            </>
+          ) : (
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              color="#d61355"
+              sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
+            >
+              Rp {course.price.toLocaleString("id-ID")}
+            </Typography>
+          )}
+        </Box>
+      </CardContent>
+    </Card>
+  </Grid>
+);
+
 
   const freeCourses = filteredCourses.filter((course) => course.price === 0);
   const paidCourses = filteredCourses.filter((course) => course.price > 0);
@@ -230,7 +255,7 @@ const Edukasi = () => {
       sx={{
         backgroundColor: "#f9f9f9",
         minHeight: "100vh",
-        position: "relative",
+        position: "relative", 
       }}
     >
       {/* Back Button */}

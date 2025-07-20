@@ -100,7 +100,7 @@ const EdukasiDetail = () => {
         }}
       >
         <IconButton
-          onClick={() => navigate("/course")}
+          onClick={() => navigate(-1)}
           sx={{ color: "#d61355" }}
         >
           <ArrowBackIcon fontSize="large" />
