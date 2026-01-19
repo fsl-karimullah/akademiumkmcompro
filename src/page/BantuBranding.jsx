@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Container,
@@ -10,6 +10,8 @@ import {
   CardContent,
   Divider,
   Dialog,
+  Pagination,
+  TextField,
 } from "@mui/material";
 import {
   CheckCircle,
@@ -18,6 +20,7 @@ import {
   Web,
   Build,
   Info,
+  Star,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -28,6 +31,22 @@ const BantuBranding = ({ currentPath }) => {
   const navigate = useNavigate();
   const [templates, setTemplates] = useState([]);
   const [openTerms, setOpenTerms] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const ITEMS_PER_PAGE = 9;
+
+  const filteredTemplates = useMemo(() => {
+    return templates.filter((t) =>
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()) 
+    );
+  }, [templates, searchQuery]);
+
+  const paginatedTemplates = useMemo(() => {
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    return filteredTemplates.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredTemplates, page]);
+
+  const totalPages = Math.ceil(filteredTemplates.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -70,7 +89,7 @@ const BantuBranding = ({ currentPath }) => {
       <Box
         sx={{
           position: "relative",
-          minHeight: "75vh",
+          minHeight: "85vh",
           background: "linear-gradient(135deg, #d61355, #ff6b6b)",
           color: "white",
           display: "flex",
@@ -82,6 +101,7 @@ const BantuBranding = ({ currentPath }) => {
           overflow: "hidden",
         }}
       >
+        {/* Decorative Background Overlay */}
         <Box
           sx={{
             position: "absolute",
@@ -95,6 +115,8 @@ const BantuBranding = ({ currentPath }) => {
             opacity: 0.1,
           }}
         />
+
+        {/* Hero Content */}
         <Container sx={{ position: "relative", zIndex: 2 }}>
           <Typography
             variant="h2"
@@ -106,6 +128,7 @@ const BantuBranding = ({ currentPath }) => {
               Tersingkir!
             </span>
           </Typography>
+
           <Typography
             variant="h6"
             sx={{ mb: 4, maxWidth: "700px", mx: "auto" }}
@@ -114,37 +137,206 @@ const BantuBranding = ({ currentPath }) => {
             <strong>Rp 500.000</strong>, kamu bisa punya website sendiri hari
             ini!
           </Typography>
-          
-          <div className="flex flex-col sm:flex-row gap-2 justify-center">
-            <Button
-            variant="contained"
-            size="large"
-            startIcon={<WhatsApp />}
+
+          {/* Buttons */}
+          <Box
             sx={{
-              backgroundColor: "#25D366",
-              fontSize: "1rem",
-              px: 4,
-              py: 1.5,
-              "&:hover": { backgroundColor: "#1EBE52" },
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: 2,
+              justifyContent: "center",
+              flexWrap: "wrap",
             }}
-            onClick={() =>
-              handleWhatsAppClick(
-                "Halo kak, saya ingin konsultasi digitalisasi BISNIS saya."
-              )
-            }
           >
-            Konsultasi Gratis via WhatsApp
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<Info />}
-           onClick={() => setOpenTerms(true)}
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<WhatsApp />}
+              sx={{
+                backgroundColor: "#25D366",
+                fontSize: "1rem",
+                px: 4,
+                py: 1.5,
+                "&:hover": { backgroundColor: "#1EBE52" },
+              }}
+              onClick={() =>
+                handleWhatsAppClick(
+                  "Halo kak, saya ingin konsultasi digitalisasi BISNIS saya."
+                )
+              }
+            >
+              Konsultasi Gratis via WhatsApp
+            </Button>
+
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<Info />}
+              onClick={() => setOpenTerms(true)}
+              sx={{
+                borderColor: "white",
+                color: "white",
+                fontSize: "1rem",
+                px: 4,
+                py: 1.5,
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+              }}
+            >
+              Syarat & Ketentuan
+            </Button>
+
+            <Box sx={{ position: "relative", display: "inline-block" }}>
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<Info />}
+                sx={{
+                  backgroundColor: "#FFD700",
+                  color: "#000",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  px: 4,
+                  py: 1.5,
+                  boxShadow: "0 0 8px 2px rgba(255, 215, 0, 0.6)",
+                  transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: "#e6c200",
+                    boxShadow: "0 0 12px 4px rgba(255, 215, 0, 0.9)",
+                    transform: "scale(1.05)",
+                  },
+                }}
+                onClick={() => navigate("/umkm-showcase")}
+              >
+                <Star sx={{ mr: 1 }} />
+                UMKM Digital Showcase
+              </Button>
+
+              {/* Featured Badge */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: -8,
+                  right: -8,
+                  backgroundColor: "#FF3D00",
+                  color: "white",
+                  px: 1.5,
+                  py: 0.3,
+                  borderRadius: "12px",
+                  fontSize: "0.75rem",
+                  fontWeight: "bold",
+                  boxShadow: "0 0 6px rgba(255, 61, 0, 0.8)",
+                  userSelect: "none",
+                  pointerEvents: "none",
+                }}
+              >
+                GRATIS
+              </Box>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* ✅ Section: Tanggal Digitalisasi Bisnis - Perfectly Centered Mobile */}
+      <Box sx={{ py: 8, backgroundColor: "#fff" }}>
+        <Container>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            textAlign="center"
+            mb={6}
+            sx={{ px: 2 }}
           >
-            Syarat & Ketentuan
-          </Button>
-          </div>
-         
+            Tangga Digitalisasi Bisnis
+          </Typography>
+
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              gap: { xs: 4, md: 2 },
+              px: { xs: 2, md: 0 },
+            }}
+          >
+            {/* Connecting Line */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: { xs: 24, md: "32px" },
+                left: { xs: "36px", md: 0 },
+                height: { xs: "100%", md: "2px" },
+                width: { xs: "2px", md: "100%" },
+                backgroundColor: "#d61355",
+                zIndex: 0,
+              }}
+            />
+
+            {/* Step Items */}
+            {[
+              "Eksistensi Social Media (Instagram, Tiktok)",
+              "Komunikasi Profesional Gunakan (Whatsapp Business)",
+              "Masuk ke Marketplace (Shopee & Tokopedia)",
+              "Iklan Digital Dasar Meta Ads atau Tiktok Ads",
+              "Website & Sistem (Landing Page / E-Commerce)",
+              "Scale Up & Kolaborasi (Affiliate)",
+            ].map((title, index) => (
+              <Box
+                key={index}
+                sx={{
+                  position: "relative",
+                  zIndex: 1,
+                  display: "flex",
+                  flexDirection: { xs: "row", md: "column" },
+                  alignItems: "center",
+                  justifyContent: { xs: "flex-start", md: "center" },
+                  gap: 2,
+                  width: "100%",
+                }}
+              >
+                {/* Step number circle */}
+                <Box
+                  sx={{
+                    width: 48,
+                    height: 48,
+                    minWidth: 48,
+                    borderRadius: "50%",
+                    backgroundColor: "#d61355",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: "bold",
+                    fontSize: "1rem",
+                    boxShadow: 1,
+                  }}
+                >
+                  {index + 1}
+                </Box>
+
+                {/* Text content */}
+                <Box
+                  sx={{
+                    flex: 1,
+                    textAlign: { xs: "left", md: "center" },
+                    maxWidth: { xs: "100%", md: 160 },
+                  }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight="bold"
+                    sx={{
+                      fontSize: "0.95rem",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {title}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Box>
         </Container>
       </Box>
 
@@ -157,8 +349,22 @@ const BantuBranding = ({ currentPath }) => {
           <Typography textAlign="center" color="text.secondary" mb={5}>
             Cocok untuk berbagai jenis BISNIS – langsung online tanpa ribet!
           </Typography>
+
+          <Box sx={{ maxWidth: 400, mx: "auto", mb: 4 }}>
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="Cari template..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setPage(1);
+              }}
+            />
+          </Box>
+
           <Grid container spacing={4}>
-            {templates.map((template, index) => (
+            {paginatedTemplates.map((template, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <Card
                   sx={{
@@ -309,6 +515,17 @@ const BantuBranding = ({ currentPath }) => {
               </Grid>
             ))}
           </Grid>
+          {totalPages > 1 && (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+              <Pagination
+                count={totalPages}
+                page={page}
+                onChange={(e, value) => setPage(value)}
+                color="primary"
+                shape="rounded"
+              />
+            </Box>
+          )}
         </Container>
       </Box>
       <Dialog

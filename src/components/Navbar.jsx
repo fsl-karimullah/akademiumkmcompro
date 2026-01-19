@@ -12,6 +12,7 @@ const menu = [
   // { name: "Promosi Bisnis", path: "/loginbisnis" },
   // { name: "Konsultasi Bisnis", path: "/konsultasi" },
   { name: "Tingkatkan Skill", path: "/courses" },
+  { name: "Tentang Kita", path: "/about" },
   { name: "Kontak", path: "https://wa.me/6285281252199", external: true },
 ];
 

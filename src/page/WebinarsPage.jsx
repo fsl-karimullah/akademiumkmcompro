@@ -112,18 +112,6 @@ const WebinarsPage = ({ currentPath }) => {
                 membantu UMKM, mahasiswa, dan profesional menjadi lebih
                 kompetitif di era digital.
               </Typography>
-
-              {/* <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "var(--themeRed)",
-                  padding: "10px 20px",
-                  "&:hover": { backgroundColor: "#d32f2f" },
-                }}
-                onClick={() => navigate("/signup")}
-              >
-                Temukan Produk Digital
-              </Button> */}
             </Grid>
           </Grid>
         </Container>
@@ -174,32 +162,12 @@ const WebinarsPage = ({ currentPath }) => {
         {!loading && !error && (
           <Grid container spacing={4}>
             {webinars.map((webinar) => (
-              <Grid item xs={12} sm={6} md={4} key={webinar.id}>
+              <Grid item xs={6} sm={6} md={4} key={webinar.id}>
                 <WebinarCard webinar={webinar} />
               </Grid>
             ))}
           </Grid>
         )}
-
-        {/* ✅ CTA for More Products */}
-        {/* <Box sx={{ textAlign: "center", mt: 6 }}>
-          <Button
-            variant="outlined"
-            sx={{
-              padding: "10px 30px",
-              fontSize: "1rem",
-              color: "var(--themeRed)",
-              borderColor: "var(--themeRed)",
-              "&:hover": {
-                backgroundColor: "var(--themeRed)",
-                color: "white",
-              },
-            }}
-            onClick={() => navigate("/allproducts")}
-          >
-            Lihat Semua Produk Digital
-          </Button>
-        </Box> */}
       </Container>
     </Box>
   );

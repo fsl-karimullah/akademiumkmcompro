@@ -20,7 +20,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 const WebinarDetail = ({ currentPath }) => {
   const { id } = useParams();
-    const isMobile = useMediaQuery("(max-width:600px)");
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [webinar, setWebinar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -69,7 +69,7 @@ const WebinarDetail = ({ currentPath }) => {
         }}
       >
         <IconButton
-          onClick={() => navigate("/course")}
+          onClick={() => navigate("/webinars")}
           sx={{ color: "#d61355" }}
         >
           <ArrowBackIcon fontSize="large" />

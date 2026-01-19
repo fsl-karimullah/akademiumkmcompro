@@ -22,7 +22,6 @@ const WebinarCard = ({ webinar }) => {
     tempDiv.innerHTML = html;
     return tempDiv.textContent || tempDiv.innerText || "";
   };
-  
 
   return (
     <Card
@@ -90,12 +89,13 @@ const WebinarCard = ({ webinar }) => {
             }}
           >
             {stripHtml(webinar.description) || "No Description Available"}
-
           </Typography>
         </CardContent>
       </CardActionArea>
       <Divider />
-      <CardActions sx={{ justifyContent: "space-between", padding: "8px 16px" }}>
+      <CardActions
+        sx={{ justifyContent: "space-between", padding: "8px 16px" }}
+      >
         <Typography variant="caption" color="text.secondary">
           Hosted by: <strong>{webinar.host || "Admin"}</strong>
         </Typography>
@@ -107,6 +107,13 @@ const WebinarCard = ({ webinar }) => {
             backgroundColor: "var(--themeRed)",
             textTransform: "none",
             fontWeight: "bold",
+            fontSize: {
+              xs: "0.6rem", 
+              sm: "0.75rem", 
+              md: "0.8rem", 
+            },
+            px: 1.5,
+            py: 0.5,
             "&:hover": {
               backgroundColor: "#b50d44",
             },

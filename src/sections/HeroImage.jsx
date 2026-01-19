@@ -8,8 +8,12 @@ import "../assets/style/heroimage.css";
 
 const images = [
   {
-    url: "/images/banner1.png",
-    link: "http://lynk.id/sixeyesdigitalproduct/7mz5j1rmyvro/checkout",
+    url: "/images/banner3.png",
+    link: "http://lynk.id/akademiumkmdigital/35w082gem179/checkout",
+  },
+  {
+    url: "/images/banner2.png",
+    link: "http://akademiumkm.id/umkm-showcase",
   },
 ];
 
