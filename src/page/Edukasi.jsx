@@ -1,35 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Container,
-  Grid,
-  Typography,
   Box,
-  IconButton,
-  Card,
-  CardMedia,
-  CardContent,
-  CircularProgress,
+  Container,
+  Typography,
   TextField,
-  Fab,
-  useMediaQuery,
-  useTheme,
+  InputAdornment,
+  Grid,
+  Card,
+  CardContent,
+  Select,
+  MenuItem,
+  FormControl,
+  CircularProgress,
+  Chip,
+  Breadcrumbs,
+  Link as MuiLink,
+  Checkbox,
+  FormControlLabel,
+  Paper,
+  Pagination,
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { useNavigate } from "react-router-dom";
+import { Search, Home, NavigateNext, LocalFireDepartment } from "@mui/icons-material";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
+import Navbar from "../components/Navbar";
 
-const Edukasi = () => {
+const Edukasi = ({ currentPath }) => {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("newest");
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+  // Filters
+  const [filters, setFilters] = useState({
+    flashSale: false,
+    gratis: false,
+    berbayar: false,
+  });
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
   const fetchCourses = async () => {
     try {
@@ -43,387 +61,471 @@ const Edukasi = () => {
       setCourses(response.data.data);
       setFilteredCourses(response.data.data);
     } catch (err) {
-      setError("Gagal memuat data kursus. Silakan coba lagi.");
-      console.error(err);
+      console.error("Error fetching courses:", err);
     } finally {
       setLoading(false);
     }
   };
 
+  // Handle search and filters
   useEffect(() => {
-    fetchCourses();
-  }, []);
+    let result = [...courses];
 
-  const handleBack = () => {
-    navigate("/landing");
+    // Filter by search query
+    if (searchQuery) {
+      result = result.filter(
+        (course) =>
+          course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          course.mentor.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Apply filters
+    const hasActiveFilters = filters.flashSale || filters.gratis || filters.berbayar;
+    if (hasActiveFilters) {
+      result = result.filter((course) => {
+        if (filters.flashSale && course.is_flashsale === 1) return true;
+        if (filters.gratis && course.price === 0) return true;
+        if (filters.berbayar && course.price > 0) return true;
+        return false;
+      });
+    }
+
+    // Sort
+    switch (sortBy) {
+      case "newest":
+        result.sort((a, b) => b.id - a.id);
+        break;
+      case "price_low":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "price_high":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case "flashsale":
+        result.sort((a, b) => b.is_flashsale - a.is_flashsale);
+        break;
+      default:
+        break;
+    }
+
+    setFilteredCourses(result);
+    setCurrentPage(1); // Reset to first page when filters change
+  }, [searchQuery, sortBy, courses, filters]);
+
+  const handleFilterChange = (filterName) => {
+    setFilters((prev) => ({
+      ...prev,
+      [filterName]: !prev[filterName],
+    }));
   };
 
-  const handleSearch = (event) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
-
-    const filtered = courses.filter(
-      (course) =>
-        course.title.toLowerCase().includes(query) ||
-        course.mentor.toLowerCase().includes(query)
-    );
-
-    setFilteredCourses(filtered);
+  const handleCourseClick = (courseId) => {
+    navigate(`/course-pay/${courseId}`);
   };
 
-  const handleReportIssue = () => {
-    const phoneNumber = "6287826563459";
-    const message = encodeURIComponent(
-      "Halo kak, saya mau melaporkan masalah ketika order ..."
-    );
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(whatsappURL, "_blank");
+  const formatPrice = (price) => {
+    return `Rp ${price.toLocaleString("id-ID")}`;
   };
-
-const renderCourseCard = (course) => (
-  <Grid
-    item
-    key={course.id}
-    xs={6}
-    sm={6}
-    md={4}
-    onClick={() => navigate(`/course-pay/${course.id}`)}
-    sx={{
-      cursor: "pointer",
-      "&:hover .course-card": {
-        boxShadow: "0px 6px 20px rgba(0,0,0,0.2)",
-        transform: "scale(1.05)",
-      },
-    }}
-  >
-    <Card
-      className="course-card"
-      sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-        borderRadius: "10px",
-        transition: "transform 0.3s ease-in-out, box-shadow 0.3s",
-        overflow: "hidden",
-        position: "relative", // needed for badge
-        border: course.is_flashsale === 1 ? "2px solid #f50057" : "none",
-        "&:hover": {
-          transform: "scale(1.02)",
-          boxShadow: "0px 6px 15px rgba(0,0,0,0.2)",
-        },
-      }}
-    >
-      {/* 🔥 Flash Sale Badge */}
-      {course.is_flashsale === 1 && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 8,
-            left: 8,
-            backgroundColor: "#f50057",
-            color: "white",
-            px: 1,
-            py: 0.5,
-            fontSize: "0.7rem",
-            fontWeight: "bold",
-            borderRadius: "5px",
-            zIndex: 2,
-          }}
-        >
-          FLASH SALE 🔥
-        </Box>
-      )}
-
-      <CardMedia
-        component="img"
-        height={isMobile ? "110" : "180"}
-        image={
-          course.thumbnail ||
-          "https://via.placeholder.com/300x180.png?text=No+Image"
-        }
-        alt={course.title}
-        sx={{ objectFit: "cover" }}
-      />
-
-      <CardContent
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          p: isMobile ? 1 : 2,
-        }}
-      >
-        <Typography
-          variant="h6"
-          fontWeight="bold"
-          gutterBottom
-          sx={{
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-            fontSize: isMobile ? "0.85rem" : "1.25rem",
-          }}
-        >
-          {course.title}
-        </Typography>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          gutterBottom
-          sx={{ fontSize: isMobile ? "0.7rem" : "0.875rem" }}
-        >
-          Mentor: {course.mentor}
-        </Typography>
-
-        <Box sx={{ mt: 1 }}>
-          {course.price === 0 ? (
-            <Typography
-              variant="h6"
-              fontWeight="bold"
-              color="#2e7d32"
-              sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
-            >
-              Gratis
-            </Typography>
-          ) : course.discount > 0 ? (
-            <>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{
-                    textDecoration: "line-through",
-                    fontSize: isMobile ? "0.65rem" : "0.875rem",
-                  }}
-                >
-                  Rp{" "}
-                  {(
-                    (course.price * 100) /
-                    (100 - course.discount)
-                  ).toLocaleString("id-ID")}
-                </Typography>
-                <Box
-                  sx={{
-                    backgroundColor: "#d61355",
-                    color: "white",
-                    px: 1,
-                    py: 0.25,
-                    borderRadius: "5px",
-                    fontSize: "0.65rem",
-                    fontWeight: "bold",
-                  }}
-                  className={course.is_flashsale === 1 ? "animate-pulse" : ""}
-                >
-                  -{course.discount}%
-                </Box>
-              </Box>
-              <Typography
-                variant="h6"
-                fontWeight="bold"
-                color="#d61355"
-                sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
-              >
-                Rp {course.price.toLocaleString("id-ID")}
-              </Typography>
-            </>
-          ) : (
-            <Typography
-              variant="h6"
-              fontWeight="bold"
-              color="#d61355"
-              sx={{ fontSize: isMobile ? "0.85rem" : "1.25rem" }}
-            >
-              Rp {course.price.toLocaleString("id-ID")}
-            </Typography>
-          )}
-        </Box>
-      </CardContent>
-    </Card>
-  </Grid>
-);
-
-
-  const freeCourses = filteredCourses.filter((course) => course.price === 0);
-  const paidCourses = filteredCourses.filter((course) => course.price > 0);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#f9f9f9",
-        minHeight: "100vh",
-        position: "relative", 
-      }}
-    >
-      {/* Back Button */}
+    <Box sx={{ backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
+      <Navbar currentPath={currentPath} />
+
+      {/* Hero Section - Purple Gradient */}
       <Box
         sx={{
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-          backgroundColor: "#fff",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-          px: 3,
-          py: 2,
-          display: "flex",
-          alignItems: "center",
+          background: "linear-gradient(135deg, #d61355 0%, #a00d42 100%)",
+          py: { xs: 5, md: 6 },
+          position: "relative",
         }}
       >
-        <IconButton onClick={handleBack} sx={{ mr: 2, color: "#d61355" }}>
-          <ArrowBackIcon fontSize="large" />
-        </IconButton>
-        <Typography variant="h5" fontWeight="bold" color="#d61355">
-          Kembali
-        </Typography>
-      </Box>
-
-      {/* Hero Section */}
-      <Box
-        sx={{
-          textAlign: "center",
-          py: isMobile ? 3 : 4,
-          px: 2,
-          backgroundColor: "#d61355",
-          color: "#fff",
-          mb: 3,
-        }}
-      >
-        <Typography variant={isMobile ? "h4" : "h3"} fontWeight="bold">
-          Jelajahi Kursus Kami
-        </Typography>
-        <Typography variant="subtitle1" sx={{ mt: 1 }}>
-          Tingkatkan kemampuan Anda dengan kursus yang dirancang untuk semua
-          level.
-        </Typography>
-      </Box>
-
-      {/* Search Bar */}
-      <Container maxWidth="lg" sx={{ mb: 2 }}>
-        <TextField
-          fullWidth
-          label="Cari kursus berdasarkan judul"
-          variant="outlined"
-          value={searchQuery}
-          onChange={handleSearch}
-          sx={{
-            backgroundColor: "#fff",
-            borderRadius: "8px",
-            boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-            "& .MuiInputBase-input": { fontSize: isMobile ? "0.9rem" : "1rem" },
-          }}
-        />
-      </Container>
-
-      {/* Courses Section */}
-      <Container
-        maxWidth="lg"
-        sx={{
-          py: 2,
-        }}
-      >
-        {loading ? (
-          <Box
+        <Container maxWidth="lg">
+          {/* Title */}
+          <Typography
+            variant="h3"
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "40vh",
+              color: "#fff",
+              fontWeight: 600,
+              textAlign: "center",
+              mb: 1.5,
+              fontSize: { xs: "1.8rem", md: "2.5rem" },
+              fontStyle: "italic",
             }}
           >
-            <CircularProgress />
-          </Box>
-        ) : error ? (
-          <Typography variant="h6" color="error" textAlign="center">
-            {error}
+            E-Course
           </Typography>
-        ) : (
-          <>
-            {/* Free Courses */}
-            {freeCourses.length > 0 && (
-              <>
-                <Box sx={{ textAlign: "center", mb: 3 }}>
-                  <Typography
-                    variant="h5"
-                    fontWeight="bold"
-                    color="#d61355"
-                    sx={{ mb: 1 }}
-                  >
-                    Hadiah buat kamu!
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    color="textSecondary"
-                    sx={{ maxWidth: "600px", margin: "0 auto" }}
-                  >
-                    Dapatkan kursus-kursus gratis yang akan membantu kamu
-                    mengembangkan skill tanpa biaya apapun!
-                  </Typography>
-                </Box>
-                <Grid container spacing={2}>
-                  {freeCourses.map(renderCourseCard)}
-                </Grid>
-              </>
-            )}
 
-            {/* Paid Courses */}
-            {paidCourses.length > 0 && (
-              <>
-                <Box sx={{ textAlign: "center", mb: 3, mt: 3 }}>
-                  <Typography
-                    variant="h5"
-                    fontWeight="bold"
-                    color="#d61355"
-                    sx={{ mb: 1 }}
-                  >
-                    Pembelajaran pilihan untuk upgrade diri
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    color="textSecondary"
-                    sx={{ maxWidth: "600px", margin: "0 auto" }}
-                  >
-                    Temukan kursus terbaik yang akan membantu kamu untuk naik ke
-                    level berikutnya dalam pengembangan diri.
-                  </Typography>
-                </Box>
-                <Grid container spacing={2}>
-                  {paidCourses.map(renderCourseCard)}
-                </Grid>
-              </>
-            )}
+          {/* Breadcrumb */}
+          <Breadcrumbs
+            separator={<NavigateNext sx={{ color: "rgba(255,255,255,0.6)", fontSize: 16 }} />}
+            sx={{
+              justifyContent: "center",
+              display: "flex",
+              mb: 4,
+              "& .MuiBreadcrumbs-ol": { justifyContent: "center" },
+            }}
+          >
+            <MuiLink
+              component={Link}
+              to="/"
+              sx={{
+                color: "rgba(255,255,255,0.8)",
+                textDecoration: "none",
+                fontSize: "0.9rem",
+                "&:hover": { color: "#fff" },
+              }}
+            >
+              Home
+            </MuiLink>
+            <Typography sx={{ color: "#fff", fontSize: "0.9rem" }}>
+              E-Course
+            </Typography>
+          </Breadcrumbs>
 
-            {/* No Course Match */}
-            {filteredCourses.length === 0 && (
+          {/* Search Bar */}
+          <Box sx={{ maxWidth: 800, mx: "auto" }}>
+            <TextField
+              fullWidth
+              placeholder="Mau cari apa nih ?"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "8px",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                  "& fieldset": { border: "none" },
+                  py: 0.5,
+                },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search sx={{ color: "#999" }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Main Content */}
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 2, md: 4 },
+            borderRadius: "16px",
+            backgroundColor: "#fff",
+          }}
+        >
+          <Grid container spacing={{ xs: 2, md: 4 }}>
+            {/* Left Sidebar - Filters */}
+            <Grid item xs={12} md={2.5}>
               <Typography
                 variant="h6"
-                textAlign="center"
-                color="textSecondary"
-                sx={{ mt: 4 }}
+                sx={{
+                  fontWeight: 700,
+                  mb: 2,
+                  color: "#333",
+                  fontSize: "1.1rem",
+                }}
               >
-                Tidak ada kursus yang sesuai dengan pencarian Anda.
+                Kategori
               </Typography>
-            )}
-          </>
-        )}
-      </Container>
 
-      <Fab
-        aria-label="whatsapp"
-        onClick={handleReportIssue}
-        sx={{
-          position: "fixed",
-          bottom: 20,
-          right: 20,
-          backgroundColor: "#25D366",
-          color: "#fff",
-          "&:hover": { backgroundColor: "#1ebe5d" },
-        }}
-      >
-        <WhatsAppIcon />
-      </Fab>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "row", md: "column" },
+                  flexWrap: "wrap",
+                  gap: { xs: 1, md: 0.5 },
+                  mb: { xs: 2, md: 0 },
+                }}
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filters.flashSale}
+                      onChange={() => handleFilterChange("flashSale")}
+                      size="small"
+                      sx={{
+                        color: "#ccc",
+                        "&.Mui-checked": { color: "#d61355" },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography sx={{ fontSize: "0.9rem", color: "#555" }}>
+                      Flash Sale
+                    </Typography>
+                  }
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filters.gratis}
+                      onChange={() => handleFilterChange("gratis")}
+                      size="small"
+                      sx={{
+                        color: "#ccc",
+                        "&.Mui-checked": { color: "#d61355" },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography sx={{ fontSize: "0.9rem", color: "#555" }}>
+                      Gratis
+                    </Typography>
+                  }
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filters.berbayar}
+                      onChange={() => handleFilterChange("berbayar")}
+                      size="small"
+                      sx={{
+                        color: "#ccc",
+                        "&.Mui-checked": { color: "#d61355" },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography sx={{ fontSize: "0.9rem", color: "#555" }}>
+                      Berbayar
+                    </Typography>
+                  }
+                />
+              </Box>
+            </Grid>
+
+            {/* Right Content - Course Grid */}
+            <Grid item xs={12} md={9.5}>
+              {/* Results Header */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 3,
+                  flexWrap: "wrap",
+                  gap: 2,
+                }}
+              >
+                <Typography sx={{ fontWeight: 500, color: "#333", fontSize: "0.95rem" }}>
+                  Showing {filteredCourses.length} Results
+                </Typography>
+
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Typography sx={{ color: "#666", fontSize: "0.9rem" }}>
+                    Sort By:
+                  </Typography>
+                  <FormControl size="small">
+                    <Select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      sx={{
+                        minWidth: 120,
+                        backgroundColor: "#fff",
+                        borderRadius: "6px",
+                        fontSize: "0.9rem",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#ddd",
+                        },
+                      }}
+                    >
+                      <MenuItem value="newest">Urutkan</MenuItem>
+                      <MenuItem value="price_low">Harga Terendah</MenuItem>
+                      <MenuItem value="price_high">Harga Tertinggi</MenuItem>
+                      <MenuItem value="flashsale">Flash Sale</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Box>
+
+              {/* Course Grid */}
+              {loading ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "40vh",
+                  }}
+                >
+                  <CircularProgress sx={{ color: "#d61355" }} />
+                </Box>
+              ) : filteredCourses.length === 0 ? (
+                <Box sx={{ textAlign: "center", py: 8 }}>
+                  <Typography variant="h6" color="text.secondary">
+                    Tidak ada kursus yang ditemukan
+                  </Typography>
+                </Box>
+              ) : (
+                <>
+                  <Grid container spacing={3}>
+                    {filteredCourses
+                      .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                      .map((course) => (
+                        <Grid item xs={12} sm={6} lg={4} key={course.id}>
+                          <Card
+                            onClick={() => handleCourseClick(course.id)}
+                            sx={{
+                              height: "100%",
+                              display: "flex",
+                              flexDirection: "column",
+                              borderRadius: "12px",
+                              overflow: "visible",
+                              boxShadow: "none",
+                              border: "1px solid #eee",
+                              cursor: "pointer",
+                              transition: "all 0.2s ease",
+                              "&:hover": {
+                                boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+                                transform: "translateY(-4px)",
+                              },
+                            }}
+                          >
+                            {/* Thumbnail Container with colored border */}
+                            <Box
+                              sx={{
+                                m: 1.5,
+                                borderRadius: "10px",
+                                overflow: "hidden",
+                                border: course.is_flashsale === 1
+                                  ? "3px solid #d61355"
+                                  : "3px solid #7c3aed",
+                                position: "relative",
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  position: "relative",
+                                  paddingTop: "60%",
+                                }}
+                              >
+                                <Box
+                                  component="img"
+                                  src={
+                                    course.thumbnail ||
+                                    "https://via.placeholder.com/400x240.png?text=No+Image"
+                                  }
+                                  alt={course.title}
+                                  sx={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              </Box>
+                            </Box>
+
+                            <CardContent sx={{ p: 2, pt: 0, flexGrow: 1, display: "flex", flexDirection: "column" }}>
+                              {/* Category Badge + Price Row */}
+                              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+                                <Chip
+                                  label={course.is_flashsale === 1 ? "Flash Sale" : course.price === 0 ? "Gratis" : "Berbayar"}
+                                  size="small"
+                                  icon={course.is_flashsale === 1 ? <LocalFireDepartment sx={{ fontSize: 14 }} /> : undefined}
+                                  sx={{
+                                    height: 24,
+                                    fontSize: "0.7rem",
+                                    fontWeight: 500,
+                                    backgroundColor: course.is_flashsale === 1
+                                      ? "#fce4ec"
+                                      : course.price === 0
+                                        ? "#e8f5e9"
+                                        : "#e3f2fd",
+                                    color: course.is_flashsale === 1
+                                      ? "#d61355"
+                                      : course.price === 0
+                                        ? "#2e7d32"
+                                        : "#1565c0",
+                                    "& .MuiChip-icon": {
+                                      color: "#d61355",
+                                    },
+                                  }}
+                                />
+                                <Typography
+                                  sx={{
+                                    fontWeight: 700,
+                                    color: "#d61355",
+                                    fontSize: "0.95rem",
+                                  }}
+                                >
+                                  {course.price === 0 ? "Gratis" : formatPrice(course.price)}
+                                </Typography>
+                              </Box>
+
+                              {/* Title */}
+                              <Typography
+                                sx={{
+                                  fontWeight: 600,
+                                  color: "#222",
+                                  mb: 1,
+                                  display: "-webkit-box",
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: "vertical",
+                                  overflow: "hidden",
+                                  fontSize: "0.95rem",
+                                  lineHeight: 1.4,
+                                }}
+                              >
+                                {course.title}
+                              </Typography>
+
+                              {/* Mentor */}
+                              <Typography
+                                sx={{
+                                  color: "#888",
+                                  fontSize: "0.85rem",
+                                  mt: "auto",
+                                }}
+                              >
+                                {course.mentor}
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        </Grid>
+                      ))}
+                  </Grid>
+
+                  {/* Pagination */}
+                  {filteredCourses.length > itemsPerPage && (
+                    <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+                      <Pagination
+                        count={Math.ceil(filteredCourses.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={(e, page) => setCurrentPage(page)}
+                        color="primary"
+                        sx={{
+                          "& .MuiPaginationItem-root": {
+                            color: "#666",
+                            "&.Mui-selected": {
+                              backgroundColor: "#d61355",
+                              color: "#fff",
+                              "&:hover": {
+                                backgroundColor: "#b50d44",
+                              },
+                            },
+                          },
+                        }}
+                      />
+                    </Box>
+                  )}
+                </>
+              )}
+            </Grid>
+          </Grid>
+        </Paper>
+      </Container>
     </Box>
   );
 };
