@@ -32,14 +32,12 @@ import {
     Business,
     Category,
     CheckCircle,
-    EventAvailable,
     Verified,
     AccessTime,
-    Groups,
-    EmojiEvents,
+    Download,
     Close,
-    CalendarMonth,
-    VideoCall,
+    Description,
+    LocalOffer,
 } from "@mui/icons-material";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -49,10 +47,10 @@ import parse from "html-react-parser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const WebinarDetail = ({ currentPath }) => {
+const ProdukDigitalDetail = ({ currentPath }) => {
     const { id } = useParams();
     const isMobile = useMediaQuery("(max-width:600px)");
-    const [webinar, setWebinar] = useState(null);
+    const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -72,18 +70,18 @@ const WebinarDetail = ({ currentPath }) => {
     });
 
     useEffect(() => {
-        const fetchWebinarDetail = async () => {
+        const fetchProductDetail = async () => {
             try {
-                const response = await axios.get(endpoint.getWebinarsById(id));
-                setWebinar(response.data.data);
+                const response = await axios.get(endpoint.getProdukDigitalById(id));
+                setProduct(response.data.data);
             } catch (error) {
-                setError("Gagal memuat data webinar.");
-                toast.error("Gagal memuat data webinar");
+                setError("Gagal memuat data produk digital.");
+                toast.error("Gagal memuat data produk digital");
             } finally {
                 setLoading(false);
             }
         };
-        fetchWebinarDetail();
+        fetchProductDetail();
     }, [id]);
 
     const handleInputChange = (e) => {
@@ -99,7 +97,7 @@ const WebinarDetail = ({ currentPath }) => {
         try {
             const response = await axios.post(endpoint.postFormPendaftaran, {
                 ...formData,
-                webinar_id: parseInt(id),
+                produk_digital_id: parseInt(id),
             });
 
             if (response.data.success) {
@@ -170,7 +168,7 @@ const WebinarDetail = ({ currentPath }) => {
                         variant="contained"
                         size="small"
                         sx={{ backgroundColor: "#d61355", "&:hover": { backgroundColor: "#b50d44" } }}
-                        onClick={() => navigate("/webinars")}
+                        onClick={() => navigate("/produk-digital")}
                     >
                         Kembali
                     </Button>
@@ -179,13 +177,13 @@ const WebinarDetail = ({ currentPath }) => {
         );
     }
 
-    const isGratis = webinar && !webinar.is_payment;
+    const isGratis = product && !product.is_payment;
 
     const benefits = [
-        { icon: <VideoCall sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Live Session" },
-        { icon: <Verified sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Sertifikat" },
-        { icon: <Groups sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Networking" },
-        { icon: <AccessTime sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Rekaman" },
+        { icon: <Download sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Download Instan" },
+        { icon: <Verified sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Terverifikasi" },
+        { icon: <Description sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Format Digital" },
+        { icon: <AccessTime sx={{ fontSize: { xs: 14, md: 18 } }} />, text: "Akses Selamanya" },
     ];
 
     return (
@@ -224,10 +222,10 @@ const WebinarDetail = ({ currentPath }) => {
                         </MuiLink>
                         <MuiLink
                             component={Link}
-                            to="/webinars"
+                            to="/produk-digital"
                             sx={{ color: "rgba(255,255,255,0.9)", textDecoration: "none", fontSize: { xs: "0.8rem", md: "0.95rem" } }}
                         >
-                            Webinar
+                            Produk Digital
                         </MuiLink>
                         <Typography sx={{ color: "#fff", fontWeight: 500, fontSize: { xs: "0.8rem", md: "0.95rem" } }}>
                             Detail
@@ -239,8 +237,8 @@ const WebinarDetail = ({ currentPath }) => {
                         <Grid item xs={12} md={7}>
                             {isGratis && (
                                 <Chip
-                                    icon={<EventAvailable sx={{ color: "#fff !important", fontSize: { xs: 14, md: 18 } }} />}
-                                    label="WEBINAR GRATIS"
+                                    icon={<LocalOffer sx={{ color: "#fff !important", fontSize: { xs: 14, md: 18 } }} />}
+                                    label="PRODUK GRATIS"
                                     size={isMobile ? "small" : "medium"}
                                     sx={{
                                         backgroundColor: "rgba(255,255,255,0.2)",
@@ -261,7 +259,7 @@ const WebinarDetail = ({ currentPath }) => {
                                     mb: { xs: 1.5, md: 2 },
                                 }}
                             >
-                                {webinar?.title}
+                                {product?.title}
                             </Typography>
                             <Typography
                                 sx={{
@@ -270,7 +268,7 @@ const WebinarDetail = ({ currentPath }) => {
                                     mb: { xs: 2, md: 3 },
                                 }}
                             >
-                                Ikuti webinar eksklusif dan tingkatkan skill bisnis Anda!
+                                Dapatkan produk digital eksklusif untuk mengembangkan bisnis Anda!
                             </Typography>
 
                             {/* Benefits */}
@@ -311,7 +309,7 @@ const WebinarDetail = ({ currentPath }) => {
                                         "&:hover": { backgroundColor: "#f5f5f5", transform: "translateY(-2px)" },
                                     }}
                                 >
-                                    Daftar Webinar Gratis
+                                    Dapatkan Produk Gratis
                                 </Button>
                             )}
 
@@ -332,7 +330,7 @@ const WebinarDetail = ({ currentPath }) => {
                                         "&:hover": { backgroundColor: "#f5f5f5" },
                                     }}
                                 >
-                                    Daftar Webinar
+                                    Dapatkan Gratis
                                 </Button>
                             )}
                         </Grid>
@@ -351,8 +349,8 @@ const WebinarDetail = ({ currentPath }) => {
                                 <Box sx={{ position: "relative", paddingTop: "133.33%" }}>
                                     <Box
                                         component="img"
-                                        src={webinar?.thumbnail || "https://via.placeholder.com/300x400.png?text=Webinar"}
-                                        alt={webinar?.title}
+                                        src={product?.thumbnail || "https://via.placeholder.com/300x400.png?text=Produk+Digital"}
+                                        alt={product?.title}
                                         sx={{
                                             position: "absolute",
                                             top: 0,
@@ -401,7 +399,7 @@ const WebinarDetail = ({ currentPath }) => {
                         >
                             <Box sx={{ backgroundColor: "#d61355", py: { xs: 1.5, md: 2 }, px: { xs: 2, md: 3 } }}>
                                 <Typography sx={{ color: "#fff", fontWeight: 600, fontSize: { xs: "0.9rem", md: "1.1rem" } }}>
-                                    Tentang Webinar
+                                    Tentang Produk
                                 </Typography>
                             </Box>
                             <CardContent sx={{ p: { xs: 2, md: 4 } }}>
@@ -416,12 +414,12 @@ const WebinarDetail = ({ currentPath }) => {
                                         "& p": { mb: 2 },
                                     }}
                                 >
-                                    {webinar?.description ? parse(webinar.description) : "Deskripsi tidak tersedia."}
+                                    {product?.description ? parse(product.description) : "Deskripsi tidak tersedia."}
                                 </Box>
                             </CardContent>
                         </Card>
 
-                        {/* Why Join */}
+                        {/* Why Get */}
                         <Card
                             sx={{
                                 borderRadius: { xs: "12px", md: "16px" },
@@ -431,14 +429,14 @@ const WebinarDetail = ({ currentPath }) => {
                         >
                             <CardContent sx={{ p: { xs: 2, md: 4 } }}>
                                 <Typography sx={{ fontWeight: 600, mb: { xs: 2, md: 3 }, color: "#333", fontSize: { xs: "0.9rem", md: "1.15rem" } }}>
-                                    Kenapa Harus Ikut Webinar Ini?
+                                    Kenapa Harus Dapatkan Produk Ini?
                                 </Typography>
                                 <Grid container spacing={{ xs: 1.5, md: 2 }}>
                                     {[
-                                        { icon: "🎯", title: "Materi Relevan", desc: "Topik sesuai kebutuhan UMKM" },
-                                        { icon: "👨‍🏫", title: "Narasumber Ahli", desc: "Pakar di bidangnya" },
-                                        { icon: "💬", title: "Tanya Jawab", desc: "Sesi Q&A interaktif" },
-                                        { icon: "📜", title: "E-Sertifikat", desc: "Bukti keikutsertaan" },
+                                        { icon: "📄", title: "Siap Pakai", desc: "Langsung bisa digunakan" },
+                                        { icon: "✨", title: "Berkualitas", desc: "Dibuat oleh ahli" },
+                                        { icon: "📱", title: "Multi Format", desc: "PDF, Excel, dll" },
+                                        { icon: "♾️", title: "Akses Selamanya", desc: "Sekali dapat, selamanya" },
                                     ].map((item, index) => (
                                         <Grid item xs={6} key={index}>
                                             <Box
@@ -489,39 +487,24 @@ const WebinarDetail = ({ currentPath }) => {
                                 }}
                             >
                                 <Typography sx={{ color: "#fff", fontWeight: 700, fontSize: { xs: "1.25rem", md: "1.5rem" } }}>
-                                    {isGratis ? "WEBINAR GRATIS" : "WEBINAR PREMIUM"}
+                                    {isGratis ? "PRODUK GRATIS" : "PRODUK PREMIUM"}
                                 </Typography>
                                 <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.75rem", md: "0.9rem" } }}>
-                                    {isGratis ? "Kuota terbatas!" : "Investasi untuk bisnis Anda"}
+                                    {isGratis ? "Tersedia terbatas!" : "Investasi untuk bisnis Anda"}
                                 </Typography>
                             </Box>
 
                             <CardContent sx={{ p: { xs: 2, md: 3 } }}>
-                                {isGratis && (
-                                    <Alert
-                                        severity="warning"
-                                        icon={<CalendarMonth sx={{ fontSize: { xs: 16, md: 20 } }} />}
-                                        sx={{
-                                            mb: 2,
-                                            py: { xs: 0.5, md: 1 },
-                                            borderRadius: "8px",
-                                            "& .MuiAlert-message": { fontSize: { xs: "0.75rem", md: "0.875rem" } },
-                                        }}
-                                    >
-                                        Segera daftar, kuota terbatas!
-                                    </Alert>
-                                )}
-
                                 <Typography sx={{ fontWeight: 600, color: "#333", fontSize: { xs: "0.8rem", md: "0.95rem" }, mb: 1 }}>
                                     Yang Anda Dapatkan:
                                 </Typography>
                                 <Box sx={{ mb: 2 }}>
                                     {[
-                                        "Akses live webinar",
-                                        "Materi presentasi",
-                                        "Rekaman webinar",
-                                        "E-Sertifikat",
-                                        "Grup diskusi",
+                                        "File produk digital",
+                                        "Akses selamanya",
+                                        "Update gratis",
+                                        "Panduan penggunaan",
+                                        "Bonus template",
                                     ].map((item, index) => (
                                         <Box key={index} sx={{ display: "flex", alignItems: "center", gap: { xs: 0.75, md: 1 }, mb: { xs: 0.75, md: 1 } }}>
                                             <CheckCircle sx={{ color: "#00c853", fontSize: { xs: 14, md: 18 } }} />
@@ -549,13 +532,13 @@ const WebinarDetail = ({ currentPath }) => {
                                             "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
                                         }}
                                     >
-                                        Daftar Webinar
+                                        Dapatkan Gratis
                                     </Button>
                                 ) : (
                                     <Button
                                         variant="contained"
                                         fullWidth
-                                        onClick={() => (window.location.href = webinar?.registration_url)}
+                                        onClick={() => (window.location.href = product?.registration_url)}
                                         sx={{
                                             background: "linear-gradient(90deg, #d61355, #ff6b6b)",
                                             py: { xs: 1.25, md: 1.5 },
@@ -566,7 +549,7 @@ const WebinarDetail = ({ currentPath }) => {
                                             "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
                                         }}
                                     >
-                                        Daftar Sekarang
+                                        Beli Sekarang
                                     </Button>
                                 )}
 
@@ -574,9 +557,9 @@ const WebinarDetail = ({ currentPath }) => {
                                     variant="text"
                                     fullWidth
                                     sx={{ mt: 1.5, color: "#666", fontSize: { xs: "0.75rem", md: "0.875rem" } }}
-                                    onClick={() => navigate("/webinars")}
+                                    onClick={() => navigate("/produk-digital")}
                                 >
-                                    Lihat Webinar Lainnya
+                                    Lihat Produk Lainnya
                                 </Button>
                             </CardContent>
                         </Card>
@@ -618,7 +601,7 @@ const WebinarDetail = ({ currentPath }) => {
                                 Halo, {successData.nama}!
                             </Typography>
                             <Typography sx={{ color: "text.secondary", display: "block", mb: 3, fontSize: { xs: "0.8rem", md: "0.95rem" } }}>
-                                Anda telah terdaftar di webinar ini. Klik tombol di bawah untuk mengakses link webinar.
+                                Anda telah terdaftar. Klik tombol di bawah untuk mengunduh produk digital.
                             </Typography>
                             <Button
                                 variant="contained"
@@ -634,7 +617,7 @@ const WebinarDetail = ({ currentPath }) => {
                                     "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
                                 }}
                             >
-                                Akses Link Webinar
+                                Download Produk
                             </Button>
                             <Button variant="text" onClick={handleCloseForm} sx={{ mt: 1.5, color: "#666", fontSize: { xs: "0.8rem", md: "0.9rem" } }}>
                                 Tutup
@@ -659,10 +642,10 @@ const WebinarDetail = ({ currentPath }) => {
                                 <Close fontSize="small" />
                             </IconButton>
                             <Typography sx={{ color: "#fff", fontWeight: 700, fontSize: { xs: "1rem", md: "1.25rem" } }}>
-                                Daftar Webinar
+                                Dapatkan Produk
                             </Typography>
                             <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.75rem", md: "0.9rem" } }}>
-                                Isi data diri untuk bergabung di webinar ini
+                                Isi data diri untuk mendapatkan produk digital ini
                             </Typography>
                         </Box>
                         <DialogContent sx={{ py: { xs: 2, md: 3 }, px: { xs: 2.5, md: 3 } }}>
@@ -727,7 +710,7 @@ const WebinarDetail = ({ currentPath }) => {
                                         "&:disabled": { background: "#ccc" },
                                     }}
                                 >
-                                    {formLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Daftar Webinar"}
+                                    {formLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Dapatkan Produk"}
                                 </Button>
                             </Box>
                             <Typography sx={{ display: "block", textAlign: "center", mt: 2, color: "#999", fontSize: { xs: "0.7rem", md: "0.8rem" } }}>
@@ -741,4 +724,4 @@ const WebinarDetail = ({ currentPath }) => {
     );
 };
 
-export default WebinarDetail;
+export default ProdukDigitalDetail;

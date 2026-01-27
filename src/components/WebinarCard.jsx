@@ -38,16 +38,27 @@ const WebinarCard = ({ webinar }) => {
     >
       <CardActionArea onClick={() => navigate(`/webinars/${webinar.id}`)}>
         <Box sx={{ position: "relative" }}>
-          <CardMedia
-            component="img"
-            height="200"
-            image={webinar.thumbnail || "default-thumbnail.webp"}
-            alt={webinar.title || "No Title Available"}
+          <Box
             sx={{
-              objectFit: "cover",
-              width: "100%",
+              position: "relative",
+              paddingTop: "133.33%", // 3:4 portrait aspect ratio
+              overflow: "hidden",
             }}
-          />
+          >
+            <CardMedia
+              component="img"
+              image={webinar.thumbnail || "default-thumbnail.webp"}
+              alt={webinar.title || "No Title Available"}
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </Box>
           {/* Optional Badge */}
           {webinar.badge && (
             <Chip
@@ -108,9 +119,9 @@ const WebinarCard = ({ webinar }) => {
             textTransform: "none",
             fontWeight: "bold",
             fontSize: {
-              xs: "0.6rem", 
-              sm: "0.75rem", 
-              md: "0.8rem", 
+              xs: "0.6rem",
+              sm: "0.75rem",
+              md: "0.8rem",
             },
             px: 1.5,
             py: 0.5,

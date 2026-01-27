@@ -32,5 +32,7 @@ export const endpoint = {
   getCourseDetails: (id) => `${url}/api/courses/${id}`,
   buyCourse: (id) => `${url}/api/courses/${id}/pay`,
   postFormPendaftaran: `${url}/api/formpendaftaran`,
+  getProdukDigital: `${url}/api/produk-digital`,
+  getProdukDigitalById: (id) => `${url}/api/produk-digital/${id}`,
 };
 

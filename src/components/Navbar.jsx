@@ -7,6 +7,7 @@ const menu = [
   { name: "Beranda", path: "/" },
   { name: "Go Digital", path: "/bantu-branding" },
   { name: "Webinar", path: "/webinars" },
+  { name: "Produk Digital", path: "/produk-digital" },
   { name: "Kursus", path: "/courses" },
   { name: "Artikel", path: "/allnews" },
   { name: "UMKM Showcase", path: "/umkm-showcase" },

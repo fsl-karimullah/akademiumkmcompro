@@ -36,6 +36,8 @@ import Showcase from "./page/Showcase/Showcase";
 import ShowcaseDetail from "./page/Showcase/ShowcaseDetail";
 import AllShowcase from "./page/Showcase/AllShowcase";
 import AboutUs from "./page/AboutUs";
+import ProdukDigitalPage from "./page/ProdukDigitalPage";
+import ProdukDigitalDetail from "./page/ProdukDigitalDetail";
 
 function App() {
   return (
@@ -98,6 +100,14 @@ function AppContent() {
       <Route
         path="/webinars/:id"
         element={<WebinarDetail currentPath={currentPath} />}
+      />
+      <Route
+        path="/produk-digital"
+        element={<ProdukDigitalPage currentPath={currentPath} />}
+      />
+      <Route
+        path="/produk-digital/:id"
+        element={<ProdukDigitalDetail currentPath={currentPath} />}
       />
       <Route
         path="/bantu-branding"
