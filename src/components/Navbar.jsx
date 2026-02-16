@@ -6,7 +6,7 @@ import Logo from "./Logo";
 const menu = [
   { name: "Beranda", path: "/" },
   { name: "Go Digital", path: "/bantu-branding" },
-  { name: "Webinar", path: "/webinars" },
+  { name: "Event", path: "/event" },
   { name: "Produk Digital", path: "/produk-digital" },
   { name: "Kursus", path: "/courses" },
   { name: "Artikel", path: "/allnews" },

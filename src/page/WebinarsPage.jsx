@@ -33,7 +33,7 @@ const WebinarsPage = ({ currentPath }) => {
         setError("Unexpected response format");
       }
     } catch (err) {
-      setError("Gagal memuat webinar. Silakan coba lagi.");
+      setError("Gagal memuat event. Silakan coba lagi.");
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ const WebinarsPage = ({ currentPath }) => {
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <img
                   src={heroImage}
-                  alt="Webinar Hero"
+                  alt="Event Hero"
                   style={{
                     width: "100%",
                     height: "auto",
@@ -119,7 +119,7 @@ const WebinarsPage = ({ currentPath }) => {
                   color: "gray",
                 }}
               >
-                Ikuti webinar eksklusif dari para ahli dan praktisi bisnis
+                Ikuti event eksklusif dari para ahli dan praktisi bisnis
                 untuk mengembangkan kemampuan Anda di era digital.
               </Typography>
             </Grid>
@@ -137,7 +137,7 @@ const WebinarsPage = ({ currentPath }) => {
             mb: 4,
           }}
         >
-          Webinar Terbaru
+          Event Terbaru
         </Typography>
 
         {/* Loading State */}
@@ -162,13 +162,13 @@ const WebinarsPage = ({ currentPath }) => {
           </Box>
         )}
 
-        {/* Webinar Cards */}
+        {/* Event Cards */}
         {!loading && !error && (
           <>
             {webinars.length === 0 ? (
               <Box sx={{ textAlign: "center", py: 6 }}>
                 <Typography variant="h6" color="text.secondary">
-                  Belum ada webinar tersedia.
+                  Belum ada event tersedia.
                 </Typography>
               </Box>
             ) : (

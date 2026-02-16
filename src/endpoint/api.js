@@ -35,5 +35,12 @@ export const endpoint = {
   postFormPendaftaran: `${url}/api/formpendaftaran`,
   getProdukDigital: `${url}/api/produk-digital`,
   getProdukDigitalById: (id) => `${url}/api/produk-digital/${id}`,
-};
 
+  // Webinar Payment (Ayolinx)
+  payWebinar: (id) => `${url}/api/webinars/${id}/pay`,
+  checkWebinarPayment: (orderId) => `${url}/api/webinar-payments/${orderId}/status`,
+
+  // Digital Product Payment (Ayolinx)
+  payDigitalProduct: (id) => `${url}/api/produk-digital/${id}/pay`,
+  checkDigitalProductPayment: (orderId) => `${url}/api/digital-product-payments/${orderId}/status`,
+};

@@ -95,16 +95,31 @@ const ProdukDigitalDetail = ({ currentPath }) => {
         setFormError(null);
 
         try {
-            const response = await axios.post(endpoint.postFormPendaftaran, {
-                ...formData,
-                produk_digital_id: parseInt(id),
-            });
+            // Check if product requires payment
+            if (product.is_payment && product.price > 0) {
+                // Call payment API for paid products
+                const response = await axios.post(endpoint.payDigitalProduct(id), formData);
 
-            if (response.data.success) {
-                setSuccessData(response.data.data);
-                toast.success("Pendaftaran berhasil!");
+                if (response.data.success) {
+                    // Redirect to Ayolinx payment page
+                    window.location.href = response.data.data.payment_link;
+                    return;
+                } else {
+                    setFormError(response.data.message || "Gagal membuat link pembayaran");
+                }
             } else {
-                setFormError(response.data.message || "Pendaftaran gagal");
+                // Free product - submit form directly
+                const response = await axios.post(endpoint.postFormPendaftaran, {
+                    ...formData,
+                    produk_digital_id: parseInt(id),
+                });
+
+                if (response.data.success) {
+                    setSuccessData(response.data.data);
+                    toast.success("Pendaftaran berhasil!");
+                } else {
+                    setFormError(response.data.message || "Pendaftaran gagal");
+                }
             }
         } catch (error) {
             if (error.response?.data?.message) {
@@ -538,7 +553,7 @@ const ProdukDigitalDetail = ({ currentPath }) => {
                                     <Button
                                         variant="contained"
                                         fullWidth
-                                        onClick={() => (window.location.href = product?.registration_url)}
+                                        onClick={() => setOpenForm(true)}
                                         sx={{
                                             background: "linear-gradient(90deg, #d61355, #ff6b6b)",
                                             py: { xs: 1.25, md: 1.5 },
@@ -549,7 +564,7 @@ const ProdukDigitalDetail = ({ currentPath }) => {
                                             "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
                                         }}
                                     >
-                                        Beli Sekarang
+                                        Beli Sekarang - Rp {product?.price?.toLocaleString('id-ID') || '0'}
                                     </Button>
                                 )}
 

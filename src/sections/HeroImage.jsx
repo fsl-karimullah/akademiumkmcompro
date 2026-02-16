@@ -8,6 +8,10 @@ import "../assets/style/heroimage.css";
 
 const images = [
   {
+    url: "/images/banner4.png",
+    link: "https://akademiumkm.id/event",
+  },
+  {
     url: "/images/banner3.png",
     link: "http://lynk.id/akademiumkmdigital/35w082gem179/checkout",
   },

@@ -23,6 +23,14 @@ const WebinarCard = ({ webinar }) => {
     return tempDiv.textContent || tempDiv.innerText || "";
   };
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
   return (
     <Card
       sx={{
@@ -36,7 +44,7 @@ const WebinarCard = ({ webinar }) => {
         },
       }}
     >
-      <CardActionArea onClick={() => navigate(`/webinars/${webinar.id}`)}>
+      <CardActionArea onClick={() => navigate(`/event/${webinar.id}`)}>
         <Box sx={{ position: "relative" }}>
           <Box
             sx={{
@@ -73,6 +81,20 @@ const WebinarCard = ({ webinar }) => {
               }}
             />
           )}
+          {/* Price Badge */}
+          <Chip
+            label={webinar.is_payment ? "BERBAYAR" : "GRATIS"}
+            size="small"
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              backgroundColor: webinar.is_payment ? "#ff6b6b" : "#00c853",
+              color: "#fff",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+            }}
+          />
         </Box>
         <CardContent sx={{ padding: 2 }}>
           <Typography
@@ -131,7 +153,7 @@ const WebinarCard = ({ webinar }) => {
           }}
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/webinars/${webinar.id}`);
+            navigate(`/event/${webinar.id}`);
           }}
         >
           Lihat Detail
