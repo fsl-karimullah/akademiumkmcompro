@@ -36,6 +36,10 @@ import Showcase from "./page/Showcase/Showcase";
 import ShowcaseDetail from "./page/Showcase/ShowcaseDetail";
 import AllShowcase from "./page/Showcase/AllShowcase";
 import AboutUs from "./page/AboutUs";
+import ProdukDigitalPage from "./page/ProdukDigitalPage";
+import ProdukDigitalDetail from "./page/ProdukDigitalDetail";
+import WebinarPaymentSuccess from "./page/WebinarPaymentSuccess";
+import DigitalProductPaymentSuccess from "./page/DigitalProductPaymentSuccess";
 
 function App() {
   return (
@@ -67,7 +71,7 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<Home currentPath={currentPath} />} />
       <Route
-        path="/webinars"
+        path="/event"
         element={<WebinarsPage currentPath={currentPath} />}
       />
       <Route
@@ -96,8 +100,24 @@ function AppContent() {
         element={<ListTemplate currentPath={currentPath} />}
       />
       <Route
-        path="/webinars/:id"
+        path="/event/:id"
         element={<WebinarDetail currentPath={currentPath} />}
+      />
+      <Route
+        path="/webinar-payment-success"
+        element={<WebinarPaymentSuccess currentPath={currentPath} />}
+      />
+      <Route
+        path="/produk-digital"
+        element={<ProdukDigitalPage currentPath={currentPath} />}
+      />
+      <Route
+        path="/produk-digital/:id"
+        element={<ProdukDigitalDetail currentPath={currentPath} />}
+      />
+      <Route
+        path="/digital-product-payment-success"
+        element={<DigitalProductPaymentSuccess currentPath={currentPath} />}
       />
       <Route
         path="/bantu-branding"

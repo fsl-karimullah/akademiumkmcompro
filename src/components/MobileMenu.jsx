@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const links = [
   { name: "Home", path: "/" },
   { name: "Go Digital", path: "/bantu-branding" },
-  { name: "E - Book & Webinar", path: "/webinars" },
+  { name: "Event", path: "/event" },
   // { name: "Promosi Bisnis", path: "/loginbisnis" },
   // { name: "Konsultasi Bisnis", path: "/konsultasi" },
   { name: "Tingkatkan Skill", path: "/courses" },
@@ -21,7 +21,7 @@ const links = [
 const MobileMenu = ({ currentPath }) => {
   const [open, setOpen] = useState(false);
 
-  return ( 
+  return (
     <div className="">
       {!open ? (
         <img
@@ -41,11 +41,10 @@ const MobileMenu = ({ currentPath }) => {
         />
       )}
       <div
-        className={`bg-red-400 text-white absolute left-0 top-20 w-screen h-[calc(100vh-5rem)] flex flex-col gap-8 items-center justify-center text-lg md:text-3xl z-50 transform origin-top-left ${
-          open
+        className={`bg-red-400 text-white absolute left-0 top-20 w-screen h-[calc(100vh-5rem)] flex flex-col gap-8 items-center justify-center text-lg md:text-3xl z-50 transform origin-top-left ${open
             ? "scale-100 transition-transform duration-500"
             : "scale-0 transition-transform duration-500 pointer-events-none"
-        }`}
+          }`}
       >
         {open &&
           links.map((item, index) => (
@@ -57,7 +56,7 @@ const MobileMenu = ({ currentPath }) => {
               target={item.external ? "_blank" : "_self"}
               rel={item.external ? "noopener noreferrer" : ""}
             >
-              {item.name} 
+              {item.name}
             </Link>
           ))}
         {currentPath === "/" ? (

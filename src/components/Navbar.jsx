@@ -6,7 +6,8 @@ import Logo from "./Logo";
 const menu = [
   { name: "Beranda", path: "/" },
   { name: "Go Digital", path: "/bantu-branding" },
-  { name: "Webinar", path: "/webinars" },
+  { name: "Event", path: "/event" },
+  { name: "Produk Digital", path: "/produk-digital" },
   { name: "Kursus", path: "/courses" },
   { name: "Artikel", path: "/allnews" },
   { name: "UMKM Showcase", path: "/umkm-showcase" },
@@ -83,8 +84,8 @@ const Navbar = () => {
               key={i}
               to={item.path}
               className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${location.pathname === item.path
-                  ? "text-[var(--themeRed)] bg-red-50"
-                  : "text-gray-600 hover:text-[var(--themeRed)] hover:bg-gray-50"
+                ? "text-[var(--themeRed)] bg-red-50"
+                : "text-gray-600 hover:text-[var(--themeRed)] hover:bg-gray-50"
                 }`}
             >
               {item.name}
@@ -222,8 +223,8 @@ const Navbar = () => {
                 to={item.path}
                 onClick={toggleMenu}
                 className={`block px-4 py-3 rounded-lg font-medium transition-colors ${location.pathname === item.path
-                    ? "text-[var(--themeRed)] bg-red-50"
-                    : "text-gray-700 hover:bg-gray-50"
+                  ? "text-[var(--themeRed)] bg-red-50"
+                  : "text-gray-700 hover:bg-gray-50"
                   }`}
               >
                 {item.name}
