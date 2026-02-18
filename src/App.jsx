@@ -36,6 +36,10 @@ import Showcase from "./page/Showcase/Showcase";
 import ShowcaseDetail from "./page/Showcase/ShowcaseDetail";
 import AllShowcase from "./page/Showcase/AllShowcase";
 import AboutUs from "./page/AboutUs";
+import { Chat } from "@mui/icons-material";
+import ChatLandingPage from "./page/Consulting/ChatLandingPage";
+import ChatBot from "./page/Consulting/ChatBot";
+import ComingSoonPage from "./page/ComingSoon/ComingSoon";
 
 function App() {
   return (
@@ -73,6 +77,18 @@ function AppContent() {
       <Route
         path="/mentor"
         element={<MentorPage currentPath={currentPath} />}
+      />
+      <Route
+        path="/ai-consulting"
+        element={<ChatLandingPage currentPath={currentPath} />}
+      />
+      <Route
+        path="/chat-consulting"
+        element={<ChatBot currentPath={currentPath} />}
+      />
+      <Route
+        path="/coming-soon"
+        element={<ComingSoonPage currentPath={currentPath} />}
       />
       <Route
         path="/news/:id"
