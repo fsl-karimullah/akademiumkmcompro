@@ -1,0 +1,46 @@
+// Production URL from environment variable, fallback to localhost for development
+const url = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+
+export const endpoint = {
+  registerUser: `${url}/api/auth/register`,
+  loginUser: `${url}/api/auth/login`,
+  logoutUser: `${url}/api/auth/logout`,
+  getProvince: `${url}/api/provinces`,
+  getCategories: `${url}/api/categories`,
+  forgotPassword: `${url}/api/auth/forgot-password`,
+  updateProfile: `${url}/api/me`,
+  getProfile: `${url}/api/me`,
+  getEducation: `${url}/api/education`,
+  getWebinars: `${url}/api/webinars`,
+  getPackage: `${url}/api/packages`,
+  getMentor: `${url}/api/mentors`,
+  getTransaction: `${url}/api/transactions`,
+  getWebinarsById: (id) => `${url}/api/webinars/${id}`,
+  getEducationById: (id) => `${url}/api/education/${id}`,
+  searchShop: (lat, lng, value) => `${url}/api/shops?q=${value}&lat=${lat}&lng=${lng}`,
+  getCities: (provinceId) => `${url}/api/cities?province_id=${provinceId}`,
+  getDistrict: (cityId) => `${url}/api/districts?city_id=${cityId}`,
+  getShop: (lat, lng) => `${url}/api/shops?lat=${lat}&lng=${lng}`,
+  getShopAll: (lat, lng) => `${url}/api/shops?with_geo=0`,
+  getShopByFilter: (lat, lng, categoryId) => `${url}/api/shops?lat=${lat}&lng=${lng}&category_id=${categoryId}`,
+  getShopDetail: (id) => `${url}/api/shops/${id}`,
+  favouriteShop: (id) => `${url}/api/favorites`,
+  deleteFavouriteShop: (id) => `${url}/api/favorites/${id}`,
+  getFavouriteShop: `${url}/api/favorites`,
+  getNews: `${url}/api/news`,
+  getNewsDetails: (id) => `${url}/api/news/${id}`,
+  getCourses: `${url}/api/courses`,
+  getCourseDetails: (id) => `${url}/api/courses/${id}`,
+  buyCourse: (id) => `${url}/api/courses/${id}/pay`,
+  postFormPendaftaran: `${url}/api/formpendaftaran`,
+  getProdukDigital: `${url}/api/produk-digital`,
+  getProdukDigitalById: (id) => `${url}/api/produk-digital/${id}`,
+
+  // Webinar Payment (Ayolinx)
+  payWebinar: (id) => `${url}/api/webinars/${id}/pay`,
+  checkWebinarPayment: (orderId) => `${url}/api/webinar-payments/${orderId}/status`,
+
+  // Digital Product Payment (Ayolinx)
+  payDigitalProduct: (id) => `${url}/api/produk-digital/${id}/pay`,
+  checkDigitalProductPayment: (orderId) => `${url}/api/digital-product-payments/${orderId}/status`,
+};

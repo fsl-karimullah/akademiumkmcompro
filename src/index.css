@@ -1,0 +1,256 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  color: var(--themeBlack);
+  background: var(--background-color);
+  overflow-x: hidden;
+}
+
+:root {
+  --primary: #d61355;
+  --themeRed: #f54748;
+  --themeBlack: #2e2e2e;
+  --themeRedHover: #d32f2f;
+  --pink: #fdecec;
+  --gray: #828282;
+  --shadow: -4px 12px 20px -2px rgba(0, 0, 0, 0.19);
+  --background-color: linear-gradient(
+    180deg,
+    rgba(255, 237, 237, 0.85) 0%,
+    rgba(255, 255, 255, 0) 30rem
+  );
+  --cartBack: rgba(255, 255, 255, 0.38);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: pink;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--themeRed);
+  border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  transition: all 300ms ease;
+}
+
+.btn {
+  width: max-content;
+  padding: 0.9rem;
+  border-radius: 4rem;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: var(--themeRed);
+}
+
+@media only screen and (max-width: 768px) {
+  .btn {
+    width: 150px; /* Tombol akan mengambil lebar penuh pada perangkat mobile */
+    padding: 0.8rem; /* Sesuaikan padding sesuai kebutuhan Anda */
+    font-size: 14px; /* Sesuaikan ukuran font sesuai kebutuhan Anda */
+  }
+}
+
+.btnSec {
+  width: max-content;
+  padding: 0.9rem;
+  border-radius: 4rem;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: var(--gray);
+}
+
+.btnMenu {
+  width: max-content;
+  border-radius: 4rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+/* .marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+
+/* .marquee-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee {
+  width: 100%;
+  white-space: nowrap;
+  animation: marquee 5s linear infinite;
+  display: flex;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+
+/* .marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-container img {
+  display: flex;
+  animation: marqueeAnimation 10s linear infinite;
+}
+
+@keyframes marqueeAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+
+/* .marquee-container {
+  display: flex;
+  overflow: hidden;
+}
+
+.marquee-container img {
+  animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+
+.text-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  overflow: hidden;
+}
+
+.text-wrapper img {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  font-size: 48px;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke-width: 0.1px;
+  -webkit-text-stroke-color: #fff;
+  white-space: nowrap;
+  padding: 0 4rem;
+  letter-spacing: 1px;
+  animation: move-rtl 6000ms linear infinite;
+}
+.text-wrapper2 img {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  font-size: 48px;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke-width: 0.1px;
+  -webkit-text-stroke-color: #fff;
+  white-space: nowrap;
+  padding: 0 4rem;
+  letter-spacing: 1px;
+  animation: none;
+}
+
+@keyframes move-rtl {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Media Query for Mobile */
+@media only screen and (min-width: 768px) {
+  .text-wrapper-2 {
+    display: none; /* Hide mobile view on desktop */
+  }
+
+  .text-wrapper {
+    display: block; /* Show desktop view on desktop */
+  }
+}
+
+/* Media Query for Desktop */
+@media only screen and (max-width: 767px) {
+  .text-wrapper-2 {
+    display: block; /* Show mobile view on mobile */
+  }
+
+  .text-wrapper {
+    display: none; /* Hide desktop view on mobile */
+  }
+}
+
+
+
+.slick-prev, .slick-next {
+  color: #d61355 !important; /* Change arrow color */
+}
+
+.slick-prev:before, .slick-next:before {
+  color: #d61355 !important; /* Change arrow icon color */
+}
+
+.slick-prev {
+  left: -30px !important; /* Adjust positioning */
+}
+
+.slick-next {
+  right: -30px !important; /* Adjust positioning */
+}
