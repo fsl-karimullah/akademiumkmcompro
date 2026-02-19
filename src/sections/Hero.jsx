@@ -43,7 +43,7 @@ const Hero = ({ currentPath }) => {
                 🔍 Belajar Sekarang
               </Link>
               <Link
-                to="/webinars"
+                to="/event"
                 className="flex items-center justify-center gap-2 bg-white border-2 border-[var(--themeRed)] text-[var(--themeRed)] px-6 py-3 rounded-full font-bold hover:bg-[var(--themeRed)] hover:text-white transition duration-300 shadow-lg"
               >
                 🛠️ Belajar Mandiri

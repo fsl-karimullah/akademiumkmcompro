@@ -23,6 +23,14 @@ const WebinarCard = ({ webinar }) => {
     return tempDiv.textContent || tempDiv.innerText || "";
   };
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
   return (
     <Card
       sx={{
@@ -36,18 +44,29 @@ const WebinarCard = ({ webinar }) => {
         },
       }}
     >
-      <CardActionArea onClick={() => navigate(`/webinars/${webinar.id}`)}>
+      <CardActionArea onClick={() => navigate(`/event/${webinar.id}`)}>
         <Box sx={{ position: "relative" }}>
-          <CardMedia
-            component="img"
-            height="200"
-            image={webinar.thumbnail || "default-thumbnail.webp"}
-            alt={webinar.title || "No Title Available"}
+          <Box
             sx={{
-              objectFit: "cover",
-              width: "100%",
+              position: "relative",
+              paddingTop: "133.33%", // 3:4 portrait aspect ratio
+              overflow: "hidden",
             }}
-          />
+          >
+            <CardMedia
+              component="img"
+              image={webinar.thumbnail || "default-thumbnail.webp"}
+              alt={webinar.title || "No Title Available"}
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </Box>
           {/* Optional Badge */}
           {webinar.badge && (
             <Chip
@@ -62,6 +81,20 @@ const WebinarCard = ({ webinar }) => {
               }}
             />
           )}
+          {/* Price Badge */}
+          <Chip
+            label={webinar.is_payment ? "BERBAYAR" : "GRATIS"}
+            size="small"
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              backgroundColor: webinar.is_payment ? "#ff6b6b" : "#00c853",
+              color: "#fff",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+            }}
+          />
         </Box>
         <CardContent sx={{ padding: 2 }}>
           <Typography
@@ -108,9 +141,9 @@ const WebinarCard = ({ webinar }) => {
             textTransform: "none",
             fontWeight: "bold",
             fontSize: {
-              xs: "0.6rem", 
-              sm: "0.75rem", 
-              md: "0.8rem", 
+              xs: "0.6rem",
+              sm: "0.75rem",
+              md: "0.8rem",
             },
             px: 1.5,
             py: 0.5,
@@ -120,7 +153,7 @@ const WebinarCard = ({ webinar }) => {
           }}
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/webinars/${webinar.id}`);
+            navigate(`/event/${webinar.id}`);
           }}
         >
           Lihat Detail

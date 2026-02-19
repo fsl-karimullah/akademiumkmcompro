@@ -6,6 +6,7 @@ import {
   Grid,
   Button,
   CircularProgress,
+  Pagination,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -14,13 +15,15 @@ import WebinarCard from "../components/WebinarCard";
 import Navbar from "../components/Navbar";
 import { endpoint } from "../endpoint/api";
 
+const ITEMS_PER_PAGE = 6;
+
 const WebinarsPage = ({ currentPath }) => {
   const navigate = useNavigate();
   const [webinars, setWebinars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
 
-  // Moved outside useEffect so it can be reused for retrying
   const fetchWebinars = async () => {
     try {
       const response = await axios.get(endpoint.getWebinars);
@@ -30,7 +33,7 @@ const WebinarsPage = ({ currentPath }) => {
         setError("Unexpected response format");
       }
     } catch (err) {
-      setError("Failed to fetch digital products. Please try again.");
+      setError("Gagal memuat event. Silakan coba lagi.");
     } finally {
       setLoading(false);
     }
@@ -46,12 +49,23 @@ const WebinarsPage = ({ currentPath }) => {
     fetchWebinars();
   };
 
+  const handlePageChange = (event, value) => {
+    setPage(value);
+    window.scrollTo({ top: 400, behavior: "smooth" });
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(webinars.length / ITEMS_PER_PAGE);
+  const paginatedWebinars = webinars.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
+
   return (
     <Box>
-      {/* ✅ Navbar */}
       <Navbar currentPath={currentPath} />
 
-      {/* ✅ Hero Section */}
+      {/* Hero Section */}
       <Box
         sx={{
           display: "flex",
@@ -64,12 +78,11 @@ const WebinarsPage = ({ currentPath }) => {
       >
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
-            {/* ✅ Hero Image */}
             <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <img
                   src={heroImage}
-                  alt="Digital Products Hero"
+                  alt="Event Hero"
                   style={{
                     width: "100%",
                     height: "auto",
@@ -80,7 +93,6 @@ const WebinarsPage = ({ currentPath }) => {
               </Box>
             </Grid>
 
-            {/* ✅ Hero Text */}
             <Grid
               item
               xs={12}
@@ -107,17 +119,15 @@ const WebinarsPage = ({ currentPath }) => {
                   color: "gray",
                 }}
               >
-                Jelajahi berbagai produk digital seperti template bisnis, e-book
-                strategi, dan panduan praktis yang dirancang khusus untuk
-                membantu UMKM, mahasiswa, dan profesional menjadi lebih
-                kompetitif di era digital.
+                Ikuti event eksklusif dari para ahli dan praktisi bisnis
+                untuk mengembangkan kemampuan Anda di era digital.
               </Typography>
             </Grid>
           </Grid>
         </Container>
       </Box>
 
-      {/* ✅ Content Section */}
+      {/* Content Section */}
       <Container maxWidth="lg" sx={{ py: 6 }}>
         <Typography
           variant="h4"
@@ -127,25 +137,19 @@ const WebinarsPage = ({ currentPath }) => {
             mb: 4,
           }}
         >
-          Pembelajaran Mandiri
+          Event Terbaru
         </Typography>
 
-        {/* ✅ Loading State */}
+        {/* Loading State */}
         {loading && (
           <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
-            <CircularProgress color="primary" />
+            <CircularProgress sx={{ color: "#d61355" }} />
           </Box>
         )}
 
-        {/* ✅ Error State */}
+        {/* Error State */}
         {error && (
-          <Box
-            sx={{
-              textAlign: "center",
-              color: "red",
-              my: 4,
-            }}
-          >
+          <Box sx={{ textAlign: "center", color: "red", my: 4 }}>
             <Typography variant="h6">{error}</Typography>
             <Button
               variant="contained"
@@ -153,20 +157,60 @@ const WebinarsPage = ({ currentPath }) => {
               onClick={handleRetry}
               sx={{ mt: 2 }}
             >
-              Retry
+              Coba Lagi
             </Button>
           </Box>
         )}
 
-        {/* ✅ Webinar Cards */}
+        {/* Event Cards */}
         {!loading && !error && (
-          <Grid container spacing={4}>
-            {webinars.map((webinar) => (
-              <Grid item xs={6} sm={6} md={4} key={webinar.id}>
-                <WebinarCard webinar={webinar} />
-              </Grid>
-            ))}
-          </Grid>
+          <>
+            {webinars.length === 0 ? (
+              <Box sx={{ textAlign: "center", py: 6 }}>
+                <Typography variant="h6" color="text.secondary">
+                  Belum ada event tersedia.
+                </Typography>
+              </Box>
+            ) : (
+              <>
+                <Grid container spacing={3}>
+                  {paginatedWebinars.map((webinar) => (
+                    <Grid item xs={12} sm={6} md={4} key={webinar.id}>
+                      <WebinarCard webinar={webinar} />
+                    </Grid>
+                  ))}
+                </Grid>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: 5,
+                    }}
+                  >
+                    <Pagination
+                      count={totalPages}
+                      page={page}
+                      onChange={handlePageChange}
+                      color="primary"
+                      size="large"
+                      sx={{
+                        "& .MuiPaginationItem-root": {
+                          fontWeight: 600,
+                        },
+                        "& .Mui-selected": {
+                          backgroundColor: "#d61355 !important",
+                          color: "#fff",
+                        },
+                      }}
+                    />
+                  </Box>
+                )}
+              </>
+            )}
+          </>
         )}
       </Container>
     </Box>

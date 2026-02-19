@@ -10,6 +10,7 @@ import OurClient from "../sections/OurClient";
 import { useLocation } from "react-router-dom";
 import News from "../sections/News";
 import HeroImage from "../sections/HeroImage";
+import IklanSection from "../sections/ServeCave";
 
 const Home = ({ currentPath }) => {
   console.log('asdasd',currentPath); 
@@ -20,6 +21,10 @@ const Home = ({ currentPath }) => {
         {/* <Hero currentPath={currentPath} /> */}
         <HeroImage currentPath={currentPath} />
       </section> 
+
+      <section className="p-4">
+         <IklanSection currentPath={currentPath} /> {/* Iklan AI */}
+      </section>
      
       <section className="p-4">
          <Menu currentPath={currentPath} /> {/* masalah */}
