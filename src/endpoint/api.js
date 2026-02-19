@@ -1,5 +1,5 @@
 // Production URL from environment variable, fallback to localhost for development
-const url = import.meta.env.VITE_API_URL || 'https://api.akademiumkm.id';
+const url = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
 export const endpoint = {
   registerUser: `${url}/api/auth/register`,

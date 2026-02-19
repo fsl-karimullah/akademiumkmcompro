@@ -123,6 +123,19 @@ const WebinarCard = ({ webinar }) => {
           >
             {stripHtml(webinar.description) || "No Description Available"}
           </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 700,
+                color: webinar.is_payment ? "#d61355" : "#00c853",
+              }}
+            >
+              {webinar.is_payment
+                ? formatPrice(webinar.price || 0)
+                : "Gratis"}
+            </Typography>
+          </Box>
         </CardContent>
       </CardActionArea>
       <Divider />
