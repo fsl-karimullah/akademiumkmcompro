@@ -35,6 +35,7 @@ export const endpoint = {
   postFormPendaftaran: `${url}/api/formpendaftaran`,
   getProdukDigital: `${url}/api/produk-digital`,
   getProdukDigitalById: (id) => `${url}/api/produk-digital/${id}`,
+  getBanners: `${url}/api/banners`,
 
   // Webinar Payment (Ayolinx)
   payWebinar: (id) => `${url}/api/webinars/${id}/pay`,
