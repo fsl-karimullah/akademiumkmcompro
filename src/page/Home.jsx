@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import News from "../sections/News";
 import HeroImage from "../sections/HeroImage";
 import IklanSection from "../sections/ServeCave";
+import Partners from "../sections/Partners";
 
 const Home = ({ currentPath }) => {
   console.log('asdasd',currentPath); 
@@ -41,6 +42,9 @@ const Home = ({ currentPath }) => {
       </section>
       <section className="p-4">
         <News currentPath={currentPath} />
+      </section>
+      <section className="p-4">
+        <Partners currentPath={currentPath} />
       </section>
       <section className="p-4">
         <DownloadApp currentPath={currentPath} /> {/* urgency */}

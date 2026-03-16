@@ -36,6 +36,7 @@ export const endpoint = {
   getProdukDigital: `${url}/api/produk-digital`,
   getProdukDigitalById: (id) => `${url}/api/produk-digital/${id}`,
   getBanners: `${url}/api/banners`,
+  getPartners: `${url}/api/partners`,
 
   // Webinar Payment (Ayolinx)
   payWebinar: (id) => `${url}/api/webinars/${id}/pay`,
