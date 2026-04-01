@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "../assets/style/heroimage.css";
 import { endpoint } from "../endpoint/api";
 
-const CACHE_KEY = "banners_cache";
+const CACHE_KEY = "banners_cache_v2";
 const CACHE_TTL = 30 * 60 * 1000; // 30 menit
 
 const getCachedBanners = () => {
