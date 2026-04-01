@@ -38,6 +38,7 @@ import {
     Close,
     Description,
     LocalOffer,
+    ConfirmationNumber,
 } from "@mui/icons-material";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -69,6 +70,12 @@ const ProdukDigitalDetail = ({ currentPath }) => {
         sektor_bisnis: "",
     });
 
+    // Voucher State
+    const [voucherCode, setVoucherCode] = useState("");
+    const [voucherData, setVoucherData] = useState(null);
+    const [voucherLoading, setVoucherLoading] = useState(false);
+    const [voucherError, setVoucherError] = useState(null);
+
     useEffect(() => {
         const fetchProductDetail = async () => {
             try {
@@ -97,8 +104,12 @@ const ProdukDigitalDetail = ({ currentPath }) => {
         try {
             // Check if product requires payment
             if (product.is_payment && product.price > 0) {
-                // Call payment API for paid products
-                const response = await axios.post(endpoint.payDigitalProduct(id), formData);
+                // Call payment API for paid products with voucher_code
+                const payload = { ...formData };
+                if (voucherData && voucherCode) {
+                    payload.voucher_code = voucherCode;
+                }
+                const response = await axios.post(endpoint.payDigitalProduct(id), payload);
 
                 if (response.data.success) {
                     // Redirect to Ayolinx payment page
@@ -147,6 +158,52 @@ const ProdukDigitalDetail = ({ currentPath }) => {
             nama_bisnis: "",
             sektor_bisnis: "",
         });
+        setVoucherCode("");
+        setVoucherData(null);
+        setVoucherError(null);
+    };
+
+    const handleValidateVoucher = async () => {
+        if (!voucherCode.trim()) {
+            setVoucherError("Masukkan kode voucher");
+            return;
+        }
+        setVoucherLoading(true);
+        setVoucherError(null);
+        setVoucherData(null);
+        try {
+            const response = await axios.post(endpoint.validateVoucher, {
+                code: voucherCode.trim(),
+                produk_digital_id: parseInt(id),
+            });
+            if (response.data.success) {
+                setVoucherData(response.data.data);
+                toast.success(`Voucher "${response.data.data.voucher_name}" berhasil diterapkan!`);
+            } else {
+                setVoucherError(response.data.message || "Voucher tidak valid");
+            }
+        } catch (error) {
+            setVoucherError(
+                error.response?.data?.message || "Gagal memvalidasi voucher"
+            );
+        } finally {
+            setVoucherLoading(false);
+        }
+    };
+
+    const handleRemoveVoucher = () => {
+        setVoucherCode("");
+        setVoucherData(null);
+        setVoucherError(null);
+    };
+
+    // Format currency
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(price);
     };
 
     const handleGetFreeProduct = () => {
@@ -550,22 +607,115 @@ const ProdukDigitalDetail = ({ currentPath }) => {
                                         Dapatkan Gratis
                                     </Button>
                                 ) : (
-                                    <Button
-                                        variant="contained"
-                                        fullWidth
-                                        onClick={() => setOpenForm(true)}
-                                        sx={{
-                                            background: "linear-gradient(90deg, #d61355, #ff6b6b)",
-                                            py: { xs: 1.25, md: 1.5 },
-                                            fontWeight: 600,
-                                            fontSize: { xs: "0.9rem", md: "1rem" },
-                                            borderRadius: "10px",
-                                            textTransform: "none",
-                                            "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
-                                        }}
-                                    >
-                                        Beli Sekarang - Rp {product?.price?.toLocaleString('id-ID') || '0'}
-                                    </Button>
+                                    <>
+                                        {/* Voucher Input for paid products - in sidebar */}
+                                        <Box sx={{ mb: 2 }}>
+                                            <Typography sx={{ fontWeight: 600, color: "#333", fontSize: { xs: "0.8rem", md: "0.9rem" }, mb: 1 }}>
+                                                🎟️ Punya Kode Voucher?
+                                            </Typography>
+                                            <Box sx={{ display: "flex", gap: 1 }}>
+                                                <TextField
+                                                    size="small"
+                                                    placeholder="Masukkan kode"
+                                                    value={voucherCode}
+                                                    onChange={(e) => {
+                                                        setVoucherCode(e.target.value.toUpperCase());
+                                                        if (voucherData) handleRemoveVoucher();
+                                                    }}
+                                                    disabled={!!voucherData}
+                                                    sx={{
+                                                        flex: 1,
+                                                        "& .MuiOutlinedInput-root": {
+                                                            borderRadius: "8px",
+                                                            fontSize: { xs: "0.8rem", md: "0.9rem" },
+                                                            "&.Mui-focused fieldset": { borderColor: "#d61355" },
+                                                        },
+                                                    }}
+                                                />
+                                                {voucherData ? (
+                                                    <Button
+                                                        variant="outlined"
+                                                        size="small"
+                                                        onClick={handleRemoveVoucher}
+                                                        sx={{
+                                                            borderColor: "#dc2626",
+                                                            color: "#dc2626",
+                                                            borderRadius: "8px",
+                                                            textTransform: "none",
+                                                            fontWeight: 600,
+                                                            fontSize: { xs: "0.75rem", md: "0.8rem" },
+                                                            minWidth: "auto",
+                                                            px: 2,
+                                                        }}
+                                                    >
+                                                        Hapus
+                                                    </Button>
+                                                ) : (
+                                                    <Button
+                                                        variant="contained"
+                                                        size="small"
+                                                        onClick={handleValidateVoucher}
+                                                        disabled={voucherLoading || !voucherCode.trim()}
+                                                        sx={{
+                                                            background: "linear-gradient(90deg, #d61355, #ff6b6b)",
+                                                            borderRadius: "8px",
+                                                            textTransform: "none",
+                                                            fontWeight: 600,
+                                                            fontSize: { xs: "0.75rem", md: "0.8rem" },
+                                                            minWidth: "auto",
+                                                            px: 2,
+                                                            "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
+                                                            "&:disabled": { background: "#ccc" },
+                                                        }}
+                                                    >
+                                                        {voucherLoading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : "Pakai"}
+                                                    </Button>
+                                                )}
+                                            </Box>
+                                            {voucherError && (
+                                                <Typography sx={{ color: "#dc2626", fontSize: { xs: "0.7rem", md: "0.8rem" }, mt: 0.5 }}>
+                                                    ❌ {voucherError}
+                                                </Typography>
+                                            )}
+                                            {voucherData && (
+                                                <Box sx={{
+                                                    mt: 1, p: 1.5, borderRadius: "8px",
+                                                    background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
+                                                    border: "1px solid #86efac",
+                                                }}>
+                                                    <Typography sx={{ color: "#16a34a", fontWeight: 600, fontSize: { xs: "0.75rem", md: "0.85rem" } }}>
+                                                        ✅ {voucherData.voucher_name}
+                                                    </Typography>
+                                                    <Typography sx={{ color: "#15803d", fontSize: { xs: "0.7rem", md: "0.8rem" } }}>
+                                                        Diskon {voucherData.discount_type === 'nominal'
+                                                            ? `Rp ${Number(voucherData.discount_value).toLocaleString('id-ID')}`
+                                                            : `${voucherData.discount_value}%`
+                                                        } — Hemat {formatPrice(voucherData.discount_amount)}
+                                                    </Typography>
+                                                </Box>
+                                            )}
+                                        </Box>
+
+                                        <Button
+                                            variant="contained"
+                                            fullWidth
+                                            onClick={() => setOpenForm(true)}
+                                            sx={{
+                                                background: "linear-gradient(90deg, #d61355, #ff6b6b)",
+                                                py: { xs: 1.25, md: 1.5 },
+                                                fontWeight: 600,
+                                                fontSize: { xs: "0.9rem", md: "1rem" },
+                                                borderRadius: "10px",
+                                                textTransform: "none",
+                                                "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
+                                            }}
+                                        >
+                                            {voucherData
+                                                ? `Beli Sekarang - ${formatPrice(voucherData.final_price)}`
+                                                : `Beli Sekarang - Rp ${product?.price?.toLocaleString('id-ID') || '0'}`
+                                            }
+                                        </Button>
+                                    </>
                                 )}
 
                                 <Button
@@ -660,7 +810,10 @@ const ProdukDigitalDetail = ({ currentPath }) => {
                                 Dapatkan Produk
                             </Typography>
                             <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.75rem", md: "0.9rem" } }}>
-                                Isi data diri untuk mendapatkan produk digital ini
+                                {product?.is_payment && product?.price > 0
+                                    ? `Isi data diri untuk melanjutkan pembayaran ${voucherData ? formatPrice(voucherData.final_price) : `Rp ${product?.price?.toLocaleString('id-ID') || '0'}`}`
+                                    : "Isi data diri untuk mendapatkan produk digital ini"
+                                }
                             </Typography>
                         </Box>
                         <DialogContent sx={{ py: { xs: 2, md: 3 }, px: { xs: 2.5, md: 3 } }}>
@@ -707,6 +860,120 @@ const ProdukDigitalDetail = ({ currentPath }) => {
                                         }}
                                     />
                                 ))}
+
+                                {/* Voucher Input in Form Dialog (for paid products) */}
+                                {product?.is_payment && product?.price > 0 && (
+                                    <Box sx={{ mt: 2, p: 2, borderRadius: "10px", backgroundColor: "#fafafa", border: "1px dashed #e0e0e0" }}>
+                                        <Typography sx={{ fontWeight: 600, color: "#333", fontSize: { xs: "0.8rem", md: "0.9rem" }, mb: 1 }}>
+                                            🎟️ Kode Voucher (Opsional)
+                                        </Typography>
+                                        <Box sx={{ display: "flex", gap: 1 }}>
+                                            <TextField
+                                                size="small"
+                                                placeholder="Contoh: HEMAT"
+                                                value={voucherCode}
+                                                onChange={(e) => {
+                                                    setVoucherCode(e.target.value.toUpperCase());
+                                                    if (voucherData) handleRemoveVoucher();
+                                                }}
+                                                disabled={!!voucherData}
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <ConfirmationNumber sx={{ color: "#d61355", fontSize: { xs: 18, md: 22 } }} />
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                                sx={{
+                                                    flex: 1,
+                                                    "& .MuiOutlinedInput-root": {
+                                                        borderRadius: "8px",
+                                                        fontSize: { xs: "0.85rem", md: "0.95rem" },
+                                                        "&.Mui-focused fieldset": { borderColor: "#d61355" },
+                                                    },
+                                                }}
+                                            />
+                                            {voucherData ? (
+                                                <Button
+                                                    variant="outlined"
+                                                    size="small"
+                                                    onClick={handleRemoveVoucher}
+                                                    sx={{
+                                                        borderColor: "#dc2626",
+                                                        color: "#dc2626",
+                                                        borderRadius: "8px",
+                                                        textTransform: "none",
+                                                        fontWeight: 600,
+                                                        minWidth: "auto",
+                                                        px: 2,
+                                                    }}
+                                                >
+                                                    Hapus
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    variant="contained"
+                                                    size="small"
+                                                    onClick={handleValidateVoucher}
+                                                    disabled={voucherLoading || !voucherCode.trim()}
+                                                    sx={{
+                                                        background: "linear-gradient(90deg, #d61355, #ff6b6b)",
+                                                        borderRadius: "8px",
+                                                        textTransform: "none",
+                                                        fontWeight: 600,
+                                                        minWidth: "auto",
+                                                        px: 2,
+                                                        "&:hover": { background: "linear-gradient(90deg, #b50d44, #ff5252)" },
+                                                        "&:disabled": { background: "#ccc" },
+                                                    }}
+                                                >
+                                                    {voucherLoading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : "Pakai"}
+                                                </Button>
+                                            )}
+                                        </Box>
+                                        {voucherError && (
+                                            <Typography sx={{ color: "#dc2626", fontSize: { xs: "0.7rem", md: "0.8rem" }, mt: 0.5 }}>
+                                                ❌ {voucherError}
+                                            </Typography>
+                                        )}
+                                        {voucherData && (
+                                            <Box sx={{
+                                                mt: 1, p: 1.5, borderRadius: "8px",
+                                                background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
+                                                border: "1px solid #86efac",
+                                            }}>
+                                                <Typography sx={{ color: "#16a34a", fontWeight: 600, fontSize: { xs: "0.75rem", md: "0.85rem" } }}>
+                                                    ✅ {voucherData.voucher_name} diterapkan!
+                                                </Typography>
+                                                <Box sx={{ display: "flex", justifyContent: "space-between", mt: 0.5 }}>
+                                                    <Typography sx={{ color: "#666", fontSize: { xs: "0.7rem", md: "0.8rem" } }}>
+                                                        Harga asli:
+                                                    </Typography>
+                                                    <Typography sx={{ color: "#999", textDecoration: "line-through", fontSize: { xs: "0.7rem", md: "0.8rem" } }}>
+                                                        {formatPrice(voucherData.original_price)}
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                                                    <Typography sx={{ color: "#16a34a", fontSize: { xs: "0.7rem", md: "0.8rem" } }}>
+                                                        Diskon:
+                                                    </Typography>
+                                                    <Typography sx={{ color: "#16a34a", fontWeight: 600, fontSize: { xs: "0.7rem", md: "0.8rem" } }}>
+                                                        - {formatPrice(voucherData.discount_amount)}
+                                                    </Typography>
+                                                </Box>
+                                                <Divider sx={{ my: 0.5 }} />
+                                                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                                                    <Typography sx={{ color: "#15803d", fontWeight: 700, fontSize: { xs: "0.8rem", md: "0.9rem" } }}>
+                                                        Total bayar:
+                                                    </Typography>
+                                                    <Typography sx={{ color: "#15803d", fontWeight: 700, fontSize: { xs: "0.8rem", md: "0.9rem" } }}>
+                                                        {formatPrice(voucherData.final_price)}
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+                                        )}
+                                    </Box>
+                                )}
 
                                 <Button
                                     type="submit"

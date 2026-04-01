@@ -38,6 +38,9 @@ export const endpoint = {
   getBanners: `${url}/api/banners`,
   getPartners: `${url}/api/partners`,
 
+  // Voucher
+  validateVoucher: `${url}/api/vouchers/validate`,
+
   // Webinar Payment (Ayolinx)
   payWebinar: (id) => `${url}/api/webinars/${id}/pay`,
   checkWebinarPayment: (orderId) => `${url}/api/webinar-payments/${orderId}/status`,
