@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import parse from "html-react-parser";
 import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
 
@@ -176,21 +177,8 @@ const NewsDetails = () => {
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
-            <div className="text-gray-700 leading-relaxed text-lg space-y-6">
-              {newsDetails.description?.split('\n').map((paragraph, index) => (
-                paragraph.trim() && (
-                  <p
-                    key={index}
-                    className={index === 0 ? "first-letter:text-4xl first-letter:font-bold first-letter:text-[var(--themeRed)] first-letter:mr-1 first-letter:float-left" : ""}
-                  >
-                    {paragraph}
-                  </p>
-                )
-              )) || (
-                  <p className="first-letter:text-4xl first-letter:font-bold first-letter:text-[var(--themeRed)] first-letter:mr-1 first-letter:float-left">
-                    {newsDetails.description}
-                  </p>
-                )}
+            <div className="text-gray-700 leading-relaxed text-lg space-y-6 [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-2">
+              {newsDetails.description ? parse(newsDetails.description) : "Deskripsi tidak tersedia."}
             </div>
           </div>
 
