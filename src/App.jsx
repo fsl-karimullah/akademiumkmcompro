@@ -44,6 +44,7 @@ import ProdukDigitalPage from "./page/ProdukDigitalPage";
 import ProdukDigitalDetail from "./page/ProdukDigitalDetail";
 import WebinarPaymentSuccess from "./page/WebinarPaymentSuccess";
 import DigitalProductPaymentSuccess from "./page/DigitalProductPaymentSuccess";
+import AnalisisKeuangan from "./page/AnalisisKeuangan";
 
 function App() {
   return (
@@ -142,6 +143,16 @@ function AppContent() {
       <Route
         path="/about"
         element={<AboutUs currentPath={currentPath} />}
+      />
+      <Route
+        path="/analisis-keuangan"
+        element={
+          isAuthenticated ? (
+            <AnalisisKeuangan currentPath={currentPath} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
       />
       <Route
         path="/konsultasi"

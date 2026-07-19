@@ -11,8 +11,9 @@ const allMenuItems = [
   { name: "Produk Digital", path: "/produk-digital",  icon: "📦" },
   { name: "Kursus",         path: "/courses",         icon: "🎓" },
   { name: "Event",          path: "/event",           icon: "📅" },
-  { name: "UMKM Showcase",  path: "/umkm-showcase",   icon: "🏪" },
+  { name: "Umkm Showcase",  path: "/umkm-showcase",   icon: "🏪" },
   { name: "Artikel",        path: "/allnews",         icon: "📰" },
+  { name: "Analisis Keuangan", path: "/analisis-keuangan", icon: "📊" },
   { name: "Tentang Kami",   path: "/about",           icon: "ℹ️" },
 ];
 
@@ -26,6 +27,7 @@ const menuGroups = [
       { name: "Konsultasi",     path: "/konsultasi",     desc: "Sesi 1-on-1 dengan mentor bisnis",    icon: "💬" },
       { name: "Produk Digital", path: "/produk-digital", desc: "Produk digital siap pakai",           icon: "📦" },
       { name: "Kursus",         path: "/courses",        desc: "Belajar bisnis dari ahlinya",         icon: "🎓" },
+      { name: "Analisis Keuangan", path: "/analisis-keuangan", desc: "Analisis laporan keuangan dgn AI", icon: "📊" },
     ],
   },
   {
