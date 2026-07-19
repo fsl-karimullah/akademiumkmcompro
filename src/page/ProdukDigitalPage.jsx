@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { endpoint } from "../endpoint/api";
+import { encodeId } from "../utils/obfuscate";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -64,7 +65,7 @@ const ProdukDigitalPage = ({ currentPath }) => {
 
     const ProductCard = ({ product }) => (
         <Card
-            onClick={() => navigate(`/produk-digital/${product.id}`)}
+            onClick={() => navigate(`/produk-digital/${encodeId(product.id)}`)}
             sx={{
                 height: "100%",
                 cursor: "pointer",

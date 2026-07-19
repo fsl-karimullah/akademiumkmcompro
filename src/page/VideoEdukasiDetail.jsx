@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import SEO from "../components/SEO";
+import { decodeId } from "../utils/obfuscate";
 
 const VideoEdukasiDetail = () => {
   const { id } = useParams();
@@ -24,7 +26,8 @@ const VideoEdukasiDetail = () => {
     const fetchVideoDetail = async () => {
       try {
         const token = localStorage.getItem("userToken");
-        const response = await fetch(`${endpoint.getEducationById(id)}`, {
+        const realId = decodeId(id);
+        const response = await fetch(`${endpoint.getEducationById(realId)}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -82,6 +85,14 @@ const VideoEdukasiDetail = () => {
         paddingBottom: "40px",
       }}
     >
+      {video && (
+        <SEO 
+            title={video.title} 
+            description={video.description?.substring(0, 160)}
+            url={`/video-edukasi/${id}`}
+            type="video.other"
+        />
+      )}
       {/* Back Button */}
       <Box
         sx={{

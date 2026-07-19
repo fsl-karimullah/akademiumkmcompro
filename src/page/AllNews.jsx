@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { endpoint } from "../endpoint/api";
+import { encodeId } from "../utils/obfuscate";
 
 const AllNews = ({ currentPath }) => {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ const AllNews = ({ currentPath }) => {
     }, []);
 
     const handleCardClick = (id) => {
-        navigate(`/news/${id}`);
+        navigate(`/news/${encodeId(id)}`);
     };
 
     const formatDate = (dateString) => {

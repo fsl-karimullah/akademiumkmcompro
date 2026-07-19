@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Hero from "../sections/Hero";
+import { useEffect } from "react";
 import Serve from "../sections/Serve";
 import Menu from "../sections/Menu";
 import Customers from "../sections/Customers";
@@ -14,7 +13,17 @@ import IklanSection from "../sections/ServeCave";
 import Partners from "../sections/Partners";
 
 const Home = ({ currentPath }) => {
-  console.log('asdasd',currentPath); 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+    if (!location.hash) return;
+
+    const targetId = location.hash.replace("#", "");
+    const el = document.getElementById(targetId);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [location]);
+
   return (
     <main className="flex flex-col justify-around ">
       <Navbar currentPath={currentPath} />
@@ -27,7 +36,7 @@ const Home = ({ currentPath }) => {
          <IklanSection currentPath={currentPath} /> {/* Iklan AI */}
       </section>
      
-      <section className="p-4">
+      <section id="menu" className="p-4 scroll-mt-24">
          <Menu currentPath={currentPath} /> {/* masalah */}
       </section>
   
@@ -43,7 +52,7 @@ const Home = ({ currentPath }) => {
       <section className="p-4">
         <News currentPath={currentPath} />
       </section>
-      <section className="p-4">
+      <section id="partners" className="p-4 scroll-mt-24">
         <Partners currentPath={currentPath} />
       </section>
       <section className="p-4">

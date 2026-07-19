@@ -17,6 +17,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
+import SEO from "../components/SEO";
+import { decodeId } from "../utils/obfuscate";
 
 const EdukasiDetail = () => {
   const { id } = useParams();
@@ -39,7 +41,8 @@ const EdukasiDetail = () => {
         const token = localStorage.getItem("userToken");
         console.log('TOKENN', token);
 
-        const response = await axios.get(endpoint.getCourseDetails(id), {
+        const realId = decodeId(id);
+        const response = await axios.get(endpoint.getCourseDetails(realId), {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -86,6 +89,15 @@ const EdukasiDetail = () => {
 
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: "#f9f9f9" }}>
+      {course && (
+        <SEO 
+            title={course.title} 
+            description={`Kursus oleh ${course.mentor}. ${course.description?.substring(0, 120)}`}
+            image={course.thumbnail}
+            url={`/edukasi-detail/${id}`}
+            type="video.other"
+        />
+      )}
       {/* Back Button */}
       <Box
         sx={{

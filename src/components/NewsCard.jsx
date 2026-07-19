@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { encodeId } from "../utils/obfuscate";
 
 const NewsCard = ({ id, title, thumbnail, description, created_at }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/news/${id}`);
+    navigate(`/news/${encodeId(id)}`);
   };
 
   return (

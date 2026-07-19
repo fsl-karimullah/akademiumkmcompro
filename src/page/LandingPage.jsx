@@ -37,6 +37,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import { endpoint } from "../endpoint/api";
 import axios from "axios";
+import { encodeId } from "../utils/obfuscate";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import { keyframes } from "@emotion/react";
@@ -198,7 +199,7 @@ const LandingPage = () => {
   }, []);
 
   const handleWatchNow = (id) => {
-    navigate(`/videoedukasidetail/${id}`);
+    navigate(`/videoedukasidetail/${encodeId(id)}`);
   };
 
   const freeCourses = filteredCourses.filter((course) => course.price === 0);
@@ -211,7 +212,7 @@ const renderCourseCard = (course) => (
     xs={12}
     sm={6}
     md={4}
-    onClick={() => navigate(`/course-pay/${course.id}`)}
+    onClick={() => navigate(`/course-pay/${encodeId(course.id)}`)}
     sx={{
       cursor: "pointer",
       transition: "transform 0.2s ease",

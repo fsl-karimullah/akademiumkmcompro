@@ -293,9 +293,12 @@ const MentorPage = () => {
         </a>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 text-center text-gray-600">
-        <p>
+      <footer className="py-8 text-center text-gray-600 border-t">
+        <p className="font-bold">PT. Tri Sinergi Digital</p>
+        <p className="text-sm mt-1 px-4">
+          Office 1: Wisma Keiai Lantai 14 Unit 1410, Jakarta | Office 2: Bandung Creative Hub Lantai 5, Bandung
+        </p>
+        <p className="text-xs mt-2 text-gray-400">
           &copy; {new Date().getFullYear()} Akademi UMKM. Hak cipta dilindungi.
         </p>
       </footer>

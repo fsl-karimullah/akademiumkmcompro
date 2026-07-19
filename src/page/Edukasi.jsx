@@ -25,6 +25,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
+import { encodeId } from "../utils/obfuscate";
 
 const Edukasi = ({ currentPath }) => {
   const navigate = useNavigate();
@@ -121,7 +122,7 @@ const Edukasi = ({ currentPath }) => {
   };
 
   const handleCourseClick = (courseId) => {
-    navigate(`/course-pay/${courseId}`);
+    navigate(`/course-pay/${encodeId(courseId)}`);
   };
 
   const formatPrice = (price) => {

@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 
-// ─── REPLACE THIS WITH YOUR GEMINI API KEY ───────────────────────────────────
-const GEMINI_API_KEY = "AIzaSyAgzcFarXRudhJ52GRISD-5iUXlO4qQTGU";
-const GEMINI_MODEL   = "gemini-3-pro-preview";
+// ─── AMBIL DARI FILE .env (VITE_GEMINI_API_KEY) ──────────────────────────────
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
+const GEMINI_MODEL   = "gemini-2.5-flash-lite";
 // ─────────────────────────────────────────────────────────────────────────────
 
 const SYSTEM_PROMPT = `Anda adalah KonsulAI, asisten konsultasi bisnis AI yang ahli untuk pelaku UMKM Indonesia. 
 Anda memiliki keahlian mendalam di: strategi bisnis, keuangan UMKM, pemasaran digital, operasional, pricing, dan pertumbuhan usaha kecil menengah di Indonesia.
+PENTING: Anda HANYA boleh merespons topik seputar bisnis, kewirausahaan, dan UMKM. Jika pengguna menanyakan topik lain (seperti politik, hiburan, lelucon di luar bisnis, dll), tolak dengan sopan dan kembalikan percakapan ke konteks bisnis.
+Jawab dengan cerdas, akurat, berdasarkan fakta, dan jangan berhalusinasi. Jika tidak ada data pasti, sarankan prinsip bisnis yang sudah teruji.
 Respond dalam Bahasa Indonesia yang hangat, profesional, dan praktis. Berikan saran yang konkret dan actionable.
 Gunakan framework bisnis yang relevan jika sesuai (SWOT, Canvas, Cost-Plus Pricing, dll).
 Jawaban maksimal 3-4 paragraf, fokus pada nilai praktis. Gunakan emoji secukupnya untuk membuat percakapan lebih hidup.`;
@@ -249,6 +252,11 @@ footer { background:var(--teak); padding:60px 60px 32px; border-top:1px solid rg
 .msg-bubble.ai { background:var(--cream); color:var(--teak); border:1px solid rgba(200,146,42,.15); border-radius:4px 16px 16px 16px; }
 .msg-bubble.user { background:var(--teak); color:var(--cream); border-radius:16px 4px 16px 16px; }
 .msg-bubble.error { background:#FEF2F2; color:#991B1B; border:1px solid #FCA5A5; border-radius:4px 16px 16px 16px; }
+.markdown-body p { margin-bottom: 8px; }
+.markdown-body p:last-child { margin-bottom: 0; }
+.markdown-body strong { font-weight: 700; color: inherit; }
+.markdown-body ul, .markdown-body ol { margin-left: 20px; margin-bottom: 8px; list-style-type: disc; }
+.markdown-body li { margin-bottom: 4px; }
 .msg-time { font-size:.68rem; color:rgba(28,18,9,.35); margin-top:4px; }
 .msg-row.user .msg-time { text-align:right; }
 
@@ -555,8 +563,8 @@ function ChatModal({ onClose }) {
                   <div className={`msg-row ${msg.role}`}>
                     <div className={`msg-avatar ${msg.role}`}>{msg.role === "ai" ? "🤖" : "A"}</div>
                     <div style={{ minWidth: 0 }}>
-                      <div className={`msg-bubble ${msg.role} ${msg.isError ? "error" : ""}`} style={{ whiteSpace: "pre-wrap" }}>
-                        {msg.text}
+                      <div className={`msg-bubble ${msg.role} ${msg.isError ? "error" : ""}`} style={{ whiteSpace: msg.role === "user" ? "pre-wrap" : "normal" }}>
+                        {msg.role === "ai" ? <div className="markdown-body"><ReactMarkdown>{msg.text}</ReactMarkdown></div> : msg.text}
                         {msg.analysis && (
                           <div className="analysis-card">
                             <div className="analysis-card-ttl">📊 Analisis Cepat KonsulAI</div>

@@ -80,10 +80,13 @@ const Footer = () => {
         {/* ✅ **Logo & Description Section** */}
         <div className="md:w-1/3 flex flex-col gap-4 items-center md:items-start">
           <Logo />
-          <p className="text-sm text-center md:text-left">
-            Hubungi kami untuk informasi lebih lanjut. Tekan tombol sosial media
-            di bawah untuk terhubung langsung dengan kami.
-          </p>
+          <div className="text-sm text-center md:text-left">
+            <h3 className="font-bold text-lg text-gray-800 mb-2">PT. Tri Sinergi Digital</h3>
+            <p>
+              Hubungi kami untuk informasi lebih lanjut. Tekan tombol sosial media
+              di bawah untuk terhubung langsung dengan kami.
+            </p>
+          </div>
           <SocialMediaLinks />
         </div>
 
@@ -101,14 +104,19 @@ const Footer = () => {
             title="Support"
             links={["Account", "Support Center", "Feedback", "Contact Us"]}
           />
-          <FooterSection
-            title="Get in Touch"
-            links={[
-              "Have a question?",
-              "We'd love to hear from you!",
-              "Contact Us",
-            ]}
-          />
+          <div className="flex flex-col gap-4 text-center md:text-left">
+            <h2 className="font-bold text-lg text-[var(--themeRed)]">Offices</h2>
+            <div className="flex flex-col gap-3 text-sm text-gray-600">
+              <div>
+                <p className="font-bold text-gray-800">Office 1</p>
+                <p>Wisma Keiai Lantai 14 Unit 1410, Jalan Jenderal Sudirman Nomor Kav.3, Jakarta, Indonesia</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-800">Office 2</p>
+                <p>Bandung Creative Hub Lantai 5, Jl. Laswi No.7, Kacapiring, Kec. Batununggal, Kota Bandung, Jawa Barat 40271</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

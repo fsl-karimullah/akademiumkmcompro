@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { encodeId } from "../../utils/obfuscate";
 import SearchIcon from "@mui/icons-material/Search";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -494,7 +495,7 @@ const AllShowcase = () => {
                         size="small"
                         variant="contained"
                         fullWidth
-                        onClick={() => navigate(`/umkm-showcase-detail/${shop.id}`)}
+                        onClick={() => navigate(`/umkm-showcase-detail/${encodeId(shop.id)}`)}
                         sx={{
                           background: "linear-gradient(135deg, #d61355, #ff6b6b)",
                           color: "white", fontWeight: 700,

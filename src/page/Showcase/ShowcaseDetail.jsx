@@ -12,6 +12,8 @@ import {
   Alert,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
+import SEO from "../../components/SEO";
+import { decodeId } from "../../utils/obfuscate";
 import axios from "axios";
 import {
   LocationOn,
@@ -48,7 +50,8 @@ const ShowcaseDetail = () => {
   const [snackbar, setSnackbar] = useState({ open: false, msg: "" });
 
   useEffect(() => {
-    axios.get(`https://api.akademiumkm.id/api/shops/${id}`).then((res) => {
+    const realId = decodeId(id);
+    axios.get(`https://api.akademiumkm.id/api/shops/${realId}`).then((res) => {
       const data = res.data.data;
       setShop(data);
       const localLikes = localStorage.getItem(`likes_${data.id}`);
@@ -111,6 +114,15 @@ const ShowcaseDetail = () => {
 
   return (
     <Box sx={{ backgroundColor: "#fafafa", minHeight: "100vh", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      {shop && (
+        <SEO 
+            title={shop.name} 
+            description={shop.description?.substring(0, 160)}
+            image={shop.thumbnail || shop.images?.[0]}
+            url={`/umkm-showcase-detail/${id}`}
+            type="business.business"
+        />
+      )}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         * { font-family: 'Plus Jakarta Sans', sans-serif; }

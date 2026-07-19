@@ -45,6 +45,8 @@ import axios from "axios";
 import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
 import parse from "html-react-parser";
+import SEO from "../components/SEO";
+import { decodeId } from "../utils/obfuscate";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -79,7 +81,8 @@ const ProdukDigitalDetail = ({ currentPath }) => {
     useEffect(() => {
         const fetchProductDetail = async () => {
             try {
-                const response = await axios.get(endpoint.getProdukDigitalById(id));
+                const realId = decodeId(id);
+                const response = await axios.get(endpoint.getProdukDigitalById(realId));
                 setProduct(response.data.data);
             } catch (error) {
                 setError("Gagal memuat data produk digital.");
@@ -109,7 +112,7 @@ const ProdukDigitalDetail = ({ currentPath }) => {
                 if (voucherData && voucherCode) {
                     payload.voucher_code = voucherCode;
                 }
-                const response = await axios.post(endpoint.payDigitalProduct(id), payload);
+                const response = await axios.post(endpoint.payDigitalProduct(decodeId(id)), payload);
 
                 if (response.data.success) {
                     // Redirect to Ayolinx payment page
@@ -122,7 +125,7 @@ const ProdukDigitalDetail = ({ currentPath }) => {
                 // Free product - submit form directly
                 const response = await axios.post(endpoint.postFormPendaftaran, {
                     ...formData,
-                    produk_digital_id: parseInt(id),
+                    produk_digital_id: parseInt(decodeId(id)),
                 });
 
                 if (response.data.success) {
@@ -174,7 +177,7 @@ const ProdukDigitalDetail = ({ currentPath }) => {
         try {
             const response = await axios.post(endpoint.validateVoucher, {
                 code: voucherCode.trim(),
-                produk_digital_id: parseInt(id),
+                produk_digital_id: parseInt(decodeId(id)),
             });
             if (response.data.success) {
                 setVoucherData(response.data.data);
@@ -262,6 +265,15 @@ const ProdukDigitalDetail = ({ currentPath }) => {
         <Box sx={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
             <ToastContainer position="top-right" autoClose={3000} />
             <Navbar currentPath={currentPath} />
+            {product && (
+                <SEO 
+                    title={product.title} 
+                    description={product.description?.substring(0, 160).replace(/<[^>]*>?/gm, '')}
+                    image={product.thumbnail}
+                    url={`/produk-digital/${id}`}
+                    type="article"
+                />
+            )}
 
             {/* Hero Section */}
             <Box

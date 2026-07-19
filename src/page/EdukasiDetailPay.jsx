@@ -35,6 +35,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import parse from "html-react-parser";
 import Navbar from "../components/Navbar";
+import SEO from "../components/SEO";
+import { decodeId, encodeId } from "../utils/obfuscate";
 
 const EdukasiDetailPay = ({ currentPath }) => {
   const { id } = useParams();
@@ -65,7 +67,8 @@ const EdukasiDetailPay = ({ currentPath }) => {
     try {
       setLoading(true);
       const token = localStorage.getItem("userToken");
-      const response = await axios.get(endpoint.getCourseDetails(id), {
+      const realId = decodeId(id);
+      const response = await axios.get(endpoint.getCourseDetails(realId), {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCourse(response.data.data);
@@ -83,7 +86,7 @@ const EdukasiDetailPay = ({ currentPath }) => {
   const handleEnroll = async () => {
     try {
       const token = localStorage.getItem("userToken");
-      const response = await axios.get(endpoint.buyCourse(id), {
+      const response = await axios.get(endpoint.buyCourse(decodeId(id)), {
         headers: { Authorization: `Bearer ${token}` },
       });
       const redirectUrl = response.data?.data?.redirect_url;
@@ -91,7 +94,7 @@ const EdukasiDetailPay = ({ currentPath }) => {
         window.location.href = redirectUrl;
       } else {
         toast.success("Berhasil klaim kursus gratis!");
-        navigate(`/course/${course.id}/`);
+        navigate(`/course/${encodeId(course.id)}/`);
       }
     } catch (err) {
       toast.error("Gagal melakukan pembelian. Silakan coba lagi.");
@@ -134,6 +137,15 @@ const EdukasiDetailPay = ({ currentPath }) => {
     <Box sx={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
       <ToastContainer position="top-right" autoClose={3000} />
       <Navbar currentPath={currentPath} />
+      {course && (
+        <SEO 
+            title={course.title} 
+            description={course.description?.substring(0, 160).replace(/<[^>]*>?/gm, '')}
+            image={course.thumbnail}
+            url={`/course-pay/${id}`}
+            type="article"
+        />
+      )}
 
       {/* Breadcrumb */}
       <Box sx={{ backgroundColor: "#fff", py: 2, borderBottom: "1px solid #eee" }}>
@@ -464,7 +476,7 @@ const EdukasiDetailPay = ({ currentPath }) => {
                     variant="contained"
                     fullWidth
                     size="medium"
-                    onClick={() => navigate(`/course/${course.id}/`)}
+                    onClick={() => navigate(`/course/${encodeId(course.id)}/`)}
                     sx={{
                       backgroundColor: "#d61355",
                       py: 1.2,

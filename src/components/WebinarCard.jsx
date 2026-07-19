@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { encodeId } from "../utils/obfuscate";
 
 const WebinarCard = ({ webinar }) => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const WebinarCard = ({ webinar }) => {
         },
       }}
     >
-      <CardActionArea onClick={() => navigate(`/event/${webinar.id}`)}>
+      <CardActionArea onClick={() => navigate(`/event/${encodeId(webinar.id)}`)}>
         <Box sx={{ position: "relative" }}>
           <Box
             sx={{
@@ -166,7 +167,7 @@ const WebinarCard = ({ webinar }) => {
           }}
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/event/${webinar.id}`);
+            navigate(`/event/${encodeId(webinar.id)}`);
           }}
         >
           Lihat Detail

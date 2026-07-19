@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer"; // Assuming Footer exists
 import { useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const AnalisisKeuangan = ({ currentPath }) => {
   const [file, setFile] = useState(null);
@@ -135,20 +136,37 @@ const AnalisisKeuangan = ({ currentPath }) => {
               background: "#fff0f4", padding: 32, borderRadius: 24,
               border: "1px solid #fee2e2", animation: "navFadeIn 0.5s ease"
             }}>
+              <style>
+                {`
+                  .ai-analysis-content h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; color: #1a1a2e; }
+                  .ai-analysis-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.75rem; color: #1a1a2e; }
+                  .ai-analysis-content p { margin-bottom: 1rem; color: #374151; line-height: 1.7; }
+                  .ai-analysis-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: #374151; }
+                  .ai-analysis-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; color: #374151; }
+                  .ai-analysis-content li { margin-bottom: 0.5rem; }
+                  .ai-analysis-content strong { font-weight: 700; color: #111827; }
+                  .ai-analysis-content hr { border: 0; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+                  .ai-analysis-content table { width: 100%; border-collapse: collapse; margin-top: 1rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+                  .ai-analysis-content th { background-color: #f9fafb; text-align: left; padding: 12px 16px; border-bottom: 2px solid #e5e7eb; color: #4b5563; font-weight: 600; }
+                  .ai-analysis-content td { padding: 12px 16px; border-bottom: 1px solid #e5e7eb; color: #374151; }
+                  .ai-analysis-content tr:hover td { background-color: #f9fafb; }
+                  .ai-analysis-content > :first-child { margin-top: 0; }
+                  .ai-analysis-content > :last-child { margin-bottom: 0; }
+                `}
+              </style>
               <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16, color: "#d61355" }}>
                 📊 Hasil Analisis AI
               </h2>
-              <div style={{ 
-                color: "#374151", 
-                lineHeight: 1.8, 
-                fontSize: "1.05rem",
-                whiteSpace: "pre-wrap",
+              <div className="ai-analysis-content" style={{ 
                 background: "white",
-                padding: 24,
+                padding: "32px",
                 borderRadius: 16,
-                border: "1px solid #f3f4f6"
+                border: "1px solid #f3f4f6",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.05)"
               }}>
-                {result}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {result}
+                </ReactMarkdown>
               </div>
             </div>
           )}

@@ -7,6 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Provider } from "react-redux";
+import { HelmetProvider } from "react-helmet-async";
 import store from "./redux/configureStore";
 import Home from "./page/Home";
 import LoginBisnis from "./page/LoginBisnis";
@@ -45,13 +46,16 @@ import ProdukDigitalDetail from "./page/ProdukDigitalDetail";
 import WebinarPaymentSuccess from "./page/WebinarPaymentSuccess";
 import DigitalProductPaymentSuccess from "./page/DigitalProductPaymentSuccess";
 import AnalisisKeuangan from "./page/AnalisisKeuangan";
+import PartnersPage from "./page/PartnersPage";
 
 function App() {
   return (
     <Provider store={store()}>
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </HelmetProvider>
     </Provider>
   );
 }
@@ -153,6 +157,10 @@ function AppContent() {
             <Navigate to="/login" />
           )
         }
+      />
+      <Route
+        path="/partners"
+        element={<PartnersPage currentPath={currentPath} />}
       />
       <Route
         path="/konsultasi"

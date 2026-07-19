@@ -4,6 +4,8 @@ import axios from "axios";
 import parse from "html-react-parser";
 import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
+import SEO from "../components/SEO";
+import { decodeId } from "../utils/obfuscate";
 
 const NewsDetails = () => {
   const { id } = useParams();
@@ -16,7 +18,8 @@ const NewsDetails = () => {
   useEffect(() => {
     const fetchNewsDetails = async () => {
       try {
-        const response = await axios.get(endpoint.getNewsDetails(id));
+        const realId = decodeId(id);
+        const response = await axios.get(endpoint.getNewsDetails(realId));
         setNewsDetails(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -89,7 +92,15 @@ const NewsDetails = () => {
       <Navbar />
 
       {newsDetails && (
-        <article className="max-w-4xl mx-auto px-4 py-8">
+        <>
+          <SEO 
+            title={newsDetails.title} 
+            description={newsDetails.description?.substring(0, 160).replace(/<[^>]*>?/gm, '')}
+            image={newsDetails.thumbnail}
+            url={`/news/${id}`}
+            type="article"
+          />
+          <article className="max-w-4xl mx-auto px-4 py-8">
           {/* Back Button */}
           <button
             onClick={handleBackClick}
@@ -175,7 +186,6 @@ const NewsDetails = () => {
             </figcaption>
           </figure>
 
-          {/* Article Content */}
           <div className="prose prose-lg max-w-none">
             <div className="text-gray-700 leading-relaxed text-lg space-y-6 [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-2">
               {newsDetails.description ? parse(newsDetails.description) : "Deskripsi tidak tersedia."}
@@ -258,6 +268,7 @@ const NewsDetails = () => {
             </button>
           </div>
         </article>
+        </>
       )}
     </div>
   );

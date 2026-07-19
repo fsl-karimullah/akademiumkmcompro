@@ -47,6 +47,8 @@ import axios from "axios";
 import { endpoint } from "../endpoint/api";
 import Navbar from "../components/Navbar";
 import parse from "html-react-parser";
+import SEO from "../components/SEO";
+import { decodeId } from "../utils/obfuscate";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -82,7 +84,8 @@ const WebinarDetail = ({ currentPath }) => {
     useEffect(() => {
         const fetchWebinarDetail = async () => {
             try {
-                const response = await axios.get(endpoint.getWebinarsById(id));
+                const realId = decodeId(id);
+                const response = await axios.get(endpoint.getWebinarsById(realId));
                 setWebinar(response.data.data);
             } catch (error) {
                 setError("Gagal memuat data webinar.");
@@ -114,7 +117,7 @@ const WebinarDetail = ({ currentPath }) => {
                 if (voucherData && voucherCode) {
                     payload.voucher_code = voucherCode;
                 }
-                const response = await axios.post(endpoint.payWebinar(id), payload);
+                const response = await axios.post(endpoint.payWebinar(decodeId(id)), payload);
 
                 if (response.data.success) {
                     setPaymentData(response.data.data);
@@ -126,7 +129,7 @@ const WebinarDetail = ({ currentPath }) => {
                 // Free webinar - use existing form pendaftaran
                 const response = await axios.post(endpoint.postFormPendaftaran, {
                     ...formData,
-                    webinar_id: parseInt(id),
+                    webinar_id: parseInt(decodeId(id)),
                 });
 
                 if (response.data.success) {
@@ -179,7 +182,7 @@ const WebinarDetail = ({ currentPath }) => {
         try {
             const response = await axios.post(endpoint.validateVoucher, {
                 code: voucherCode.trim(),
-                webinar_id: parseInt(id),
+                webinar_id: parseInt(decodeId(id)),
             });
             if (response.data.success) {
                 setVoucherData(response.data.data);
@@ -274,6 +277,15 @@ const WebinarDetail = ({ currentPath }) => {
         <Box sx={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
             <ToastContainer position="top-right" autoClose={3000} />
             <Navbar currentPath={currentPath} />
+            {webinar && (
+                <SEO 
+                    title={webinar.title} 
+                    description={webinar.description?.substring(0, 160).replace(/<[^>]*>?/gm, '')}
+                    image={webinar.thumbnail}
+                    url={`/event/${id}`}
+                    type="article"
+                />
+            )}
 
             {/* Hero Section */}
             <Box

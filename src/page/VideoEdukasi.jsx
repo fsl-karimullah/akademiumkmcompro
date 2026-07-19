@@ -14,6 +14,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { endpoint } from "../endpoint/api";
+import { encodeId } from "../utils/obfuscate";
 
 const VideoEdukasi = () => {
   const [videos, setVideos] = useState([]);
@@ -48,7 +49,7 @@ const VideoEdukasi = () => {
   }, []);
 
   const handleWatchNow = (id) => {
-    navigate(`/videoedukasidetail/${id}`);
+    navigate(`/videoedukasidetail/${encodeId(id)}`);
   };
 
   return (
@@ -164,8 +165,14 @@ const VideoEdukasi = () => {
       </Container>
 
       {/* Footer Section */}
-      <Box sx={{ py: 3, textAlign: "center", backgroundColor: "#333", color: "#fff" }}>
-        <Typography variant="body2">&copy; 2024 Akademi UMKM. Semua hak dilindungi.</Typography>
+      <Box sx={{ py: 4, textAlign: "center", backgroundColor: "#333", color: "#fff", px: 2 }}>
+        <Typography variant="subtitle2" fontWeight="bold">PT. Tri Sinergi Digital</Typography>
+        <Typography variant="caption" display="block" sx={{ opacity: 0.8, mt: 1 }}>
+          Office 1: Wisma Keiai Lantai 14 Unit 1410, Jakarta | Office 2: Bandung Creative Hub Lantai 5, Bandung
+        </Typography>
+        <Typography variant="caption" display="block" sx={{ opacity: 0.6, mt: 2 }}>
+          &copy; {new Date().getFullYear()} Akademi UMKM. Semua hak dilindungi.
+        </Typography>
       </Box>
     </Box>
   );
